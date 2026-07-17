@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>はじめてのホロスコープv2 — 読み方ナビつき出生図ツール</title>
+<title>はじめてのホロスコープv2.1 — 読み方ナビつき出生図ツール</title>
 <style>
 :root{
   --ink:#3a352f; --sub:#6b6357; --paper:#faf9f5; --card:#ffffff;
@@ -178,7 +178,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 <body>
 <header class="site">
   <div class="stars">☽ ✶ ☉ ✶ ☊</div>
-  <h1>はじめてのホロスコープ <span class="ver">v2</span></h1>
+  <h1>はじめてのホロスコープ <span class="ver">v2.1</span></h1>
   <p>生年月日と生まれた場所から、あなたの出生図（ネイタルチャート）を作り、<br>「読む順番」つきでやさしく解説するカヒノト式学習ツールです。<br>v2から、アスペクト（天体同士の角度）を正式に読めるようになりました。</p>
 </header>
 <main>
@@ -729,6 +729,7 @@ const PREFS = [
   ['福岡県（福岡）',33.61,130.42],['佐賀県（佐賀）',33.25,130.30],['長崎県（長崎）',32.74,129.87],
   ['熊本県（熊本）',32.79,130.74],['大分県（大分）',33.24,131.61],['宮崎県（宮崎）',31.91,131.42],
   ['鹿児島県（鹿児島）',31.56,130.56],['沖縄県（那覇）',26.21,127.68],
+  ['北海道（釧路）',42.98,144.38],['沖縄県（石垣島）',24.34,124.16],
 ];
 
 /* ---------------- アスペクト定義 ---------------- */
@@ -1155,6 +1156,7 @@ function angleCardASC(no, chart) {
     <div class="formula"><span class="f-planet">外から見たあなた（第一印象）</span>は ${signChip(ai)} ——「<span class="f-sign">${SIGNS[ai].how}</span>」ふるまう人として周囲に映ります。</div>
     <div class="formula"><span class="f-planet">ディセンダント（DSC）</span>はその真向かい、西に沈む点＝${signChip(di)}。一対一の相手・パートナーには「<span class="f-sign">${SIGNS[di].how}</span>」接する人を引き寄せやすく、そこに<b>自分に足りない資質を映す鏡</b>があるとされます。</div>
     <details class="more"><summary>ASCの星座（${SIGNS[ai].name}）のプロフィールを見る</summary>${signMemo(ai)}</details>
+    <details class="more"><summary>DSCの星座（${SIGNS[di].name}）のプロフィールを見る</summary>${signMemo(di)}</details>
   </article>`;
 }
 function angleCardMC(no, chart) {
@@ -1171,6 +1173,7 @@ function angleCardMC(no, chart) {
     <div class="formula"><span class="f-planet">社会的な到達点（MC）</span>は ${signChip(mi)} の方向——「<span class="f-sign">${SIGNS[mi].how}</span>」登っていきます。</div>
     <div class="formula"><span class="f-planet">IC（イムム・コエリ＝「空の底」）</span>はその真下、大地の底＝${signChip(ii)}。<b>心の基盤・家・ルーツ</b>を示し、あなたは「<span class="f-sign">${SIGNS[ii].how}</span>」安らぎを取り戻します。ICが土台、MCが頂上。木の根と梢のような一対です。</div>
     <details class="more"><summary>MCの星座（${SIGNS[mi].name}）のプロフィールを見る</summary>${signMemo(mi)}</details>
+    <details class="more"><summary>ICの星座（${SIGNS[ii].name}）のプロフィールを見る</summary>${signMemo(ii)}</details>
   </article>`;
 }
 function nodeCard(no, chart) {
@@ -1200,6 +1203,14 @@ function genCard(no, chart) {
       <p class="guide">${p.guide}（能力：${p.noryoku}）</p>
       ${formulaBox(p.house, p.name, p.noryoku, si, chart.timeUnknown)}
       ${rulerHtml}
+      <details class="more"><summary>${p.name}と${SIGNS[si].name}のプロフィールを見る</summary>
+        <table class="memo-table">
+          <tr><th>神話</th><td>${p.deity}</td></tr>
+          ${p.holst ? `<tr><th>ホルスト「惑星」</th><td>〈${p.holst}〉として描かれた</td></tr>` : ''}
+          <tr><th>動く速さ</th><td>${p.speed}</td></tr>
+        </table>
+        ${signMemo(si)}
+      </details>
     </div>`;
   }).join('');
   return `<article class="card el-風" id="card-gen">
@@ -1928,7 +1939,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 </main>
 <footer class="site">
-  はじめてのホロスコープv2 — カヒノト式・占星術学習ツール<br>
+  はじめてのホロスコープv2.1 — カヒノト式・占星術学習ツール<br>
   © 2026 カヒノト — 本ツールの著作権は占い師カヒノトに帰属します。無断転載・再配布はご遠慮ください。<br>
   ご質問はXへ：<a href="https://x.com/yajul" target="_blank" rel="noopener">@yajul</a> ｜ 計算エンジン: Astronomy Engine (MIT License)
 </footer>
