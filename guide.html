@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>はじめてのホロスコープ・解説書 — 初心者は何から始めればいいのか</title>
+<style>
+:root{
+  --ink:#3a352f; --sub:#6b6357; --paper:#faf9f5; --card:#ffffff;
+  --line:#e3ddd0; --accent:#7a6448; --gold:#b08d3e;
+  --fire:#c1502e; --earth:#5e7a2f; --air:#a07d1c; --water:#2f6ea5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.85;font-size:16.5px}
+main{max-width:880px;margin:0 auto;padding:0 16px 80px}
+h1{font-size:1.7em;letter-spacing:.04em}
+h2{font-size:1.35em;margin:0 0 .6em;padding:.35em .7em;border-left:6px solid var(--gold);
+  background:linear-gradient(90deg,#f5efe2,transparent);border-radius:4px}
+h3{font-size:1.12em;margin:1.2em 0 .5em;color:var(--accent)}
+p{margin:.5em 0}
+a{color:var(--water)}
+section{margin:38px 0}
+.small{font-size:.85em;color:var(--sub)}
+header.site{background:linear-gradient(160deg,#2e3450,#4a3f63 60%,#6b5544);color:#f5f1e8;
+  padding:44px 16px 36px;text-align:center;margin-bottom:34px}
+header.site .stars{font-size:1.5em;letter-spacing:.35em;opacity:.85}
+header.site h1{color:#fff;margin:.3em 0 .2em}
+header.site p{color:#d9d2c2;font-size:.95em;max-width:640px;margin:0 auto}
+.lead-box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin:14px 0}
+.lead-box h3:first-child{margin-top:0}
+blockquote{border-left:4px solid var(--gold);background:#fdf9ee;padding:10px 18px;margin:12px 0;border-radius:0 8px 8px 0}
+blockquote b{color:var(--accent)}
+table{border-collapse:collapse;width:100%;background:var(--card);margin:10px 0}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;font-size:.93em}
+thead th{background:#f0ead9;color:var(--accent)}
+th.rowh{background:#f6f2e8;color:var(--sub);font-size:.88em;width:9em;vertical-align:top}
+.note{background:#eef4f8;border:1.5px solid #bcd4e4;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.94em}
+.warn{background:#fdf0ee;border:1.5px solid #e5b8ae;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.94em}
+.point{background:#fdf6e0;border:1.5px solid #d9bc6a;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.94em}
+.step-list{list-style:none;counter-reset:stepc;margin:14px 0}
+.step-list li{counter-increment:stepc;position:relative;background:var(--card);border:1.5px solid var(--line);
+  border-radius:10px;padding:12px 16px 12px 52px;margin:10px 0}
+.step-list li::before{content:counter(stepc);position:absolute;left:14px;top:14px;width:26px;height:26px;
+  background:var(--accent);color:#fff;border-radius:50%;font-size:.85em;display:flex;align-items:center;justify-content:center;font-weight:bold}
+.step-list b{color:var(--accent)}
+.toc{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin:10px 0}
+.toc a{display:block;background:var(--card);border:1.5px solid var(--line);border-radius:10px;
+  padding:9px 14px;text-decoration:none;color:var(--ink);font-size:.92em}
+.toc a:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(176,141,62,.25)}
+.tool-link{text-align:center;margin:26px 0}
+.tool-btn{display:inline-block;font-size:1.1em;font-weight:bold;color:#fff!important;background:linear-gradient(135deg,#6b5544,#4a3f63);
+  border-radius:12px;padding:14px 38px;text-decoration:none;letter-spacing:.06em;box-shadow:0 3px 10px rgba(74,63,99,.35)}
+.tool-btn:hover{filter:brightness(1.12)}
+.sym{font-size:1.25em}
+.el-fire{color:var(--fire);font-weight:bold} .el-earth{color:var(--earth);font-weight:bold}
+.el-air{color:var(--air);font-weight:bold} .el-water{color:var(--water);font-weight:bold}
+footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;text-align:center;font-size:.82em;color:var(--sub)}
+@media print{header.site .stars{display:none}body{background:#fff}}
+@media (max-width:560px){body{font-size:15.5px}}
+.tbl-scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="stars">♈ ✶ ☉ ✶ ♓</div>
+  <h1>はじめてのホロスコープ・解説書</h1>
+  <p>初心者は何から始めればいいのか——<br>ツール「はじめてのホロスコープ」とあわせて使う、はじめの一歩の道しるべです。</p>
+</header>
+<main>
+
+<section id="g-about">
+  <h2>この解説書について</h2>
+  <div class="lead-box">
+    <p>この解説書は、ホロスコープ作成ツール<b>「はじめてのホロスコープ」</b>の姉妹編です。ツールは「作って、読む」ための道具、この解説書は「読むために知っておくこと」をまとめた地図——<b>二つで一つ</b>としてお使いください。</p>
+    <p class="small">💡 下のボタンからいつでもツールへ移れます。ツール側からも、この解説書へ戻ってこられます。</p>
+    <div class="tool-link"><a class="tool-btn" href="index.html">🔭 ツールを開く — はじめてのホロスコープ</a></div>
+  </div>
+  <h3>目次</h3>
+  <ol class="toc">
+    <li><a href="#g-start">1. 初心者は何から始めればいいのか</a></li>
+    <li><a href="#g-meisen">2. ホロスコープは「命占」です</a></li>
+    <li><a href="#g-dekiru">3. ホロスコープでできること</a></li>
+    <li><a href="#g-time">4. 自分の生まれた時間を入れる</a></li>
+    <li><a href="#g-chart">5. ネイタルチャートとは</a></li>
+    <li><a href="#g-kubun">6. 星座の属性を知って、初めて読める</a></li>
+    <li><a href="#g-kigou">7. 記号を覚える</a></li>
+    <li><a href="#g-jouhou">8. 星座と天体、それぞれの情報</a></li>
+    <li><a href="#g-element">9. エレメントを知る</a></li>
+    <li><a href="#g-manabi">10. 学びの進め方</a></li>
+  </ol>
+</section>
+
+<section id="g-start">
+  <h2>1. 初心者は何から始めればいいのか</h2>
+  <p>ホロスコープの世界は広くて、入口で立ち尽くしてしまう人がとても多いのです。でも、通る道は実はシンプルです。この順番で進んでください。</p>
+  <ol class="step-list">
+    <li><b>この解説書をざっと読む</b> — 全部覚えなくて大丈夫。「ホロスコープがどんな占いで、何が描いてあるのか」の輪郭をつかみます。特に<b>7章（記号）と9章（エレメント）</b>は、あとで何度も戻ってくる章です。</li>
+    <li><b>ツールで自分のホロスコープを作る</b> — 生年月日・時刻・生まれた都道府県を入れるだけ。教材はあなた自身の一枚が最良です。自分のことなら、読みが当たっているかどうか自分でわかるからです。</li>
+    <li><b>初級：3つの重要な要素を読む</b> — 太陽（何者であるか）・月（素の自分）・アセンダント（外から見えるあなた）。ツールの初級表示が、この三枚だけを見せてくれます。</li>
+    <li><b>中級：全体をながめ、順に読む</b> — エレメントの偏りをつかみ、「読む順番ナビ」に従って天体をひとつずつ。<b>「この場面で、この能力が、こうやって発揮される」</b>という読み方の方式が体に入ります。</li>
+    <li><b>上級：アスペクトへ</b> — 天体同士の角度＝能力と能力の会話を読みます。ここまで来たら、あとは数をこなすだけ（10章）。</li>
+  </ol>
+  <div class="point">🗝 <b>合言葉は「まず自分の一枚」</b>。理論を全部覚えてから作るのではなく、作ってから理論に戻る——その往復が、いちばん速い学び方です。</div>
+</section>
+
+<section id="g-meisen">
+  <h2>2. ホロスコープは「命占」です</h2>
+  <p>占いは大きく三つの系統に分かれます。この分類を知ると、ホロスコープが占いの世界のどこに立っているかが見えます。</p>
+  <table><thead><tr><th>系統</th><th>読むもの</th><th>問いの形</th><th>代表的な占い</th></tr></thead><tbody>
+    <tr><td><b>命占（めいせん）</b></td><td>生まれた情報（生年月日・時刻・出生地）</td><td>「わたしはどんな人間で、どんな人生を歩むのか」</td><td><b>西洋占星術（ホロスコープ）</b>・四柱推命・紫微斗数</td></tr>
+    <tr><td><b>卜占（ぼくせん）</b></td><td>今この瞬間の偶然のしるし</td><td>「この件、どうなる？　どうすべき？」</td><td>タロット・易・ルーン</td></tr>
+    <tr><td><b>相術（そうじゅつ）</b></td><td>形あるもののすがた</td><td>「この形は何を語っているか」</td><td>手相・人相・風水</td></tr>
+  </tbody></table>
+  <p>ホロスコープは<b>西洋の命占の代表格</b>です。命占の材料は「生まれた瞬間」——つまり<b>一生変わりません</b>。だからホロスコープは、引き直すたびに答えが変わる占いではなく、<b>何度でも帰ってこられる一枚の地図</b>です。10年後に読み返すと、同じ図から違う発見がある。それが命占の醍醐味です。</p>
+  <p class="small">💡 ちなみにツールの入力欄の初期値が「ページを開いた瞬間の日時」になっているのは、そのまま作成すると「今この瞬間の星空の図」が立てられるからです。これは<b>ホラリー占星術</b>という応用技法（卜占的な使い方）への入口——命占の道具は、実は卜占の道具にもなるのです。</p>
+</section>
+
+<section id="g-dekiru">
+  <h2>3. ホロスコープでできること</h2>
+  <p>ネイタルチャート（出生図）から読み取れるのは、たとえばこんなことです。</p>
+  <table><thead><tr><th>読めること</th><th>主に見る場所</th></tr></thead><tbody>
+    <tr><td>性格・気質——表の顔と、素の自分のズレまで</td><td>太陽・月・アセンダント</td></tr>
+    <tr><td>頭の使い方・話し方のクセ</td><td>水星</td></tr>
+    <tr><td>何を美しいと感じ、どう愛するか</td><td>金星</td></tr>
+    <tr><td>やる気の燃え方・戦い方</td><td>火星</td></tr>
+    <tr><td>どこで伸びるか（追い風の場所）／どこで鍛えられるか（人生の宿題）</td><td>木星／土星</td></tr>
+    <tr><td>人生でこれから育てていく方向</td><td>ドラゴンヘッド</td></tr>
+    <tr><td>気質ぜんたいの傾向・バランス</td><td>エレメント・三区分・二区分の偏り</td></tr>
+    <tr><td>能力どうしの連携や葛藤（上級）</td><td>アスペクト</td></tr>
+  </tbody></table>
+  <p>逆に、「明日の吉凶」のようなその場の問いへの即答は、命占よりも卜占（タロットや易）の領分です。道具には得意分野がある——ホロスコープの得意は、<b>深く、長く効く自己理解</b>です。</p>
+  <h3>「あなたは〇〇座」だけの占いとの違い</h3>
+  <p>雑誌やテレビの12星座占いは、<b>太陽がどの星座にあるか</b>だけを使います。それも立派な入口ですが、世界の人口を12種類に分けることになります。本格的なホロスコープはまったく別物です。</p>
+  <table><thead><tr><th></th><th>12星座占い</th><th>本格ホロスコープ</th></tr></thead><tbody>
+    <tr><td>使う情報</td><td>誕生月のみ</td><td>生年月日・時刻・出生地</td></tr>
+    <tr><td>天体</td><td>太陽のみ</td><td>10天体すべて＋ドラゴンヘッド／テイル</td></tr>
+    <tr><td>分類</td><td>世界を12種類に</td><td>一人ひとり異なる一枚</td></tr>
+    <tr><td>目的</td><td>手軽な傾向把握</td><td>深い自己理解</td></tr>
+  </tbody></table>
+</section>
+
+<section id="g-time">
+  <h2>4. 自分の生まれた時間を入れる</h2>
+  <p>ホロスコープ作成に使う材料は三つ——<b>生年月日・生まれた時刻・生まれた場所</b>です。</p>
+  <h3>なぜ「時刻」まで必要なのか</h3>
+  <p>空は動いています。<b>アセンダント（東の地平線から昇る星座）は約4分で1度</b>動くため、同じ日に生まれた二人でも、時刻が違えばアセンダントとハウスの配置がまるで変わります。時刻こそが、ホロスコープを「一人ひとり違う一枚」にしている材料なのです。</p>
+  <p>生まれた時刻は<b>母子手帳</b>に書いてあります。実家に確認できる方は、ぜひ調べてみてください。分単位でわかれば理想的です。</p>
+  <h3>時間がわからなくても大丈夫</h3>
+  <div class="note">🕐 ツールには<b>「出生時刻がわからない」モード</b>があります。チェックを入れるだけで、読めるものと読めないものを整理して表示してくれます。<br><br>
+  <b>読めるもの</b>：太陽・水星・金星など、ほとんどの天体の星座。あなたの気質の大部分はここからわかります。<br>
+  <b>幅をもって読むもの</b>：月（1日に12〜13度動くため、±6〜7度の幅つきで表示。星座の境目にいる日は両方の可能性を教えてくれます）。<br>
+  <b>読めないもの</b>：アセンダント・MC・ハウス（時刻に敏感すぎるため）。<br><br>
+  つまり時刻不明でも、<b>読める範囲で十分に深い読みができます</b>。あきらめる理由にはなりません。</div>
+  <p class="small">📍 生まれた「場所」も大切です。日本標準時は東経135度（兵庫県明石市）の空が基準なので、たとえば札幌や那覇では太陽の動きが標準時から数十分ずれます。ツールは都道府県を選ぶだけで、この地方時差まで自動で織り込みます。</p>
+</section>
+
+<section id="g-chart">
+  <h2>5. ネイタルチャートとは — 図に描いてあるもの</h2>
+  <p><b>ネイタルチャート（出生図）</b>とは、あなたが生まれた瞬間の天体の配置を、一枚の円に写し取った図です。「ホロスコープ」の語源はギリシャ語の<b>ホーロスコポス＝「時の見張り番」</b>。名前のとおり、生まれた「瞬間」を写した図です。</p>
+  <p>ツールが描く円には、外側から順にこれだけの情報が入っています。</p>
+  <table><thead><tr><th>場所</th><th>描いてあるもの</th><th>意味</th></tr></thead><tbody>
+    <tr><td>いちばん外側の4層</td><td>星座名 → エレメント → 三区分 → 二区分</td><td>円をひとまわりする12星座と、その属性（6章）</td></tr>
+    <tr><td>目盛りの内側</td><td>天体の記号と度数</td><td>生まれた瞬間、各天体がどの星座の何度にいたか</td></tr>
+    <tr><td>内側の区画</td><td>ハウス（1〜12の番号）と ASC・DSC・MC・IC の軸</td><td>人生の12の場面。時刻がわかるときだけ表示</td></tr>
+    <tr><td>中心部の線</td><td>アスペクト線（上級表示のとき）</td><td>天体同士の角度＝能力と能力の会話</td></tr>
+  </tbody></table>
+  <p>この一枚に、性格も才能も課題も、すべて描き込まれています。ページの下に続く解説はぜんぶ、この円に描かれていることの言葉化です。<b>この図が読めるようになることが、学びのゴール</b>です。</p>
+  <p class="small">🧭 図の左端が東（アセンダント）なのは、ホロスコープが「南を向いて空を見上げた図」だから。詳しくはツールの位置一覧の下に解説があります。</p>
+</section>
+
+<section id="g-kubun">
+  <h2>6. 星座の属性を知って、初めてホロスコープは読める</h2>
+  <p>ここが、この解説書でいちばん伝えたいことです。</p>
+  <p>12星座は、ただ12個並んでいるのではありません。一つひとつが<b>属性の組み合わせ</b>を持っています。</p>
+  <table><thead><tr><th>属性</th><th>分け方</th><th>何がわかるか</th></tr></thead><tbody>
+    <tr><td><b>エレメント（四元素）</b></td><td>火・地・風・水（各3星座）</td><td>どんな<b>気質</b>か——世界をどう感じ、どう動くか</td></tr>
+    <tr><td><b>三区分（クオリティ）</b></td><td>活動宮・不動宮・柔軟宮（各4星座）</td><td>どんな<b>リズム</b>か——始めるのか、貫くのか、合わせるのか</td></tr>
+    <tr><td><b>二区分（極性）</b></td><td>男性宮（陽）・女性宮（陰）（各6星座）</td><td>エネルギーの<b>向き</b>——外へ発するか、内で受けとめるか</td></tr>
+  </tbody></table>
+  <p>4エレメント×3区分＝ちょうど12通り。<b>12星座はすべて異なる組み合わせ</b>を持っていて、だから12星座は一つとして同じ性格をしていないのです。たとえば同じ火でも——火を点ける牡羊座（活動）、燃やし続ける獅子座（不動）、火を遠くへ運ぶ射手座（柔軟）。</p>
+  <h3>一般的なホロスコープの図では、この属性は省略されています</h3>
+  <p>ふつう、ホロスコープの図に描かれるのは星座の記号と天体だけです。エレメントや区分の層は紙面に描かれません。<b>読み手が頭の中で属性を思い出しながら読む</b>のが前提だからです。</p>
+  <p>逆に言えば——<b>星座の属性を知らないまま図を眺めても、ホロスコープは読めません</b>。属性こそが、図を「読める文章」に変える文法なのです。</p>
+  <div class="point">🗝 ツール「はじめてのホロスコープ」のチャートが<b>四層のリング</b>（星座名→エレメント→三区分→二区分）で描かれているのは、この文法を図の上でそのまま見られるようにした学習用の設計です。ツールの四層で属性の感覚を体に入れておけば、いつか他の場所でふつうのホロスコープ図に出会っても、頭の中で四層を重ねて読めるようになります。</div>
+</section>
+
+<section id="g-kigou">
+  <h2>7. 記号を覚える</h2>
+  <p>ホロスコープの図は、星座と天体の<b>記号</b>で書かれています。最初に覚えるのはこの24個だけ。それぞれの記号には由来があるので、「絵」として覚えると忘れません。</p>
+  <h3>12星座の記号</h3>
+  <div class="tbl-scroll">
+  <table><thead><tr><th>記号</th><th>星座</th><th>記号の覚え方</th></tr></thead><tbody>
+    <tr><td class="sym">♈&#xFE0E;</td><td>牡羊座</td><td>羊の顔と、くるんと巻いた二本の角</td></tr>
+    <tr><td class="sym">♉&#xFE0E;</td><td>牡牛座</td><td>牛の顔と角</td></tr>
+    <tr><td class="sym">♊&#xFE0E;</td><td>双子座</td><td>並んで立つ二人（ローマ数字のⅡ）</td></tr>
+    <tr><td class="sym">♋&#xFE0E;</td><td>蟹座</td><td>蟹の甲羅と二本のハサミ（69を横にした形）</td></tr>
+    <tr><td class="sym">♌&#xFE0E;</td><td>獅子座</td><td>獅子のたてがみと、はねた尻尾</td></tr>
+    <tr><td class="sym">♍&#xFE0E;</td><td>乙女座</td><td>Mの字に、閉じた結び（純潔の象徴）</td></tr>
+    <tr><td class="sym">♎&#xFE0E;</td><td>天秤座</td><td>秤の皿。地平線に沈む夕日の形とも</td></tr>
+    <tr><td class="sym">♏&#xFE0E;</td><td>蠍座</td><td>Mの字に、突き出した毒針</td></tr>
+    <tr><td class="sym">♐&#xFE0E;</td><td>射手座</td><td>射手が放った矢</td></tr>
+    <tr><td class="sym">♑&#xFE0E;</td><td>山羊座</td><td>山羊の角と、魚の尾（牧神パンの姿）</td></tr>
+    <tr><td class="sym">♒&#xFE0E;</td><td>水瓶座</td><td>瓶から流れる水の波</td></tr>
+    <tr><td class="sym">♓&#xFE0E;</td><td>魚座</td><td>紐で結ばれた二匹の魚</td></tr>
+  </tbody></table>
+  </div>
+  <h3>天体の記号</h3>
+  <div class="tbl-scroll">
+  <table><thead><tr><th>記号</th><th>天体</th><th>記号の覚え方</th></tr></thead><tbody>
+    <tr><td class="sym">☉&#xFE0E;</td><td>太陽</td><td>円の中心に点——輝く太陽そのもの</td></tr>
+    <tr><td class="sym">☽&#xFE0E;</td><td>月</td><td>三日月の形</td></tr>
+    <tr><td class="sym">☿&#xFE0E;</td><td>水星</td><td>頭に翼（角）のついた杖——伝令神ヘルメス</td></tr>
+    <tr><td class="sym">♀&#xFE0E;</td><td>金星</td><td>女神アフロディテの手鏡</td></tr>
+    <tr><td class="sym">♂&#xFE0E;</td><td>火星</td><td>軍神アレスの盾と槍</td></tr>
+    <tr><td class="sym">♃&#xFE0E;</td><td>木星</td><td>数字の4に見える——ゼウスの雷（いかずち）</td></tr>
+    <tr><td class="sym">♄&#xFE0E;</td><td>土星</td><td>時の神クロノスの鎌</td></tr>
+    <tr><td class="sym">♅&#xFE0E;</td><td>天王星</td><td>発見者ハーシェル（Herschel）の頭文字H</td></tr>
+    <tr><td class="sym">♆&#xFE0E;</td><td>海王星</td><td>海神ポセイドンの三叉の矛</td></tr>
+    <tr><td class="sym">♇&#xFE0E;</td><td>冥王星</td><td>PとLの組み合わせ（Pluto）</td></tr>
+    <tr><td class="sym">☊&#xFE0E;</td><td>ドラゴンヘッド</td><td>竜の頭。ヘッドホンの形と覚えても</td></tr>
+    <tr><td class="sym">☋&#xFE0E;</td><td>ドラゴンテイル</td><td>竜の尾。ヘッドをひっくり返した形</td></tr>
+  </tbody></table>
+  </div>
+  <p class="small">💡 一度に暗記しようとしなくて大丈夫。ツールのチャートには常に記号と名前が併記されているので、自分の図を読み返すうちに自然と覚わります。それでも早く覚えたい方は、ブランクカード（10章）へ。</p>
+</section>
+
+<section id="g-jouhou">
+  <h2>8. 星座と天体、それぞれの情報</h2>
+  <p>読みに使う「意味」の早見表です。ツールの解説はこの意味の組み合わせでできています。</p>
+  <h3>12星座 — 結論（どんなふうに発揮されるか）</h3>
+  <div class="tbl-scroll">
+  <table><thead><tr><th>星座</th><th>期間</th><th>エレメント</th><th>三区分</th><th>二区分</th><th>支配星</th><th>キーワード</th></tr></thead><tbody>
+    <tr><td>♈&#xFE0E; 牡羊座</td><td>3/21〜4/19</td><td class="el-fire">火</td><td>活動</td><td>陽</td><td>火星</td><td>情熱的に・真っ先に動く</td></tr>
+    <tr><td>♉&#xFE0E; 牡牛座</td><td>4/20〜5/20</td><td class="el-earth">地</td><td>不動</td><td>陰</td><td>金星</td><td>安定して・五感を味わう</td></tr>
+    <tr><td>♊&#xFE0E; 双子座</td><td>5/21〜6/21</td><td class="el-air">風</td><td>柔軟</td><td>陽</td><td>水星</td><td>知的に・多方面に広げる</td></tr>
+    <tr><td>♋&#xFE0E; 蟹座</td><td>6/22〜7/22</td><td class="el-water">水</td><td>活動</td><td>陰</td><td>月</td><td>感情豊かに・身内を守る</td></tr>
+    <tr><td>♌&#xFE0E; 獅子座</td><td>7/23〜8/22</td><td class="el-fire">火</td><td>不動</td><td>陽</td><td>太陽</td><td>誇り高く・華やかに</td></tr>
+    <tr><td>♍&#xFE0E; 乙女座</td><td>8/23〜9/22</td><td class="el-earth">地</td><td>柔軟</td><td>陰</td><td>水星</td><td>緻密に・完璧を求めて</td></tr>
+    <tr><td>♎&#xFE0E; 天秤座</td><td>9/23〜10/22</td><td class="el-air">風</td><td>活動</td><td>陽</td><td>金星</td><td>調和的に・バランスを取って</td></tr>
+    <tr><td>♏&#xFE0E; 蠍座</td><td>10/23〜11/21</td><td class="el-water">水</td><td>不動</td><td>陰</td><td>火星・冥王星</td><td>深く・徹底的に</td></tr>
+    <tr><td>♐&#xFE0E; 射手座</td><td>11/22〜12/21</td><td class="el-fire">火</td><td>柔軟</td><td>陽</td><td>木星</td><td>自由に・遠くを目指して</td></tr>
+    <tr><td>♑&#xFE0E; 山羊座</td><td>12/22〜1/19</td><td class="el-earth">地</td><td>活動</td><td>陰</td><td>土星</td><td>現実的に・着実に登る</td></tr>
+    <tr><td>♒&#xFE0E; 水瓶座</td><td>1/20〜2/18</td><td class="el-air">風</td><td>不動</td><td>陽</td><td>土星・天王星</td><td>革新的に・型を破って</td></tr>
+    <tr><td>♓&#xFE0E; 魚座</td><td>2/19〜3/20</td><td class="el-water">水</td><td>柔軟</td><td>陰</td><td>木星・海王星</td><td>感性的に・境界を溶かして</td></tr>
+  </tbody></table>
+  </div>
+  <p class="small">💡 「期間」は太陽がその星座にいる時期＝いわゆる誕生星座です。ほかの天体は、それぞれ別のペースで12星座をめぐっています。</p>
+  <h3>天体 — 能力（どんなエネルギーか）</h3>
+  <div class="tbl-scroll">
+  <table><thead><tr><th>天体</th><th>能力の意味</th><th>星座をひとつ進む速さ</th><th>性格への効き方</th></tr></thead><tbody>
+    <tr><td>☉&#xFE0E; 太陽</td><td>自我・意志・生命力。「何者であるか」の核心</td><td>約1ヶ月</td><td rowspan="7" style="vertical-align:middle"><b>個人天体</b><br>あなた個人の性格を語る</td></tr>
+    <tr><td>☽&#xFE0E; 月</td><td>感情・本能・無意識のニーズ</td><td>約2.5日（最速）</td></tr>
+    <tr><td>☿&#xFE0E; 水星</td><td>知性・言語・コミュニケーション</td><td>約3週間〜2ヶ月</td></tr>
+    <tr><td>♀&#xFE0E; 金星</td><td>愛・美・価値観・調和</td><td>約1ヶ月</td></tr>
+    <tr><td>♂&#xFE0E; 火星</td><td>行動力・情熱・闘争心</td><td>約2ヶ月</td></tr>
+    <tr><td>♃&#xFE0E; 木星</td><td>拡大・幸運・寛容・伸びる力</td><td>約1年</td></tr>
+    <tr><td>♄&#xFE0E; 土星</td><td>制限・忍耐・試練・責任</td><td>約2.5年</td></tr>
+    <tr><td>♅&#xFE0E; 天王星</td><td>革新・独立・突発的な変化</td><td>約7年</td><td rowspan="3" style="vertical-align:middle"><b>世代天体</b><br>同世代で共通。時代のテーマ</td></tr>
+    <tr><td>♆&#xFE0E; 海王星</td><td>幻想・霊性・インスピレーション</td><td>約14年</td></tr>
+    <tr><td>♇&#xFE0E; 冥王星</td><td>変容・死と再生・深層の力</td><td>約12〜30年</td></tr>
+    <tr><td>☊&#xFE0E; ドラゴンヘッド</td><td>未来へ進む道・これから獲得するパターン</td><td>約1年半（逆向き）</td><td rowspan="2" style="vertical-align:middle">天体ではなく計算上の点</td></tr>
+    <tr><td>☋&#xFE0E; ドラゴンテイル</td><td>過去に積み上げてきた性質</td><td>ヘッドの正反対</td></tr>
+  </tbody></table>
+  </div>
+  <p>覚え方のコツはひとつだけ——<b>速い天体ほど、あなた個人の個性を強く語る</b>。月は2.5日で星座を移るので隣の席の人とも違いますが、海王星は14年動かないので同世代はみな同じです。ツールの「読む順番ナビ」が個人的な天体から順に並んでいるのは、この理屈です。</p>
+  <p class="small">🏛 天体の名前はギリシャ・ローマ神話の神々に由来します。それぞれの神様の物語は、ツールの各カードの「プロフィールを見る」に書いてあります——神話ごと覚えると、意味は忘れなくなります。</p>
+</section>
+
+<section id="g-element">
+  <h2>9. エレメントを知る</h2>
+  <p>星座の属性（6章）の中でも、いちばん大切なのがエレメントです。古代ギリシャの哲学者エンペドクレスの<b>「万物は火・地・風・水の四つの元素からなる」</b>という思想を、占星術が取り入れたものです。</p>
+  <table><thead><tr><th>エレメント</th><th>星座</th><th>気質</th></tr></thead><tbody>
+    <tr><td class="el-fire">火</td><td>牡羊座・獅子座・射手座</td><td>情熱・直感・行動力・開拓精神。外に向かって燃え広がるエネルギー</td></tr>
+    <tr><td class="el-earth">地</td><td>牡牛座・乙女座・山羊座</td><td>安定・現実・忍耐・物質。大地のように揺るがない実直さ</td></tr>
+    <tr><td class="el-air">風</td><td>双子座・天秤座・水瓶座</td><td>知性・コミュニケーション・交流・革新。自由に動き回る思考</td></tr>
+    <tr><td class="el-water">水</td><td>蟹座・蠍座・魚座</td><td>感情・直感・共感・霊性。目に見えないものを感じ取る深い内面</td></tr>
+  </tbody></table>
+  <p>エレメントは「その人がどのように世界を感じ、動くか」という<b>根本の気質</b>を示します。ツールの「まず、全体をながめる」で最初にエレメントの偏りを数えるのは、それが人物像の土台になるからです。多いエレメントはその人の主成分、ゼロのエレメントは盲点になりやすい領域です。</p>
+  <h3>エレメント × 三区分 ＝ 12星座</h3>
+  <p>同じエレメントの3星座は、三区分（リズム）で役割が分かれます。火を例にすると——</p>
+  <blockquote>火を<b>点ける</b>のが牡羊座（活動宮）、火を<b>燃やし続ける</b>のが獅子座（不動宮）、火を<b>遠くへ運ぶ</b>のが射手座（柔軟宮）。</blockquote>
+  <p>この「element（何の気質か）× quality（どんなリズムか）」の掛け算で、12星座の個性はすべて説明できます。丸暗記ではなく、掛け算で導けるようになるのが理想です。</p>
+  <p class="small">🃏 ちなみにタロットの四つのスート（ワンド＝火・ペンタクル＝地・ソード＝風・カップ＝水）も同じ四元素に対応しています。エレメントは西洋占術ぜんたいを貫く共通の土台——ここで覚えたことは、タロットを学ぶときもそのまま使えます。</p>
+</section>
+
+<section id="g-manabi">
+  <h2>10. 学びの進め方</h2>
+  <h3>習熟度の目安</h3>
+  <table><thead><tr><th>レベル</th><th>できること</th><th>ツールの表示レベル</th></tr></thead><tbody>
+    <tr><td><b>初級</b></td><td>太陽・月・アセンダントの意味がわかる。記号とエレメントを覚えた</td><td>初級表示</td></tr>
+    <tr><td><b>中級</b></td><td>「この場面で、この能力が、こうやって発揮される」の方式で全天体が読める</td><td>中級表示</td></tr>
+    <tr><td><b>上級</b></td><td>アスペクト（天体同士の角度）を統合して、一枚をストーリーとして語れる</td><td>上級表示</td></tr>
+  </tbody></table>
+  <h3>トレーニングの方法</h3>
+  <ol class="step-list">
+    <li><b>自分の図を、繰り返し読む</b> — ツールの解説を音読するだけでも練習になります。「当たってる」「ここは違うかも」という手応えが、いちばんの教材です。</li>
+    <li><b>家族や友人の図を作る</b> — よく知っている人の図は、答え合わせができます。「あの人の月が蟹座——なるほど」という納得が、意味を記憶に焼き付けます。</li>
+    <li><b>ブランクカードで組み合わせ練習</b> — 100均のカードに「ハウス」「天体」「星座」を書き写し、1枚ずつ引いて「どの場面で・どの能力が・どんなふうに発揮されるか」を声に出して読みます。<b>アストロダイス</b>（ハウス・天体・星座の12面ダイス）を使っても構いません。</li>
+    <li><b>とにかく数をこなす</b> — 200回くらいで実践レベル、可能なら500回。占いは知識ではなく、手が覚える技術です。</li>
+  </ol>
+  <div class="point">🗝 学びの合言葉をもう一度——<b>まず自分の一枚</b>。理論はこの解説書に置いてあります。迷ったら、いつでもここへ戻ってきてください。</div>
+  <div class="tool-link"><a class="tool-btn" href="index.html">🔭 ツールを開いて、自分の一枚を作る</a></div>
+</section>
+
+</main>
+<footer class="site">
+  はじめてのホロスコープ・解説書 — カヒノト式・占星術学習ツール姉妹編<br>
+  © 2026 カヒノト — 本書の著作権は占い師カヒノトに帰属します。無断転載・再配布はご遠慮ください。<br>
+  ご質問はXへ：<a href="https://x.com/yajul" target="_blank" rel="noopener">@yajul</a>
+</footer>
+</body>
+</html>
