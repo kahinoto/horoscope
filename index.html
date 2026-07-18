@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>はじめてのホロスコープv2.2 — 読み方ナビつき出生図ツール</title>
+<title>はじめてのホロスコープv2.3 — 読み方ナビつき出生図ツール</title>
 <style>
 :root{
   --ink:#3a352f; --sub:#6b6357; --paper:#faf9f5; --card:#ffffff;
@@ -24,6 +24,8 @@ p{margin:.5em 0}
 a{color:var(--water)}
 section{margin:38px 0}
 .small{font-size:.85em;color:var(--sub)}
+.tar-el{background:#fdf6e0} .tar-pl{background:#edf2f8}
+.tar-chip{padding:1px 8px;border-radius:4px;border:1px solid var(--line)}
 header.site{background:linear-gradient(160deg,#2e3450,#4a3f63 60%,#6b5544);color:#f5f1e8;
   padding:44px 16px 36px;text-align:center;margin-bottom:34px}
 header.site .stars{font-size:1.5em;letter-spacing:.35em;opacity:.85}
@@ -178,7 +180,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 <body>
 <header class="site">
   <div class="stars">☽ ✶ ☉ ✶ ☊</div>
-  <h1>はじめてのホロスコープ <span class="ver">v2.2</span></h1>
+  <h1>はじめてのホロスコープ <span class="ver">v2.3</span></h1>
   <p>生年月日と生まれた場所から、あなたの出生図（ネイタルチャート）を作り、<br>「読む順番」つきでやさしく解説するカヒノト式学習ツールです。<br>v2から、アスペクト（天体同士の角度）を正式に読めるようになりました。</p>
 </header>
 <main>
@@ -1890,6 +1892,43 @@ if (typeof module !== 'undefined' && module.exports) {
   </details>
 
   <details>
+    <summary>タロットとの関係——大アルカナ22枚は「星座12＋天体7＋エレメント3」</summary>
+    <p>タロットと占星術は、近代の西洋では一つの照応体系に組み上げられました。ここに載せるのは、「黄金の夜明け団」の標準的な照応で、現在もっとも広く使われているウェイト版タロットの土台になっている体系です。</p>
+    <p>大アルカナ22枚は、三つの群に分かれます——星座に対応する12枚、七つの古典天体に対応する7枚、エレメントに対応する3枚。12＋7＋3＝22。なぜエレメントの札だけ3枚しかないのかについては、表のあとで解説します。</p>
+    <p class="small">表の色分け：<span class="tar-el tar-chip">エレメントの札（3枚）</span>　<span class="tar-pl tar-chip">天体の札（7枚）</span>　星座の札（12枚）は無色です</p>
+    <table><thead><tr><th>番号</th><th>大アルカナ</th><th>照応</th><th>エレメント</th></tr></thead><tbody>
+      <tr class="tar-el"><td>0</td><td>愚者</td><td><b>風</b>（エレメント）＋天王星 ♅&#xFE0E;</td><td>風</td></tr>
+      <tr class="tar-pl"><td>1</td><td>魔術師</td><td>水星 ☿&#xFE0E;</td><td>—</td></tr>
+      <tr class="tar-pl"><td>2</td><td>女教皇</td><td>月 ☽&#xFE0E;</td><td>—</td></tr>
+      <tr class="tar-pl"><td>3</td><td>女帝</td><td>金星 ♀&#xFE0E;</td><td>—</td></tr>
+      <tr><td>4</td><td>皇帝</td><td>牡羊座 ♈&#xFE0E;</td><td>火</td></tr>
+      <tr><td>5</td><td>教皇</td><td>牡牛座 ♉&#xFE0E;</td><td>地</td></tr>
+      <tr><td>6</td><td>恋人</td><td>双子座 ♊&#xFE0E;</td><td>風</td></tr>
+      <tr><td>7</td><td>戦車</td><td>蟹座 ♋&#xFE0E;</td><td>水</td></tr>
+      <tr><td>8</td><td>力</td><td>獅子座 ♌&#xFE0E;</td><td>火</td></tr>
+      <tr><td>9</td><td>隠者</td><td>乙女座 ♍&#xFE0E;</td><td>地</td></tr>
+      <tr class="tar-pl"><td>10</td><td>運命の輪</td><td>木星 ♃&#xFE0E;</td><td>—</td></tr>
+      <tr><td>11</td><td>正義</td><td>天秤座 ♎&#xFE0E;</td><td>風</td></tr>
+      <tr class="tar-el"><td>12</td><td>吊るされた男</td><td><b>水</b>（エレメント）＋海王星 ♆&#xFE0E;</td><td>水</td></tr>
+      <tr><td>13</td><td>死神</td><td>蠍座 ♏&#xFE0E;</td><td>水</td></tr>
+      <tr><td>14</td><td>節制</td><td>射手座 ♐&#xFE0E;</td><td>火</td></tr>
+      <tr><td>15</td><td>悪魔</td><td>山羊座 ♑&#xFE0E;</td><td>地</td></tr>
+      <tr class="tar-pl"><td>16</td><td>塔</td><td>火星 ♂&#xFE0E;</td><td>—</td></tr>
+      <tr><td>17</td><td>星</td><td>水瓶座 ♒&#xFE0E;</td><td>風</td></tr>
+      <tr><td>18</td><td>月</td><td>魚座 ♓&#xFE0E;</td><td>水</td></tr>
+      <tr class="tar-pl"><td>19</td><td>太陽</td><td>太陽 ☉&#xFE0E;</td><td>—</td></tr>
+      <tr class="tar-el"><td>20</td><td>審判</td><td><b>火</b>（エレメント）＋冥王星 ♇&#xFE0E;</td><td>火</td></tr>
+      <tr class="tar-pl"><td>21</td><td>世界</td><td>土星 ♄&#xFE0E;</td><td>（地）</td></tr>
+    </tbody></table>
+    <p>星座に対応する12枚は、星座のエレメントをそのまま受け継ぎます（右列）。皇帝の推進力は牡羊座の火、隠者の内省は乙女座の地、死神の変容は蠍座の水。カードの意味と星座の意味が、互いの解説になっていることが分かります。</p>
+    <p>なぜ「星座12・天体7・エレメント3」なのかは、タロットのカードの数と同じ22という数にあります。ヘブライ文字は全部で22字。カバラの古典『形成の書（セフェル・イェツィラー）』は、この22字を<b>三つの母字</b>（すべての音の母体となる特別な3字：アレフ＝風・メム＝水・シン＝火）、<b>七つの複字</b>（2通りの読みを持つ7字＝七つの古典天体）、<b>十二の単字</b>（残りの12字＝12星座）に分類しました。大アルカナ22枚はこの22文字に一枚ずつ対応しており、三つの群の正体は、実はこの文字の分類そのものなのです。エレメントの3枚——愚者（風）・吊るされた男（水）・審判（火）——は、三つの母字に対応する別格の札ということになります。そして近代の占星術では、この3枚にちょうど<b>三つの現代天体</b>が重ねられました——愚者＝天王星、吊るされた男＝海王星、審判＝冥王星。つまりこの表は「星座12＋古典天体7＋現代天体3」とも読めるのです。</p>
+    <p><b>エレメントの札には、地だけがありません。</b> 三つの母字は風・水・火のみで、地は「三つのエレメントが結実したもの」と考えられたからです。世界（土星）が地を兼ねるとされ、「完成し、大地に降り立つ」という世界のカードの意味とも響き合っています。</p>
+    <p><b>タロットカードの番号について</b>：この表は力＝8・正義＝11とするウェイト版の番号です。マルセイユ版では力＝11・正義＝8と逆になります。マルセイユ版の番号を支える有名な理屈が一つあります。魔術師（1）と力（11）の帽子のつばは<b>∞（レムニスケート・無限の印）</b>の形に描かれ、世界（21）の花環を結ぶリボンもまた∞の形。つまり1・11・21、「各位の一」の三枚だけがレムニスケートの印を持つのです。ウェイト版は力を8番に移しましたが、力の頭上には今も∞が描かれています。この三枚はタロットカードの中でも特に強力なカードです。</p>
+    <p>小アルカナのほうは、すでにご存じの対応です——<b>ワンド＝火・カップ＝水・ソード＝風・ペンタクル＝地</b>。さらに数札の一枚一枚を「デカン」（星座を10度ずつ三つに分けた区画）に割り当てる体系もありますが、そこから先は専門書の領域です。</p>
+    <p class="small">💡 なお、「天体そのもののエレメント」を載せた解説も見かけますが、これは複数の異なる理屈（古典的には天体が持つのは元素ではなく<b>熱・冷・乾・湿の性質</b>です）が混ざったもので、出典により食い違います。本ページでは、エレメントは星座の属性としてのみ扱っています。</p>
+  </details>
+
+  <details>
     <summary>習熟度の目安——どこまで登れば「占星術師」か</summary>
     <table><thead><tr><th>レベル</th><th>習得の目安</th><th>内容</th></tr></thead><tbody>
       <tr><td><b>初級</b></td><td>10天体・12星座・エレメントを覚えた</td><td>太陽星座・月星座・アセンダントの意味がわかる。ホロスコープが円形で何を表しているかを説明できる</td></tr>
@@ -1963,7 +2002,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 </main>
 <footer class="site">
-  はじめてのホロスコープv2.2 — カヒノト式・占星術学習ツール<br>
+  はじめてのホロスコープv2.3 — カヒノト式・占星術学習ツール<br>
   © 2026 カヒノト — 本ツールの著作権は占い師カヒノトに帰属します。無断転載・再配布はご遠慮ください。<br>
   ご質問はXへ：<a href="https://x.com/yajul" target="_blank" rel="noopener">@yajul</a> ｜ 計算エンジン: Astronomy Engine (MIT License)
 </footer>
