@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>はじめてのホロスコープv2.3 — 読み方ナビつき出生図ツール</title>
+<title>はじめてのホロスコープv2.4 — 読み方ナビつき出生図ツール</title>
 <style>
 :root{
   --ink:#3a352f; --sub:#6b6357; --paper:#faf9f5; --card:#ffffff;
@@ -160,6 +160,17 @@ details.more summary{cursor:pointer;color:var(--water);font-size:.92em;font-weig
 #result.lv2 #sec-aspects{display:none}
 #result.lv1 .asp-lines,#result.lv2 .asp-lines,#result.lv1 .asp-note,#result.lv2 .asp-note{display:none}
 #result.lv2 .nav-asp{display:none}
+/* シンプル表示（lv4）＝解説なし・チャートとデータのみ */
+.lv4-note{display:none;background:#f3f0ea;border:1.5px solid #cfc7b8;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.94em}
+#result.lv4 .lv4-note{display:block}
+#result.lv4 #sec-summary,#result.lv4 #sec-nav,#result.lv4 #sec-cards{display:none}
+#result.lv4 .lv4-hide,#result.lv4 #sec-chart>p,#result.lv4 #sec-chart .legend2,
+#result.lv4 #sec-balance>p,#result.lv4 #sec-aspects>p,#result.lv4 #sec-aspects>.lead-box,
+#result.lv4 #sec-table-body p.small,#result.lv4 #sec-balance-body>p,
+#result.lv4 .bal-guide,#result.lv4 .bal-extra,#result.lv4 .asp-detail{display:none}
+.lv4-only{display:none}
+#result.lv4 .lv4-only{display:block}
+body.simple-view #sec-dict,body.simple-view #sec-theory,body.simple-view #sec-trivia{display:none}
 /* 戻るボタン */
 #backtop{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border:none;border-radius:24px;
   padding:10px 18px;font-size:.9em;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.3);z-index:9}
@@ -179,7 +190,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 <body>
 <header class="site">
   <div class="stars">☽ ✶ ☉ ✶ ☊</div>
-  <h1>はじめてのホロスコープ <span class="ver">v2.3</span></h1>
+  <h1>はじめてのホロスコープ <span class="ver">v2.4</span></h1>
   <p>生年月日と生まれた場所から、あなたの出生図（ネイタルチャート）を作り、<br>「読む順番」つきでやさしく解説するカヒノト式学習ツールです。<br>v2から、アスペクト（天体同士の角度）を正式に読めるようになりました。</p>
 </header>
 <main>
@@ -222,6 +233,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
   <label><input type="radio" name="lv" value="1" checked> <b>初級</b>：3つの重要な要素だけ（太陽・月・アセンダント）——まずはここから</label>
   <label><input type="radio" name="lv" value="2"> <b>中級</b>：アスペクト以外のすべて（全体のバランス＋天体の要素を順に読む）</label>
   <label><input type="radio" name="lv" value="3"> <b>上級</b>：アスペクトを含む全部——ここが読めれば占星術師</label>
+  <label><input type="radio" name="lv" value="4"> <b>シンプル</b>：解説なし・チャートとデータのみ（慣れた方向け）</label>
   <p class="small">💡 隠れている内容が消えるわけではありません。一段読み終えるごとに、レベルを一つ上げてみてください。</p>
 </div>
 
@@ -232,11 +244,12 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 
 <section id="sec-chart">
   <h2>ネイタルチャート（出生図）</h2>
+  <div class="lv4-note">🗒 <b>シンプル表示中</b> — 解説を省き、チャートとデータのみを表示しています。読み方の解説つきで見たいときは、上の表示レベルを初級〜上級に切り替えてください。</div>
   <p><b>ホロスコープは、この一枚の図がすべてです。</b>この図から得られる情報を整理して読み解いていくのが占星術——このページの下に続く解説もぜんぶ、この円の中にすでに描かれていることの言語化にすぎません。この図が読めるようになれば、全部わかるのです。そして、このホロスコープの図を見てそれぞれの要素を的確に理解し、読み、語ることができる人のことを<b>「占星術師」</b>と呼びます。</p>
   <p class="small">🏛 <b>「ホロスコープ」という言葉の由来</b> — ギリシャ語の<b>ホーロスコポス（hōroskopos）</b>＝「ホーラ（時間）を見るもの・時の見張り番」。それがラテン語の horoscopus を経て、英語の horoscope になりました。名前に「時間」が入っているとおり、生まれた<b>瞬間</b>を写し取るのがこの図です。ちなみに英語の hour（時間）も、同じホーラを先祖に持つ言葉です。</p>
   <p>円の外側から <b>星座名 → エレメント（火地風水） → 三区分（活動・不動・柔軟） → 二区分（男・女）</b> の四層として表示しています。</p>
   <div id="chart-holder"></div>
-  <h3>図の中の記号（天体とその能力）</h3>
+  <h3 class="lv4-hide">図の中の記号（天体とその能力）</h3>
   <div class="legend2">
     <span><b>☉︎ 太陽</b> — 自我・意志・生命力</span>
     <span><b>☽︎ 月</b> — 感情・本能・無意識のニーズ</span>
@@ -253,6 +266,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
   </div>
   <h3>天体の位置一覧</h3>
   <div id="sec-table-body"></div>
+  <div id="cusp-holder" class="lv4-only"></div>
 </section>
 
 <section id="sec-balance">
@@ -1359,9 +1373,10 @@ function aspectSection(chart) {
   let html = '';
   if (tu) html += `<div class="warn">⚠ <b>時刻不明モードです。</b>月は1日に約12〜13度動くため、正午で計算した月のアスペクトには±6〜7度の誤差がありえます。月がらみのアスペクトは「参考」に留めてください（月以外の天体同士は時刻の影響がごく小さいので、そのまま読めます）。</div>`;
   html += `<h3>あなたのアスペクト表（アスペクトグリッド）</h3>
-  <p>調べたい二つの天体それぞれの段から、縦と横にマスをたどって<b>交わるマス</b>を見ます。記号が入っていればその二天体はアスペクトを結んでおり、記号の下の小さな数字がオーブ（ずれの度数・小さいほど強い）です。空欄はメジャーアスペクトなし。この階段状の表（アスペクトグリッド）は、プロの現場でも標準の道具です。</p>`;
+  <p class="lv4-hide">調べたい二つの天体それぞれの段から、縦と横にマスをたどって<b>交わるマス</b>を見ます。記号が入っていればその二天体はアスペクトを結んでおり、記号の下の小さな数字がオーブ（ずれの度数・小さいほど強い）です。空欄はメジャーアスペクトなし。この階段状の表（アスペクトグリッド）は、プロの現場でも標準の道具です。</p>`;
   html += aspectGrid(chart);
   if (!list.length) return html + `<p>メジャーアスペクトは一つも見つかりませんでした（かなり珍しいチャートです）。それぞれの天体が独立して働く人と読みます。</p>`;
+  html += `<div class="asp-detail">`; // 解説カード群＝シンプル表示では隠す（グリッドのみ残す）
   html += configCards(chart);
   const personal = list.filter(a => !a.p1.gen && !a.p2.gen).sort((x,y) => x.orb - y.orb);
   const mixed = list.filter(a => a.p1.gen !== a.p2.gen).sort((x,y) => x.orb - y.orb);
@@ -1382,6 +1397,7 @@ function aspectSection(chart) {
     html += `</p>`;
   }
   html += `<p class="small">💡 このページのアスペクトは10天体同士のみを扱っています。ドラゴンヘッドやASC・MCへのアスペクトを読む流儀もありますが、それはこの先の学びに取っておきましょう。</p>`;
+  html += `</div>`; // /asp-detail
   return html;
 }
 
@@ -1484,6 +1500,8 @@ function balanceSection(chart) {
     : mCount <= 3 ? '女性宮が優勢。エネルギーが内へ向かい、受けとめ、感じ取り、育てるタイプです。'
     : `陽と陰のバランス型。外に向かう力と内に向かう力を場面によって使い分けられます。迷ったら太陽（${sunPol}）と月（${moonPol}）のいる側を重く見ましょう。` }</p>`;
 
+  html += `<div class="bal-extra">`; // ここから先（ステリウム・太陽と月の距離・上下左右）はシンプル表示では隠す
+
   // ステリウム
   const stelSign = Object.entries(bySign).filter(e=>e[1]>=3);
   const stelHouse = Object.entries(byHouse).filter(e=>e[1]>=3);
@@ -1533,6 +1551,7 @@ function balanceSection(chart) {
       : `左右もほぼ半々。自力と縁の両方を使える配置です。`;
     html += `</p>`;
   }
+  html += `</div>`; // /bal-extra
   return html;
 }
 
@@ -1562,6 +1581,18 @@ function positionsTable(chart) {
   <p class="small">📐 <b>「〇〇座20度40分」の見方</b> — ホロスコープの円はぐるりと360度。その出発点（0度の基準）は<b>春分点＝牡羊座の始まり</b>で、そこから12星座が30度ずつを受け持ちます。表の度数は「<b>その星座に入ってから何度進んだか</b>」（0〜29度）を表し、「分」は1度をさらに60等分した細かい目盛りです。たとえば「天秤座20度40分」なら、天秤座の入口から3分の2ほど進んだあたり、ということ。0度に近ければ星座に入りたて、29度なら次の星座への引っ越し間際です。</p>
   <p class="small">R＝逆行中（地球から見て天体が逆戻りして見える状態。エネルギーが内向き・見直しの方向に働くとされますが、初学者はまず気にしなくて大丈夫です）。</p>
   ${anyDomicile ? `<p class="small">👑＝その天体が<b>自分の支配する星座</b>にいる印（ドミサイル・本来の座）。王が自分の城にいるような状態で、その天体の力が最も素直に、力強く出る格の高い配置です。</p>` : ''}`;
+}
+
+function cuspTable(chart) {
+  const cu = chart.houses.cusps;
+  let rows = '';
+  for (let h = 1; h <= 12; h++) {
+    const si = signIdx(cu[h]);
+    rows += `<tr><td>第${h}ハウス</td><td>${signChip(si)}</td><td>${degStr(cu[h])}</td></tr>`;
+  }
+  return `<h3>ハウス・カスプ表</h3>
+  <table class="pos-table"><thead><tr><th>ハウス</th><th>カスプの星座</th><th>度数</th></tr></thead><tbody>${rows}</tbody></table>
+  <p class="small">カスプ＝各ハウスの起点。ハウス分割はプラシーダス方式です。第1ハウスのカスプ＝アセンダント、第10ハウスのカスプ＝MC。</p>`;
 }
 
 function summarySection(chart) {
@@ -1615,8 +1646,10 @@ function currentLevel() {
 }
 function setLevel(lv) {
   const r = document.getElementById('result');
-  r.classList.remove('lv1', 'lv2', 'lv3');
+  r.classList.remove('lv1', 'lv2', 'lv3', 'lv4');
   r.classList.add('lv' + lv);
+  // シンプル表示ではページ下部の解説セクション（ミニ辞典・専門理論・雑学）も隠す
+  document.body.classList.toggle('simple-view', +lv === 4);
 }
 // 「次のレベルを表示する」ボタン：ラジオも同期させ、新しく開いた章の入り口へ誘導する
 function levelUp(lv) {
@@ -1637,6 +1670,7 @@ function renderChart(chart) {
   }
   document.getElementById('chart-holder').innerHTML = chartHtml;
   document.getElementById('sec-table-body').innerHTML = positionsTable(chart);
+  document.getElementById('cusp-holder').innerHTML = (!chart.timeUnknown && chart.houses) ? cuspTable(chart) : '';
   document.getElementById('sec-nav-body').innerHTML = navSection(chart);
 
   const cards = [];
@@ -1698,10 +1732,10 @@ function initForm() {
     renderChart(chart);
     document.getElementById('result').scrollIntoView({behavior:'smooth'});
   });
-  // URLパラメータで自動生成（例: ?y=1982&mo=10&d=14&h=12&mi=0&p=0 / &tu=1で時刻不明 / &lv=1〜3で表示レベル）
+  // URLパラメータで自動生成（例: ?y=1982&mo=10&d=14&h=12&mi=0&p=0 / &tu=1で時刻不明 / &lv=1〜4で表示レベル・4＝シンプル）
   const q = new URLSearchParams(location.search);
   if (q.has('lv')) {
-    const lv = Math.min(3, Math.max(1, +q.get('lv') || 1));
+    const lv = Math.min(4, Math.max(1, +q.get('lv') || 1));
     const el = document.querySelector(`input[name="lv"][value="${lv}"]`);
     if (el) el.checked = true;
   }
@@ -1717,7 +1751,7 @@ if (typeof document !== 'undefined') {
   window.addEventListener('DOMContentLoaded', initForm);
 }
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { computeChart, buildChartSVG, SIGNS, signIdx, degStr, positionsTable:null };
+  module.exports = { computeChart, buildChartSVG, SIGNS, signIdx, degStr, cuspTable, balanceSection, aspectSection, positionsTable:null };
 }
 </script>
 <section id="sec-dict" class="dict">
@@ -1997,11 +2031,11 @@ if (typeof module !== 'undefined' && module.exports) {
   </div>
 </section>
 
-<button id="backtop" hidden onclick="document.getElementById(document.getElementById('result').classList.contains('lv1')?'sec-cards':'sec-nav').scrollIntoView({behavior:'smooth'})">▲ 読む順番ナビへ</button>
+<button id="backtop" hidden onclick="var r=document.getElementById('result');document.getElementById(r.classList.contains('lv4')?'sec-chart':r.classList.contains('lv1')?'sec-cards':'sec-nav').scrollIntoView({behavior:'smooth'})">▲ 読む順番ナビへ</button>
 
 </main>
 <footer class="site">
-  はじめてのホロスコープv2.3 — カヒノト式・占星術学習ツール<br>
+  はじめてのホロスコープv2.4 — カヒノト式・占星術学習ツール<br>
   © 2026 カヒノト — 本ツールの著作権は占い師カヒノトに帰属します。無断転載・再配布はご遠慮ください。<br>
   アクセス数の計測にGoatCounterを使用しています（入力内容・個人情報は送信されません）。<br>
   ご質問はXへ：<a href="https://x.com/yajul" target="_blank" rel="noopener">@yajul</a> ｜ 計算エンジン: Astronomy Engine (MIT License)
