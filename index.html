@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>はじめてのホロスコープv2.4 — 読み方ナビつき出生図ツール</title>
+<title>はじめてのホロスコープv2.5 — 読み方ナビつき出生図ツール</title>
 <meta name="theme-color" content="#faf9f5">
 <!-- アイコン：火地風水の四色が十二宮を巡る意匠。極小用は四分割に簡略化しデータURIで内蔵＝ファイル単体でも表示される -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23faf9f5'/%3E%3Cpath d='M256 256 L256 86 A170 170 0 0 1 426 256 Z' fill='%23c1502e'/%3E%3Cpath d='M256 256 L426 256 A170 170 0 0 1 256 426 Z' fill='%235e7a2f'/%3E%3Cpath d='M256 256 L256 426 A170 170 0 0 1 86 256 Z' fill='%23a07d1c'/%3E%3Cpath d='M256 256 L86 256 A170 170 0 0 1 256 86 Z' fill='%232f6ea5'/%3E%3Ccircle cx='256' cy='256' r='96' fill='%23faf9f5' stroke='%23b08d3e' stroke-width='14'/%3E%3C/svg%3E">
@@ -174,7 +174,19 @@ details.more summary{cursor:pointer;color:var(--water);font-size:.92em;font-weig
 #result.lv1 #card-jupiter,#result.lv1 #card-saturn,#result.lv1 #card-node,#result.lv1 #card-gen{display:none}
 #result.lv2 #sec-aspects{display:none}
 #result.lv1 .asp-lines,#result.lv2 .asp-lines,#result.lv1 .asp-note,#result.lv2 .asp-note{display:none}
-#result.lv2 .nav-asp{display:none}
+#result.lv2 .nav-asp,#result.lv2 .nav-dec{display:none}
+/* デカン・72天使・72魔神（v2.5）＝上級でのみ表示する */
+#result.lv1 #sec-decan,#result.lv2 #sec-decan,#result.lv4 #sec-decan{display:none}
+.dec-sub{font-size:.82em;color:var(--sub);font-weight:normal}
+.dec-deg{display:block;font-size:.86em;color:var(--sub);margin-top:2px}
+.dec-table td{vertical-align:middle;line-height:1.45}
+.dec-full{font-size:.86em}
+.dec-full td,.dec-full th{padding:5px 8px;line-height:1.35}
+.dec-scroll{overflow-x:auto;max-height:520px;overflow-y:auto;border:1px solid var(--line);border-radius:8px;margin:10px 0}
+.guard-box{background:linear-gradient(135deg,#fdf8ec,#f6f1e4);border:1.5px solid var(--gold);border-radius:12px;padding:16px 20px;margin:0 0 18px}
+.guard-label{font-size:.86em;color:var(--sub);letter-spacing:.08em}
+.guard-name{font-size:1.5em;font-weight:bold;color:var(--accent);margin:4px 0 8px}
+.guard-lat{font-size:.6em;color:var(--sub);font-weight:normal;letter-spacing:.04em}
 /* シンプル表示（lv4）＝解説なし・チャートとデータのみ */
 .lv4-note{display:none;background:#f3f0ea;border:1.5px solid #cfc7b8;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.94em}
 #result.lv4 .lv4-note{display:block}
@@ -205,7 +217,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 <body>
 <header class="site">
   <div class="stars">☽ ✶ ☉ ✶ ☊</div>
-  <h1>はじめてのホロスコープ <span class="ver">v2.4</span></h1>
+  <h1>はじめてのホロスコープ <span class="ver">v2.5</span></h1>
   <p>生年月日と生まれた場所から、あなたの出生図（ネイタルチャート）を作り、<br>「読む順番」つきでやさしく解説するカヒノト式学習ツールです。<br>v2から、アスペクト（天体同士の角度）を正式に読めるようになりました。</p>
 </header>
 <main>
@@ -247,7 +259,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
   <div class="lv-title">📚 表示レベル — どこまで読むかを選べます（いつでも切り替え可能）</div>
   <label><input type="radio" name="lv" value="1" checked> <b>初級</b>：3つの重要な要素だけ（太陽・月・アセンダント）——まずはここから</label>
   <label><input type="radio" name="lv" value="2"> <b>中級</b>：アスペクト以外のすべて（全体のバランス＋天体の要素を順に読む）</label>
-  <label><input type="radio" name="lv" value="3"> <b>上級</b>：アスペクトを含む全部——ここが読めれば占星術師</label>
+  <label><input type="radio" name="lv" value="3"> <b>上級</b>：アスペクトとデカンの照応を含む全部——ここが読めれば占星術師</label>
   <label><input type="radio" name="lv" value="4"> <b>シンプル</b>：解説なし・チャートとデータのみ（慣れた方向け）</label>
   <p class="small">💡 隠れている内容が消えるわけではありません。一段読み終えるごとに、レベルを一つ上げてみてください。</p>
 </div>
@@ -309,7 +321,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 
 <section id="sec-aspects">
   <h2>アスペクト — 天体同士の対話</h2>
-  <div class="lv3-note">🔶 <b>上級表示中</b> — すべての内容を表示しています。ここまでの読みにこの章＝アスペクトが加わるのが上級。チャートの中心部にもアスペクトの線が現れています。ここが読めれば、習熟度の目安でいう<b>「占星術師」</b>の入り口です。</div>
+  <div class="lv3-note">🔶 <b>上級表示中</b> — すべての内容を表示しています。ここまでの読みにこの章＝アスペクトが加わるのが上級。チャートの中心部にもアスペクトの線が現れています。ここが読めれば、習熟度の目安でいう<b>「占星術師」</b>の入り口です。さらにこの下には、円をもっと細かく刻む<b>「デカンと照応」</b>の章が続きます。</div>
   <p>ここまでの読み方の方式は「<b>この場面（ハウス）で、この能力（天体）が、こうやって（星座）発揮される</b>」でした。<b>アスペクト</b>はその次の段階——ホロスコープの円（360度）の中で天体と天体がなす<b>角度</b>から、<b>能力と能力が互いにどう影響し合っているか</b>を読む技法です。特定の角度で結ばれた二つの天体は、いわば「会話」をしています。それが協力の会話なのか、綱引きの会話なのかを教えてくれるのがアスペクトです。</p>
   <p class="small">📖 <b>初学者の方へ</b> — アスペクトはホロスコープ読みの中でいちばん難しい段階です（習熟度でいえば、ここが読めたら上級）。ここまでの「全体をながめる」「読む順番ナビ」で天体×星座×ハウスの読みに充分慣れてから挑む、仕上げの章と考えてください。</p>
   <div class="lead-box">
@@ -326,6 +338,16 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
     <p class="small">⚖ <b>ハードは「悪い」ではありません</b> — ソフトだけの人生は、たとえるなら摩擦のない床。歩きやすいけれど、蹴る力が育ちません。ハードアスペクトは人生に課題を持ち込みますが、その摩擦こそが推進力と深みを作ります。名の残る人物のチャートほど、ハードアスペクトがよく効いているものです。</p>
   </div>
   <div id="sec-aspects-body"></div>
+</section>
+
+<section id="sec-decan">
+  <h2>デカンと照応 — あなたの天体が立つ区画</h2>
+  <p>ホロスコープの円は360度。これを12で割ったものが<b>星座</b>（30度ずつ）でした。ところが古代の占星術は、同じ円をもっと細かく刻んでいます。<b>10度ずつ36に割ったものが「デカン」</b>、<b>5度ずつ72に割ったものが「クイナリー」</b>です。同じ牡羊座生まれでも、牡羊座の頭にいるのか、真ん中か、終わりかで、受け持つ守護者と札が変わる——そういう見方です。</p>
+  <p>デカンには<b>支配星</b>と<b>タロットの小アルカナ一枚</b>が、5度の区画には<b>72の天使</b>と<b>72の魔神</b>が配当されています。あなたの天体が、どの区画のどの守護のもとに立っているかを一覧にしました。</p>
+  <div class="lead-box" style="background:#faf7f0">
+    <p class="small">⚖️ <b>これは何の資料か</b> — ここに載せるのは、ルネサンス以降の西洋魔術・カバラの文献（『ゴエティア』『Book T』ほか）に記された<b>照応の体系</b>です。文化史・体系の資料としてご覧ください。<b>召喚や実践を勧めるものではありません</b>。占星術の本流の技法でもなく、「当たる／当たらない」を論じるものでもない——円をどう刻み、そこに何を配当してきたかという、人間の分類の歴史の一断面です。</p>
+  </div>
+  <div id="sec-decan-body"></div>
 </section>
 
 </div><!-- /result -->
@@ -1570,6 +1592,161 @@ function balanceSection(chart) {
   return html;
 }
 
+/* ---------------- デカン・72の天使・72の魔神 ---------------- */
+/* 出典と方式（v2.5）
+   ・デカン＝黄道を10度ずつ36分割。支配星はカルデア順（土星→木星→火星→太陽→金星→水星→月）を
+     牡羊座第1デカン＝火星から始めて順に配る。
+   ・小アルカナ数札（2〜10の36枚）の割り当ては黄金の夜明け団『Book T』。
+     スート＝星座のエレメント、数の起点＝三区分（活動宮2／不動宮5／柔軟宮8）で機械的に決まる。
+   ・72天使＝シェムハメフォラシュ。牡羊座0度から5度ずつ順に72区画。ここは異説がない。
+   ・72魔神＝『ゴエティア（レメゲトン第一の書）』の序列。黄道への配当は流儀が二つあるため両方を出す：
+       ①黄金の夜明け団（マザース／クロウリー777）＝1デカン（10度）に昼夜二体。昼＝序列1〜36、夜＝序列37〜72
+       ②ラッド系（近代のクイナリー説）＝天使と一対一。5度ずつ、序列どおり */
+
+const CHALDEAN = ['土星','木星','火星','太陽','金星','水星','月'];
+const SUIT_BY_EL = {'火':'ワンド','地':'ペンタクル','風':'ソード','水':'カップ'};
+const BASE_BY_Q  = {'活動宮':2,'不動宮':5,'柔軟宮':8};
+const CARD_TITLE = {
+  'ワンド':   {2:['支配','Lord of Dominion'], 3:['確立された力','Lord of Established Strength'], 4:['完成された仕事','Lord of Perfected Work'],
+               5:['闘争','Lord of Strife'], 6:['勝利','Lord of Victory'], 7:['勇気','Lord of Valour'],
+               8:['敏速','Lord of Swiftness'], 9:['大いなる力','Lord of Great Strength'], 10:['抑圧','Lord of Oppression']},
+  'カップ':   {2:['愛','Lord of Love'], 3:['豊穣','Lord of Abundance'], 4:['混じり合う快楽','Lord of Blended Pleasure'],
+               5:['快楽の中の喪失','Lord of Loss in Pleasure'], 6:['快楽','Lord of Pleasure'], 7:['幻の成功','Lord of Illusionary Success'],
+               8:['見捨てられた成功','Lord of Abandoned Success'], 9:['物質的な幸福','Lord of Material Happiness'], 10:['完成された成功','Lord of Perfected Success']},
+  'ソード':   {2:['回復された平和','Lord of Peace Restored'], 3:['悲しみ','Lord of Sorrow'], 4:['争いからの休息','Lord of Rest from Strife'],
+               5:['敗北','Lord of Defeat'], 6:['努力で得た成功','Lord of Earned Success'], 7:['不安定な努力','Lord of Unstable Effort'],
+               8:['削がれた力','Lord of Shortened Force'], 9:['絶望と残酷','Lord of Despair and Cruelty'], 10:['破滅','Lord of Ruin']},
+  'ペンタクル':{2:['調和のとれた変化','Lord of Harmonious Change'], 3:['物質的な仕事','Lord of Material Works'], 4:['地上の力','Lord of Earthly Power'],
+               5:['物質的な困窮','Lord of Material Trouble'], 6:['物質的な成功','Lord of Material Success'], 7:['未完の成功','Lord of Success Unfulfilled'],
+               8:['慎重','Lord of Prudence'], 9:['物質的な利得','Lord of Material Gain'], 10:['富','Lord of Wealth']},
+};
+
+// 72天使（シェムハメフォラシュ）：牡羊座0度から5度ずつ。［和名, ラテン綴り］
+const ANGELS = [
+  ['ヴェフイア','Vehuiah'],['イェリエル','Jeliel'],['シタエル','Sitael'],['エレミヤ','Elemiah'],
+  ['マハシア','Mahasiah'],['レラヘル','Lelahel'],['アカイア','Achaiah'],['カヘテル','Cahetel'],
+  ['ハジエル','Haziel'],['アラディア','Aladiah'],['ラウヴィア','Lauviah'],['ハハイア','Hahaiah'],
+  ['イエザレル','Iezalel'],['メバヘル','Mebahel'],['ハリエル','Hariel'],['ハカミア','Hakamiah'],
+  ['ラヴィア','Lauviah（第2）'],['カリエル','Caliel'],['レウヴィア','Leuviah'],['パハリア','Pahaliah'],
+  ['ネルカエル','Nelchael'],['イェイアイエル','Yeiayel'],['メラヘル','Melahel'],['ハヘウイア','Haheuiah'],
+  ['ニタイア','Nith-Haiah'],['ハアイア','Haaiah'],['イェラテル','Yerathel'],['セヘイア','Seheiah'],
+  ['レイイエル','Reiyel'],['オマエル','Omael'],['レカベル','Lecabel'],['ヴァサリア','Vasariah'],
+  ['イェフイア','Yehuiah'],['レハヒア','Lehahiah'],['カヴァキア','Chavakiah'],['メナデル','Menadel'],
+  ['アニエル','Aniel'],['ハアミア','Haamiah'],['レハエル','Rehael'],['イェイアゼル','Ieiazel'],
+  ['ハハヘル','Hahahel'],['ミカエル','Mikael'],['ヴェウリア','Veuliah'],['イェラヒア','Yelahiah'],
+  ['セアリア','Sealiah'],['アリエル','Ariel'],['アサリア','Asaliah'],['ミハエル','Mihael'],
+  ['ヴェフエル','Vehuel'],['ダニエル','Daniel'],['ハハシア','Hahasiah'],['イマミア','Imamiah'],
+  ['ナナエル','Nanael'],['ニタエル','Nithael'],['メバヒア','Mebahiah'],['ポイエル','Poyel'],
+  ['ネマミア','Nemamiah'],['イェイアレル','Yeialel'],['ハラヘル','Harahel'],['ミツラエル','Mitzrael'],
+  ['ウマベル','Umabel'],['イアヘル','Iah-Hel'],['アナウエル','Anauel'],['メヒエル','Mehiel'],
+  ['ダマビア','Damabiah'],['マナケル','Manakel'],['エヤエル','Eyael'],['ハブヒア','Habuhiah'],
+  ['ロケル','Rochel'],['ヤバミア','Jabamiah'],['ハイアイエル','Haiaiel'],['ムミア','Mumiah'],
+];
+
+// 72魔神（ゴエティア）：グリモワールの序列どおり。［和名, ラテン綴り］
+const DEMONS = [
+  ['バエル','Bael'],['アガレス','Agares'],['ウァサゴ','Vassago'],['ガミジン','Samigina'],
+  ['マルバス','Marbas'],['ウァレフォル','Valefor'],['アモン','Amon'],['バルバトス','Barbatos'],
+  ['パイモン','Paimon'],['ブエル','Buer'],['グシオン','Gusion'],['シトリー','Sitri'],
+  ['ベレト','Beleth'],['レラジェ','Leraje'],['エリゴス','Eligos'],['ゼパル','Zepar'],
+  ['ボティス','Botis'],['バティン','Bathin'],['サレオス','Sallos'],['プルソン','Purson'],
+  ['マラクス','Morax'],['イポス','Ipos'],['アイム','Aim'],['ナベリウス','Naberius'],
+  ['グラシャラボラス','Glasya-Labolas'],['ブネ','Bune'],['ロノウェ','Ronove'],['ベリト','Berith'],
+  ['アスタロト','Astaroth'],['フォルネウス','Forneus'],['フォラス','Foras'],['アスモデウス','Asmoday'],
+  ['ガープ','Gaap'],['フールフール','Furfur'],['マルコシアス','Marchosias'],['ストラス','Stolas'],
+  ['フェニクス','Phenex'],['ハルファス','Halphas'],['マルファス','Malphas'],['ラウム','Raum'],
+  ['フォカロル','Focalor'],['ウェパル','Vepar'],['サブナク','Sabnock'],['シャクス','Shax'],
+  ['ウィネ','Vine'],['ビフロンス','Bifrons'],['ウヴァル','Uvall'],['ハアゲンティ','Haagenti'],
+  ['クロケル','Crocell'],['フルカス','Furcas'],['バラム','Balam'],['アロケス','Alloces'],
+  ['カイム','Camio'],['ムルムル','Murmur'],['オロバス','Orobas'],['グレモリー','Gremory'],
+  ['オセ','Ose'],['アミー','Amy'],['オリアス','Orias'],['ウァプラ','Vapula'],
+  ['ザガン','Zagan'],['ウァラク','Valac'],['アンドラス','Andras'],['ハウレス','Haures'],
+  ['アンドレアルフス','Andrealphus'],['キマリス','Cimeries'],['アムドゥスキアス','Amdusias'],['ベリアル','Belial'],
+  ['デカラビア','Decarabia'],['セーレ','Seere'],['ダンタリオン','Dantalion'],['アンドロマリウス','Andromalius'],
+];
+
+// 黄経 → デカン（10度区画）の情報
+function decanInfo(lon) {
+  const k = Math.floor(norm(lon) / 10);       // 0〜35
+  const si = Math.floor(k / 3), d = k % 3;    // 星座・その中で何番目のデカンか
+  const sg = SIGNS[si];
+  const suit = SUIT_BY_EL[sg.el], num = BASE_BY_Q[sg.q] + d;
+  const t = CARD_TITLE[suit][num];
+  return {
+    k, si, d, sign: sg, ruler: CHALDEAN[(k + 2) % 7],
+    card: suit + num, titleJa: t[0], titleEn: t[1],
+    from: si * 30 + d * 10, to: si * 30 + d * 10 + 10,
+    demonDay: DEMONS[k], demonNight: DEMONS[k + 36],
+  };
+}
+// 黄経 → クイナリー（5度区画）の情報＝天使と、それと一対一で対応する魔神
+function quinaryInfo(lon) {
+  const q = Math.floor(norm(lon) / 5);        // 0〜71
+  return { q, angel: ANGELS[q], demon: DEMONS[q], from: q * 5, to: q * 5 + 5 };
+}
+// 度数を「牡羊座10度」の形に（区画の境目を示すため分は出さない）
+function degLabel(abs) {
+  const a = norm(abs);
+  return SIGNS[Math.floor(a / 30)].name + Math.round(a % 30) + '度';
+}
+
+// 結果画面：あなたの天体がどの区画に立っているか
+function decanSection(chart) {
+  const line = (sym, name, lon) => {
+    const dc = decanInfo(lon), qn = quinaryInfo(lon);
+    return `<tr><td>${sym}${TXT} ${name}</td><td>${signChip(dc.si)}<span class="dec-deg">${degStr(lon)}</span></td>
+      <td>第${dc.d + 1}デカン<br><span class="dec-sub">${dc.ruler}</span></td>
+      <td><b>${dc.card}</b><br><span class="dec-sub">${dc.titleJa}</span></td>
+      <td>${qn.q + 1} ${qn.angel[0]}<br><span class="dec-sub">${qn.angel[1]}</span></td>
+      <td>${qn.q + 1} ${qn.demon[0]}<br><span class="dec-sub">${qn.demon[1]}</span></td></tr>`;
+  };
+  let rows = '';
+  for (const p of chart.planets) rows += line(p.sym, p.name, p.lon);
+  rows += line('☊', 'ドラゴンヘッド', chart.node);
+  if (!chart.timeUnknown && chart.houses) {
+    rows += line('ASC', 'アセンダント', chart.houses.asc);
+    rows += line('MC', 'MC（天頂）', chart.houses.mc);
+  }
+  const sun = chart.planets.find(p => p.key === 'sun');
+  const sq = quinaryInfo(sun.lon), sd = decanInfo(sun.lon);
+  const guard = `<div class="guard-box">
+    <div class="guard-label">太陽の区画が示す天使</div>
+    <div class="guard-name">第${sq.q + 1} ${sq.angel[0]} <span class="guard-lat">${sq.angel[1]}</span></div>
+    <p class="small">太陽は${degLabel(sq.from)}〜${degLabel(sq.to)}の区画にあります。この5度を受け持つ天使です。誕生日でおよそ決まるため、俗に<b>誕生天使・守護天使</b>と呼ばれることがあります。同じ区画の魔神は<b>${sq.demon[0]}（${sq.demon[1]}）</b>、太陽のデカンが呼ぶ札は<b>${sd.card}「${sd.titleJa}」</b>です。</p>
+    <p class="small">※ 守護天使の決め方は文献によって異なり（太陽の度数のほか、生誕時刻から別の天使を立てる流儀、三体を組にする流儀もあります）、ここでは<b>太陽の度数による最も広く使われる方式</b>を採っています。</p>
+  </div>`;
+  const tuNote = chart.timeUnknown
+    ? `<p class="small">🕐 時刻不明のため、月の区画は前後にずれる可能性があります（月は1日で約13度＝2〜3区画進みます）。アセンダント・MCは計算していません。</p>` : '';
+  return `${guard}
+  <table class="pos-table dec-table"><thead><tr><th>天体</th><th>位置</th><th>デカン<br><span class="dec-sub">支配星</span></th><th>タロット<br><span class="dec-sub">札の通称</span></th><th>天使<br><span class="dec-sub">5度区画</span></th><th>魔神<br><span class="dec-sub">一対一対応</span></th></tr></thead><tbody>${rows}</tbody></table>
+  ${tuNote}
+  <p class="small">📖 表の魔神は<b>天使と一対一で対応する流儀</b>（5度ずつ）で出しています。もうひとつの流儀＝黄金の夜明け団の「1デカンに昼と夜の二体」では、割り当てが変わります。二つの流儀の違いは、下の<b>「専門的な理論」→「デカン・36枚の小アルカナ・72の天使と魔神」</b>で全表とともに解説しています。</p>`;
+}
+
+// 専門的な理論：36デカンの全表
+function decanFullTable() {
+  let rows = '';
+  for (let k = 0; k < 36; k++) {
+    const dc = decanInfo(k * 10 + 5);
+    rows += `<tr><td>${k + 1}</td><td>${dc.sign.sym}${TXT} ${dc.sign.name} ${dc.d * 10}〜${dc.d * 10 + 10}度</td>
+      <td>${dc.ruler}</td><td><b>${dc.card}</b></td><td>${dc.titleJa}<br><span class="dec-sub">${dc.titleEn}</span></td>
+      <td>${k + 1} ${dc.demonDay[0]}</td><td>${k + 37} ${dc.demonNight[0]}</td></tr>`;
+  }
+  return `<table class="dec-full"><thead><tr><th>#</th><th>デカン</th><th>支配星</th><th>札</th><th>札の通称</th><th>昼の魔神</th><th>夜の魔神</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+// 専門的な理論：72区画（天使と魔神）の全表
+function quinaryFullTable() {
+  let rows = '';
+  for (let q = 0; q < 72; q++) {
+    const qn = quinaryInfo(q * 5 + 2);
+    const si = Math.floor(q / 6);
+    rows += `<tr><td>${q + 1}</td><td>${SIGNS[si].sym}${TXT} ${SIGNS[si].name} ${(q % 6) * 5}〜${(q % 6) * 5 + 5}度</td>
+      <td>${qn.angel[0]}<br><span class="dec-sub">${qn.angel[1]}</span></td>
+      <td>${qn.demon[0]}<br><span class="dec-sub">${qn.demon[1]}</span></td></tr>`;
+  }
+  return `<table class="dec-full"><thead><tr><th>#</th><th>区画（5度）</th><th>天使</th><th>魔神（一対一対応）</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
 /* ---------------- 一覧表・サマリー ---------------- */
 
 function positionsTable(chart) {
@@ -1646,9 +1823,11 @@ function navSection(chart) {
     ['card-node', `ドラゴンヘッド — ${SIGNS[signIdx(chart.node)].name}`, '未来へ進む道／過去の蓄積'],
     ['card-gen', '天王星・海王星・冥王星', '世代の刻印。さらりと眺める'],
     ['sec-aspects', 'アスペクト — 天体同士の対話', '仕上げの上級編。ここが読めれば占星術師'],
+    ['sec-decan', 'デカンと照応 — あなたの天体が立つ区画', '円をさらに細かく刻む見方。タロット札・72の天使と魔神'],
   ];
+  const navCls = id => id==='sec-aspects' ? ' nav-asp' : id==='sec-decan' ? ' nav-dec' : '';
   let lis = items.map((it, i) =>
-    `<li class="${it[3]?'nav-off':''}${it[0]==='sec-aspects'?' nav-asp':''}"><a href="#${it[0]}"><b>${it[1]}</b><span>${it[2]}</span></a></li>`).join('');
+    `<li class="${it[3]?'nav-off':''}${navCls(it[0])}"><a href="#${it[0]}"><b>${it[1]}</b><span>${it[2]}</span></a></li>`).join('');
   return `<ol class="nav-list">${lis}</ol>
   <p class="small">💡 迷ったら、この順番のとおり上から読むだけで大丈夫。①太陽・②月${tu?'':'・③アセンダント'}の${tu?'2つ':'3つの重要な要素'}だけでも、その人の骨格は見えてきます。</p>`;
 }
@@ -1704,6 +1883,7 @@ function renderChart(chart) {
   document.getElementById('sec-cards-body').innerHTML = cards.join('');
 
   document.getElementById('sec-aspects-body').innerHTML = aspectSection(chart);
+  document.getElementById('sec-decan-body').innerHTML = decanSection(chart);
   document.getElementById('sec-balance-body').innerHTML = balanceSection(chart);
   setLevel(currentLevel());
   document.getElementById('result').hidden = false;
@@ -1722,6 +1902,11 @@ function fillSelect(id, from, to, pad, selected) {
   sel.innerHTML = html;
 }
 function initForm() {
+  // 専門的な理論の全表（36デカン・72区画）はデータから生成する＝結果画面の判定と同じ表を使い、食い違いを防ぐ
+  const dh = document.getElementById('decan-full-holder');
+  if (dh) dh.innerHTML = decanFullTable();
+  const qh = document.getElementById('quinary-full-holder');
+  if (qh) qh.innerHTML = quinaryFullTable();
   // ページを開いた瞬間の日時を初期値にする（そのまま作成すればホラリー占星術に使える）
   const now = new Date();
   fillSelect('in-year', 1900, 2050, false, now.getFullYear());
@@ -1766,7 +1951,8 @@ if (typeof document !== 'undefined') {
   window.addEventListener('DOMContentLoaded', initForm);
 }
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { computeChart, buildChartSVG, SIGNS, signIdx, degStr, cuspTable, balanceSection, aspectSection, positionsTable:null };
+  module.exports = { computeChart, buildChartSVG, SIGNS, signIdx, degStr, cuspTable, balanceSection, aspectSection, positionsTable:null,
+    decanInfo, quinaryInfo, decanSection, decanFullTable, quinaryFullTable, ANGELS, DEMONS, CARD_TITLE, CHALDEAN };
 }
 </script>
 <section id="sec-dict" class="dict">
@@ -1972,8 +2158,48 @@ if (typeof module !== 'undefined' && module.exports) {
     <p>なぜ「星座12・天体7・エレメント3」なのかは、タロットのカードの数と同じ22という数にあります。ヘブライ文字は全部で22字。カバラの古典『形成の書（セフェル・イェツィラー）』は、この22字を<b>三つの母字</b>（すべての音の母体となる特別な3字：アレフ＝風・メム＝水・シン＝火）、<b>七つの複字</b>（2通りの読みを持つ7字＝七つの古典天体）、<b>十二の単字</b>（残りの12字＝12星座）に分類しました。大アルカナ22枚はこの22文字に一枚ずつ対応しており、三つの群の正体は、実はこの文字の分類そのものなのです。エレメントの3枚——愚者（風）・吊るされた男（水）・審判（火）——は、三つの母字に対応する別格の札ということになります。そして近代の占星術では、この3枚にちょうど<b>三つの現代天体</b>が重ねられました——愚者＝天王星、吊るされた男＝海王星、審判＝冥王星。つまりこの表は「星座12＋古典天体7＋現代天体3」とも読めるのです。</p>
     <p><b>エレメントの札には、地だけがありません。</b> 三つの母字は風・水・火のみで、地は「三つのエレメントが結実したもの」と考えられたからです。世界（土星）が地を兼ねるとされ、「完成し、大地に降り立つ」という世界のカードの意味とも響き合っています。</p>
     <p><b>タロットカードの番号について</b>：この表は力＝8・正義＝11とするウェイト版の番号です。マルセイユ版では力＝11・正義＝8と逆になります。マルセイユ版の番号を支える有名な理屈が一つあります。魔術師（1）と力（11）の帽子のつばは<b>∞（レムニスケート・無限の印）</b>の形に描かれ、世界（21）の花環を結ぶリボンもまた∞の形。つまり1・11・21、「各位の一」の三枚だけがレムニスケートの印を持つのです。ウェイト版は力を8番に移しましたが、力の頭上には今も∞が描かれています。この三枚はタロットカードの中でも特に強力なカードです。</p>
-    <p>小アルカナのほうは、すでにご存じの対応です——<b>ワンド＝火・カップ＝水・ソード＝風・ペンタクル＝地</b>。さらに数札の一枚一枚を「デカン」（星座を10度ずつ三つに分けた区画）に割り当てる体系もありますが、そこから先は専門書の領域です。</p>
+    <p>小アルカナのほうは、すでにご存じの対応です——<b>ワンド＝火・カップ＝水・ソード＝風・ペンタクル＝地</b>。さらに数札の一枚一枚を「デカン」（星座を10度ずつ三つに分けた区画）に割り当てる体系もあります。それは<b>次の項</b>にすべて載せました。</p>
     <p class="small">💡 なお、「天体そのもののエレメント」を載せた解説も見かけますが、これは複数の異なる理屈（古典的には天体が持つのは元素ではなく<b>熱・冷・乾・湿の性質</b>です）が混ざったもので、出典により食い違います。本ページでは、エレメントは星座の属性としてのみ扱っています。</p>
+  </details>
+
+  <details>
+    <summary>デカン・36枚の小アルカナ・72の天使と魔神——円をさらに細かく刻む</summary>
+    <p class="note">⚖️ <b>はじめに——これは何の資料か</b><br>ここに載せるのは、ルネサンス以降の西洋魔術・カバラの文献（『ゴエティア』『Book T』ほか）に記された<b>照応の体系</b>です。文化史・体系の資料としてご覧ください。<b>召喚や実践を勧めるものではありません</b>。また「当たる／当たらない」を論じるものでもありません。円をどう刻み、そこに何を配当してきたか——人間が世界を分類しようとした歴史の、一断面です。</p>
+
+    <h3>デカン——10度ずつ、36の区画</h3>
+    <p>星座は円の360度を12で割ったもの（30度ずつ）でした。その一つひとつを、さらに三つに割ったのが<b>デカン</b>です。10度ずつ、全部で36。語源はギリシャ語の<b>デカ（10）</b>。起源は古代エジプトにあり、夜空に10日ごとに順ぐりに昇ってくる36の星の群れを暦の目盛りに使ったのが始まりです。1年365日を36×10日＋5日で数えた、いわば<b>星でできたカレンダー</b>でした。</p>
+    <p>ヘレニズム期の占星術はこれを黄道の区画として取り込み、各デカンに<b>支配星</b>を配当しました。その順番が面白いところです——<b>土星・木星・火星・太陽・金星・水星・月</b>。これは七つの古典天体を<b>動きの遅い順</b>に並べたもので、<b>カルデア順</b>と呼ばれます（土星がいちばん遅く、月がいちばん速い）。ちなみに、この同じ並びから<b>曜日の順番</b>も導かれます。日月火水木金土は、無関係な語呂ではなく、この天体の速さの順序から生まれた並びなのです。</p>
+    <p>牡羊座の第1デカンは<b>火星</b>から始まります（牡羊座の支配星そのもの）。あとは順ぐりに、円を一周して36個ぴったりで元に戻ります。</p>
+
+    <h3>36枚の小アルカナ——実は、あなたはもう仕組みを知っています</h3>
+    <p>黄金の夜明け団は、この36のデカンに<b>小アルカナの数札2〜10（4スート×9枚＝36枚）</b>を一枚ずつ配当しました。マザースがまとめた『Book T』の体系で、ウェイト版・トート版どちらの絵柄も、この土台の上に描かれています。</p>
+    <p>そして——この割り当ては、覚えるものではありません。<b>すでにご存じの二つの知識から、機械的に出てきます</b>。</p>
+    <table><thead><tr><th>決めるもの</th><th>使う知識</th><th>規則</th></tr></thead><tbody>
+      <tr><td><b>スート</b>（どの組か）</td><td>星座の<b>エレメント</b></td><td>火＝ワンド／地＝ペンタクル／風＝ソード／水＝カップ</td></tr>
+      <tr><td><b>数字</b>（何番の札か）</td><td>星座の<b>三区分</b></td><td>活動宮＝2・3・4／不動宮＝5・6・7／柔軟宮＝8・9・10（第1〜第3デカンの順）</td></tr>
+    </tbody></table>
+    <p>たとえば牡羊座は<b>火の活動宮</b>——だからワンドの2・3・4。牡牛座は<b>地の不動宮</b>——だからペンタクルの5・6・7。双子座は<b>風の柔軟宮</b>——だからソードの8・9・10。これで12星座×3＝36枚がぴたりと埋まり、余りも重複も出ません。</p>
+    <p>解説書の9章に、<b>4エレメント×3区分＝12マスに星座が一つずつ収まる表</b>がありました。「12星座はすべて異なる属性の組み合わせを持つ」というあの表です。その掛け算がそのまま、タロット36枚の住所になっているわけです。区分を覚える意味は、こんなところにまで及んでいます。</p>
+    <div class="dec-scroll" id="decan-full-holder"></div>
+    <p class="small">📌 表の「昼の魔神／夜の魔神」については、次項で説明します。札の通称は『Book T』の英名（Lord of ○○）に基づく訳です。</p>
+
+    <h3>72の天使——シェムハメフォラシュ</h3>
+    <p>円を5度ずつ刻むと、72の区画になります（30度÷5＝6区画×12星座）。この72に配当されるのが、カバラの伝統でいう<b>シェムハメフォラシュ（שם המפורש＝「分節された御名」）</b>の72天使です。</p>
+    <p>出どころは『出エジプト記』14章の19〜21節。ヘブライ語で書かれたこの三つの節は、<b>いずれもちょうど72文字</b>でできています。19節を左から、20節を右から、21節をまた左から——牛が畑を耕すように往復に読んで三文字ずつ縦に取ると、<b>72の三文字の名</b>が現れる。そこへ神を意味する接尾辞<b>エル（אל）</b>または<b>ヤ（יה）</b>を添えたものが、72天使の名です。名前の多くが「〜エル」「〜イア」で終わるのはそのためです。</p>
+    <p>この72天使を黄道の5度区画に順に当てる方式は、文献間で異論がありません。<b>牡羊座0〜5度が第1のヴェフイア</b>で、そこから順に一周します。太陽の位置する区画の天使が、俗に<b>誕生天使・守護天使</b>と呼ばれるものです（決め方には別の流儀もあります。上の結果画面の注記をご覧ください）。</p>
+
+    <h3>72の魔神——ゴエティア、そして<b>二つの流儀</b></h3>
+    <p><b>『ゴエティア』</b>は17世紀の魔術書『レメゲトン（ソロモンの小さな鍵）』の第一の書で、72の霊の名・位階・印章を列挙したものです。バエル、パイモン、アスモデウス、ベリアル——現代のゲームや小説でおなじみの名前の、ほとんどの出所がここです。</p>
+    <p>この72を黄道に当てるとき、<b>広く使われている方式が二つあり、内容が食い違います</b>。どちらか一方だけを「正しい」として載せるのは誠実ではないので、両方を示します。</p>
+    <table><thead><tr><th>流儀</th><th>刻み方</th><th>割り当て</th><th>例：牡羊座の頭</th></tr></thead><tbody>
+      <tr><td><b>黄金の夜明け団</b><br><span class="dec-sub">マザース／クロウリー『777』</span></td><td><b>10度</b>（デカン）</td><td>1デカンに<b>昼・夜の二体</b>。昼＝序列1〜36、夜＝序列37〜72が、それぞれ36のデカンを順に受け持つ</td><td>牡羊0〜10度＝昼バエル（1）・夜フェニクス（37）</td></tr>
+      <tr><td><b>ラッド系</b><br><span class="dec-sub">近代の「クイナリー」説</span></td><td><b>5度</b>（クイナリー）</td><td>天使と<b>一対一</b>。序列どおり72区画に一体ずつ。天使Nと魔神Nが同じ区画で対になる</td><td>牡羊0〜5度＝バエル（1）／5〜10度＝アガレス（2）</td></tr>
+    </tbody></table>
+    <p>上の36デカン表に載せた「昼の魔神・夜の魔神」が前者、下の72区画表が後者です。結果画面の一覧で出しているのは<b>後者（天使と一対一）</b>——天使と並べて見るのが本項の趣旨だからです。</p>
+    <p class="small">💡 なお、天使Nと魔神Nを「光と影の対」とみなす見立ては17世紀の英国の医師・魔術書収集家<b>トマス・ラッド</b>に遡るとされ、彼の写本では魔神を制する天使として並べられています。近年これを占星術に仕立て直したのがクイナリー説です。<b>体系としての歴史はそれほど古くありません</b>——古代からの伝承ではない、という点は押さえておいてよいでしょう。</p>
+    <div class="dec-scroll" id="quinary-full-holder"></div>
+    <p class="small">📖 <b>表記のゆれについて</b>——天使・魔神の名はヘブライ語・ラテン語からの転写を重ねたもので、写本や翻訳ごとに綴りが揺れます（Jeliel／Jelialなど）。照合できるよう、和名の下にラテン綴りを併記しました。</p>
+    <p class="small">📚 <b>主な出典</b>：デカンの支配星＝カルデア順（ヘレニズム占星術の標準）／小アルカナの配当＝S.L.マグレガー・マザース『Book T — The Tarot』（黄金の夜明け団）、A.クロウリー『777』『トートの書』／72天使＝『出エジプト記』14:19-21に基づくカバラの伝統（ルナンほか）／72魔神＝『レメゲトン』第一の書『ゴエティア』（マザース／クロウリー版）、トマス・ラッドの写本系統。</p>
   </details>
 
   <details>
@@ -2050,7 +2276,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 </main>
 <footer class="site">
-  はじめてのホロスコープv2.4 — カヒノト式・占星術学習ツール<br>
+  はじめてのホロスコープv2.5 — カヒノト式・占星術学習ツール<br>
   © 2026 カヒノト — 本ツールの著作権は占い師カヒノトに帰属します。無断転載・再配布はご遠慮ください。<br>
   アクセス数の計測にGoatCounterを使用しています（入力内容・個人情報は送信されません）。<br>
   ご質問はXへ：<a href="https://x.com/yajul" target="_blank" rel="noopener">@yajul</a> ｜ 計算エンジン: Astronomy Engine (MIT License)
