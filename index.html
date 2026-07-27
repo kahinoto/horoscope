@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>はじめてのホロスコープv2.5 — 読み方ナビつき出生図ツール</title>
+<title>はじめてのホロスコープv2.6 — 読み方ナビつき出生図ツール</title>
 <meta name="theme-color" content="#faf9f5">
 <!-- アイコン：火地風水の四色が十二宮を巡る意匠。極小用は四分割に簡略化しデータURIで内蔵＝ファイル単体でも表示される -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23faf9f5'/%3E%3Cpath d='M256 256 L256 86 A170 170 0 0 1 426 256 Z' fill='%23c1502e'/%3E%3Cpath d='M256 256 L426 256 A170 170 0 0 1 256 426 Z' fill='%235e7a2f'/%3E%3Cpath d='M256 256 L256 426 A170 170 0 0 1 86 256 Z' fill='%23a07d1c'/%3E%3Cpath d='M256 256 L86 256 A170 170 0 0 1 256 86 Z' fill='%232f6ea5'/%3E%3Ccircle cx='256' cy='256' r='96' fill='%23faf9f5' stroke='%23b08d3e' stroke-width='14'/%3E%3C/svg%3E">
@@ -175,18 +175,26 @@ details.more summary{cursor:pointer;color:var(--water);font-size:.92em;font-weig
 #result.lv2 #sec-aspects{display:none}
 #result.lv1 .asp-lines,#result.lv2 .asp-lines,#result.lv1 .asp-note,#result.lv2 .asp-note{display:none}
 #result.lv2 .nav-asp,#result.lv2 .nav-dec{display:none}
-/* デカン・72天使・72魔神（v2.5）＝上級でのみ表示する */
+/* デカン・72天使・72魔神（v2.6）＝上級でのみ表示する */
 #result.lv1 #sec-decan,#result.lv2 #sec-decan,#result.lv4 #sec-decan{display:none}
 .dec-sub{font-size:.82em;color:var(--sub);font-weight:normal}
 .dec-deg{display:block;font-size:.86em;color:var(--sub);margin-top:2px}
 .dec-table td{vertical-align:middle;line-height:1.45}
 .dec-full{font-size:.86em}
-.dec-full td,.dec-full th{padding:5px 8px;line-height:1.35}
-.dec-scroll{overflow-x:auto;max-height:520px;overflow-y:auto;border:1px solid var(--line);border-radius:8px;margin:10px 0}
-.guard-box{background:linear-gradient(135deg,#fdf8ec,#f6f1e4);border:1.5px solid var(--gold);border-radius:12px;padding:16px 20px;margin:0 0 18px}
-.guard-label{font-size:.86em;color:var(--sub);letter-spacing:.08em}
-.guard-name{font-size:1.5em;font-weight:bold;color:var(--accent);margin:4px 0 8px}
-.guard-lat{font-size:.6em;color:var(--sub);font-weight:normal;letter-spacing:.04em}
+.dec-full td,.dec-full th{padding:5px 8px;line-height:1.35;vertical-align:top}
+.dec-full-wide td:nth-child(3),.dec-full-wide td:nth-child(4){min-width:15em}
+.dec-scroll{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:8px;margin:10px 0}
+.dec-lat{font-size:.82em;color:var(--sub);font-weight:normal;letter-spacing:.03em}
+.dec-work{margin:5px 0 0;font-size:.9em;line-height:1.6}
+.dec-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:0 0 14px}
+.dec-card.dec-lead{border:1.5px solid var(--gold);background:linear-gradient(135deg,#fdf8ec,#f9f5ea)}
+.dec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:10px}
+.dec-planet{font-size:1.18em;font-weight:bold;color:var(--accent)}
+.dec-pos{font-size:.92em;color:var(--sub)}
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.dec-cell{min-width:0}
+.dec-key{font-size:.8em;color:var(--sub);letter-spacing:.05em;margin-bottom:2px}
+@media(max-width:620px){.dec-grid{grid-template-columns:1fr}}
 /* シンプル表示（lv4）＝解説なし・チャートとデータのみ */
 .lv4-note{display:none;background:#f3f0ea;border:1.5px solid #cfc7b8;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.94em}
 #result.lv4 .lv4-note{display:block}
@@ -217,7 +225,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 <body>
 <header class="site">
   <div class="stars">☽ ✶ ☉ ✶ ☊</div>
-  <h1>はじめてのホロスコープ <span class="ver">v2.5</span></h1>
+  <h1>はじめてのホロスコープ <span class="ver">v2.6</span></h1>
   <p>生年月日と生まれた場所から、あなたの出生図（ネイタルチャート）を作り、<br>「読む順番」つきでやさしく解説するカヒノト式学習ツールです。<br>v2から、アスペクト（天体同士の角度）を正式に読めるようになりました。</p>
 </header>
 <main>
@@ -342,10 +350,11 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 
 <section id="sec-decan">
   <h2>デカンと照応 — あなたの天体が立つ区画</h2>
-  <p>ホロスコープの円は360度。これを12で割ったものが<b>星座</b>（30度ずつ）でした。ところが古代の占星術は、同じ円をもっと細かく刻んでいます。<b>10度ずつ36に割ったものが「デカン」</b>、<b>5度ずつ72に割ったものが「クイナリー」</b>です。同じ牡羊座生まれでも、牡羊座の頭にいるのか、真ん中か、終わりかで、受け持つ守護者と札が変わる——そういう見方です。</p>
-  <p>デカンには<b>支配星</b>と<b>タロットの小アルカナ一枚</b>が、5度の区画には<b>72の天使</b>と<b>72の魔神</b>が配当されています。あなたの天体が、どの区画のどの守護のもとに立っているかを一覧にしました。</p>
+  <p>ホロスコープの円は360度。これを12で割ったものが<b>星座</b>（30度ずつ）でした。ところが古代の占星術は、同じ円をもっと細かく刻んでいます。<b>10度ずつ36に割ったものが「デカン」</b>、<b>5度ずつ72に割ったものが「クイナンス」</b>です。同じ牡羊座生まれでも、牡羊座の頭にいるのか、真ん中か、終わりかで、割り当てられる名も札も変わります。</p>
+  <p>デカンには<b>支配星</b>と<b>タロットの小アルカナ一枚</b>が、5度の区画には<b>72の天使</b>と<b>72の魔神</b>が配当されています。あなたの天体がどの区画に入るかを算出し、<b>その区画に配当されているものを、そのまま並べました</b>。</p>
   <div class="lead-box" style="background:#faf7f0">
-    <p class="small">⚖️ <b>これは何の資料か</b> — ここに載せるのは、ルネサンス以降の西洋魔術・カバラの文献（『ゴエティア』『Book T』ほか）に記された<b>照応の体系</b>です。文化史・体系の資料としてご覧ください。<b>召喚や実践を勧めるものではありません</b>。占星術の本流の技法でもなく、「当たる／当たらない」を論じるものでもない——円をどう刻み、そこに何を配当してきたかという、人間の分類の歴史の一断面です。</p>
+    <p class="small">⚖️ <b>これは何の資料か</b> — ここに載せるのは、ルネサンス以降の西洋魔術・カバラの文献に記された<b>照応の体系</b>です。文化史・体系の資料としてご覧ください。<b>召喚や実践を勧めるものではありません</b>。占星術の本流の技法でもなく、「当たる／当たらない」を論じるものでもない——円をどう刻み、そこに何を配当してきたかという、人間の分類の歴史の一断面です。</p>
+    <p class="small">📖 <b>読み方は書きません</b> — このページは<b>「その区画に何が配当されているか」を出すところまで</b>にとどめ、「あなたはこういう人です」という読み文は載せません。職能の記述は原典の訳であって、あなたを説明するものではないからです。<b>どう受け取るかは、読む方それぞれに委ねます。</b>出典と、使う前に知っておくべき注意は、下の「専門的な理論」に明記しました。</p>
   </div>
   <div id="sec-decan-body"></div>
 </section>
@@ -1593,15 +1602,15 @@ function balanceSection(chart) {
 }
 
 /* ---------------- デカン・72の天使・72の魔神 ---------------- */
-/* 出典と方式（v2.5）
+/* 出典と方式（v2.6）
    ・デカン＝黄道を10度ずつ36分割。支配星はカルデア順（土星→木星→火星→太陽→金星→水星→月）を
      牡羊座第1デカン＝火星から始めて順に配る。
    ・小アルカナ数札（2〜10の36枚）の割り当ては黄金の夜明け団『Book T』。
      スート＝星座のエレメント、数の起点＝三区分（活動宮2／不動宮5／柔軟宮8）で機械的に決まる。
-   ・72天使＝シェムハメフォラシュ。牡羊座0度から5度ずつ順に72区画。ここは異説がない。
+   ・72天使＝シェム・ハ＝メフォラシュ。牡羊座0度から5度ずつ順に72区画。ここは異説がない。
    ・72魔神＝『ゴエティア（レメゲトン第一の書）』の序列。黄道への配当は流儀が二つあるため両方を出す：
        ①黄金の夜明け団（マザース／クロウリー777）＝1デカン（10度）に昼夜二体。昼＝序列1〜36、夜＝序列37〜72
-       ②ラッド系（近代のクイナリー説）＝天使と一対一。5度ずつ、序列どおり */
+       ②ラッド系（近代のクイナンス説）＝天使と一対一。5度ずつ、序列どおり */
 
 const CHALDEAN = ['土星','木星','火星','太陽','金星','水星','月'];
 const SUIT_BY_EL = {'火':'ワンド','地':'ペンタクル','風':'ソード','水':'カップ'};
@@ -1621,49 +1630,160 @@ const CARD_TITLE = {
                8:['慎重','Lord of Prudence'], 9:['物質的な利得','Lord of Material Gain'], 10:['富','Lord of Wealth']},
 };
 
-// 72天使（シェムハメフォラシュ）：牡羊座0度から5度ずつ。［和名, ラテン綴り］
+// 72天使（シェム・ハ＝メフォラシュ）：牡羊座0度から5度ずつ。
+// 職能欄は元本ノート［シェム・ハ＝メフォラシュ72天使は何を司るか］の逐語訳をそのまま転記（Burkle 2015, Table 6 の全訳）。
 const ANGELS = [
-  ['ヴェフイア','Vehuiah'],['イェリエル','Jeliel'],['シタエル','Sitael'],['エレミヤ','Elemiah'],
-  ['マハシア','Mahasiah'],['レラヘル','Lelahel'],['アカイア','Achaiah'],['カヘテル','Cahetel'],
-  ['ハジエル','Haziel'],['アラディア','Aladiah'],['ラウヴィア','Lauviah'],['ハハイア','Hahaiah'],
-  ['イエザレル','Iezalel'],['メバヘル','Mebahel'],['ハリエル','Hariel'],['ハカミア','Hakamiah'],
-  ['ラヴィア','Lauviah（第2）'],['カリエル','Caliel'],['レウヴィア','Leuviah'],['パハリア','Pahaliah'],
-  ['ネルカエル','Nelchael'],['イェイアイエル','Yeiayel'],['メラヘル','Melahel'],['ハヘウイア','Haheuiah'],
-  ['ニタイア','Nith-Haiah'],['ハアイア','Haaiah'],['イェラテル','Yerathel'],['セヘイア','Seheiah'],
-  ['レイイエル','Reiyel'],['オマエル','Omael'],['レカベル','Lecabel'],['ヴァサリア','Vasariah'],
-  ['イェフイア','Yehuiah'],['レハヒア','Lehahiah'],['カヴァキア','Chavakiah'],['メナデル','Menadel'],
-  ['アニエル','Aniel'],['ハアミア','Haamiah'],['レハエル','Rehael'],['イェイアゼル','Ieiazel'],
-  ['ハハヘル','Hahahel'],['ミカエル','Mikael'],['ヴェウリア','Veuliah'],['イェラヒア','Yelahiah'],
-  ['セアリア','Sealiah'],['アリエル','Ariel'],['アサリア','Asaliah'],['ミハエル','Mihael'],
-  ['ヴェフエル','Vehuel'],['ダニエル','Daniel'],['ハハシア','Hahasiah'],['イマミア','Imamiah'],
-  ['ナナエル','Nanael'],['ニタエル','Nithael'],['メバヒア','Mebahiah'],['ポイエル','Poyel'],
-  ['ネマミア','Nemamiah'],['イェイアレル','Yeialel'],['ハラヘル','Harahel'],['ミツラエル','Mitzrael'],
-  ['ウマベル','Umabel'],['イアヘル','Iah-Hel'],['アナウエル','Anauel'],['メヒエル','Mehiel'],
-  ['ダマビア','Damabiah'],['マナケル','Manakel'],['エヤエル','Eyael'],['ハブヒア','Habuhiah'],
-  ['ロケル','Rochel'],['ヤバミア','Jabamiah'],['ハイアイエル','Haiaiel'],['ムミア','Mumiah'],
+  {n:1, ja:'ヴェフイア', lat:'Vehuiah', alt:'Vehuaiah', work:'精妙な霊。偉大な叡智を授かり、学術と諸芸に熱意を持ち、最も困難な事を企て成し遂げる力がある。'},
+  {n:2, ja:'イェリエル', lat:'Jeliel', work:'民衆の蜂起を鎮めるために。不当に攻撃する者に対し勝利を得るために。快活な気質、快い礼儀正しい物腰、性愛に情熱的。'},
+  {n:3, ja:'シタエル', lat:'Sitael', work:'逆境に抗して。武器と猛獣から護る。真実を愛し、約束を守り、その助けを必要とする者に応じる。'},
+  {n:4, ja:'エレミア', lat:'Elemiah', work:'精神の不調に抗し、裏切り者を見分けるために。航海・船旅を司る。勤勉、成功する、旅を好む。'},
+  {n:5, ja:'マハシア', lat:'Mahasiah', work:'万人と和して生きるために。高等学問・秘教哲学・神学・自由学芸を司る。学びが速く、健全な楽しみを好む。'},
+  {n:6, ja:'レラヘル', lat:'Lelahel', work:'知識を得、病を癒すために。愛・名声・学術・諸芸・幸運を司る。特質は野心、名声。'},
+  {n:7, ja:'アカイア', lat:'Achaiah', work:'忍耐と自然の秘密を司る。学ぶことを愛し、最も困難な仕事を成し遂げることを誇る。'},
+  {n:8, ja:'カヘテル', lat:'Cahetel', work:'神の祝福を得、悪霊を追い払うために。農業生産を司る。人を神へ向かって高まるよう促す。'},
+  {n:9, ja:'ハジエル', lat:'Haziel', alt:'Aziel', work:'神の慈悲、有力者の友情と厚意、なされた約束の履行（sic）。誠実と和解を司る。約束に誠実で、容易に赦しを与える。'},
+  {n:10, ja:'アラディア', lat:'Aladiah', work:'隠れた罪を犯し露見を恐れる者によい。憤怒と疫病、病の治癒を司る。健康に恵まれ、企てに成功する。'},
+  {n:11, ja:'ラウヴィア', lat:'Lauviah', work:'落雷に抗し、勝利を得る（sic）ために。名声を司る。偉大な人物、学識があり、個人の才能で名を成す。'},
+  {n:12, ja:'ハハイア', lat:'Hahaiah', work:'逆境に抗して。夢を司る。人に隠された神秘。温和、機知に富み、慎み深い物腰。'},
+  {n:13, ja:'イェザレル', lat:'Iezalel', work:'友情・和解・夫婦の貞節を司る。学びが速い。器用。'},
+  {n:14, ja:'メバヘル', lat:'Mebahel', work:'他人の財を奪おうとする者に抗して。正義・真実・自由を司る。抑圧された者を解き放ち、囚人を護る。法学を愛し、法廷への親和がある。'},
+  {n:15, ja:'ハリエル', lat:'Hariel', work:'不信心な者に抗して。学術と諸芸を司る。宗教的感情、道徳的に清廉。'},
+  {n:16, ja:'ハカミア', lat:'Hakamiah', work:'裏切り者に抗し、我らを抑圧しようとする者から逃れるために。戴冠せる者・偉大な指揮官を司る。勝利を与える。率直、忠実、勇敢な性格、名誉に鋭敏、金星への親和。'},
+  {n:17, ja:'ラウヴィア', lat:'Lauviah', work:'断食しながら呼ぶべし。精神の苦悶、悲嘆に抗して。高等学問・驚くべき発見を司る。夢に啓示を与える。音楽・詩・文学・哲学を愛す。'},
+  {n:18, ja:'カリエル', lat:'Caliel', work:'速やかな援助を得るために。訴訟において真実を知らしめ、無実を勝たせる。公正、正直、真実を愛す、司法。'},
+  {n:19, ja:'レウヴィア', lat:'Leuviah', work:'南に向かって呼ぶべし。神の恩寵を得るために。記憶・人間の知性を司る。愛想がよく、快活、慎ましく、逆境を諦念とともに耐える。'},
+  {n:20, ja:'パハリア', lat:'Pahaliah', work:'宗教の敵に抗し、諸国民をキリスト教へ改宗させるために（!）。宗教・神学・道徳・貞潔・純粋を司る。聖職への召命。'},
+  {n:21, ja:'ネルカエル', lat:'Nelchael', alt:'Nelebael', work:'中傷者と呪いに抗し、悪霊を滅ぼすために。天文学・数学・地理学およびあらゆる抽象科学を司る。詩と文学を愛し、学問に貪欲。'},
+  {n:22, ja:'イェイアイェル', lat:'Yeiayel', alt:'Ieiael', work:'幸運・名望・外交・商業を司り、航海と発見に影響し、嵐と難破から護る。事業を愛し、勤勉、自由主義的かつ博愛的な思想。'},
+  {n:23, ja:'メラヘル', lat:'Melahel', work:'武器に抗し、旅の安全のために。水・大地の産物、とりわけ病の治癒に必要な植物を司る。勇敢、名誉ある行いを成す。'},
+  {n:24, ja:'ハフイア', lat:'Hahuiah', work:'神の恩寵と慈悲を得るために。亡命者・逃亡者・債務不履行者を司る。有害な獣から護る。盗賊と暗殺者から守る。真実と精密科学を愛し、言行に誠実。'},
+  {n:25, ja:'ニトハイア', lat:'Nith-Haiah', work:'叡智を得、隠された神秘の真理を発見するために。隠秘学（オカルト）を司る。夢に啓示を与える。とりわけ、この天使が司る日に生まれた者に対して。賢者の魔術を行う者に影響する。'},
+  {n:26, ja:'ハアイア', lat:'Haaiah', work:'訴訟に勝つために。真理を探求する者を護る。政治・外交官・秘密の遠征と工作員に影響する。'},
+  {n:27, ja:'イェラテル', lat:'Yerathel', alt:'Jerathel', work:'悪事を為す者と嘘つきを打ち負かし、己の敵から逃れるために。光の伝播・文明を司る。愛・平和・正義・学術・諸芸。文学への特別な親和。'},
+  {n:28, ja:'セヘイア', lat:'Seheiah', alt:'Seeiah', work:'病弱と雷に抗し、火災・建物の倒壊・墜落・疾病から護る。健康・質朴を司る。判断力に富む。'},
+  {n:29, ja:'レイイェル', lat:'Reiyel', alt:'Reiiel', work:'不信心な者と宗教の敵に抗し、可視・不可視のあらゆる敵から逃れるために。真理の伝播への徳と熱意。不信心を滅ぼすために全力を尽くす。'},
+  {n:30, ja:'オマエル', lat:'Omael', alt:'Ornael', work:'悲嘆と絶望に抗し、忍耐を得るために。動物界を司り、生類の繁殖を見守る。化学者、医師、外科医。解剖学と医学への親和。'},
+  {n:31, ja:'レカベル', lat:'Lecabel', work:'知識を得るために。植生と農業を司る。天文学・数学・幾何学を愛す。'},
+  {n:32, ja:'ヴァサリア', lat:'Vasariah', work:'法廷で我らを攻撃する者に抗して。正義を司る。記憶がよく、弁が立つ。'},
+  {n:33, ja:'イェフイア', lat:'Yehuiah', alt:'Iehuiah', work:'裏切り者を見分けるために。'},
+  {n:34, ja:'レハヒア', lat:'Lehahiah', work:'怒りに抗して。その才と行い、祈りの確信と熱意によって知られる。'},
+  {n:35, ja:'カヴァキア', lat:'Chavakiah', alt:'Chevakiah', work:'傷つけた相手の好意を取り戻すために。遺言・相続・あらゆる私的な金銭契約を司る。万人と和して暮らすことを愛す。仕える者の忠義に報いることを愛す。'},
+  {n:36, ja:'メナデル', lat:'Menadel', work:'職を保ち、生計の手段を守るために。中傷に抗し、囚人を解放するために。'},
+  {n:37, ja:'アニエル', lat:'Aniel', work:'勝利を得、都市の包囲を解くために。学術と諸芸を司る。自然の秘密を明かし、哲学者・賢者に霊感を与える。傑出した碩学。'},
+  {n:38, ja:'ハアミア', lat:'Haamiah', work:'天と地のあらゆる宝を得るために。詐欺・武器・野獣・地獄の霊に抗して。神に関わるすべてを司る。'},
+  {n:39, ja:'レハエル', lat:'Rehael', work:'病者を癒すために。健康と長寿を司る。父子の情愛に影響する。'},
+  {n:40, ja:'イェイアゼル', lat:'Ieiazel', work:'囚人の解放のため、慰めのため、己の敵から逃れるために。印刷と書物を司る。文人と芸術家。'},
+  {n:41, ja:'ハハヘル', lat:'Hahahel', work:'不信心な者、中傷者に抗して。キリスト教を司る。魂の偉大さ、活力。神への奉仕に身を捧げている。'},
+  {n:42, ja:'ミカエル', lat:'Mikael', work:'旅の安全のために。陰謀を発見するために。政治向きの事柄に関わり、外交的。'},
+  {n:43, ja:'ヴェウリア', lat:'Veuliah', alt:'Veuahiah', work:'敵を滅ぼし、束縛から解放されるために。栄光と軍事を愛す。'},
+  {n:44, ja:'イェラヒア', lat:'Yelahiah', alt:'Ielahiah', work:'有益な事業の成功。為政者からの保護。裁判。軍勢から護り、勝利を与える。旅と学問を好む。その企てはすべて成功で報われる。軍事的才幹と勇気で傑出。'},
+  {n:45, ja:'セアリア', lat:'Sealiah', work:'邪悪な者と傲慢な者を打ち負かし、辱められた者・倒れた者を高めるために。植生を司る。学ぶことを愛し、適性に富む。'},
+  {n:46, ja:'アリエル', lat:'Ariel', work:'啓示を得るために。神が我らに送る善に感謝するために。隠された宝を発見し、自然の最大の秘密を明かす。望むものを夢に見せる。強く精妙な精神、新しく崇高な思考、慎重、思慮深い。'},
+  {n:47, ja:'アサリア', lat:'Asaliah', work:'神を讃え、神が我らを照らすときに神へ向かって成長するために。正義を司り、訴訟において真実を知らしめる。快い性格、秘められた知識を得ることに貪欲。'},
+  {n:48, ja:'ミハエル', lat:'Mihael', alt:'Michael', work:'平和の保持と夫婦の和合のために。己に呼びかける者を護り、予感と密かな霊感を与える。生類の繁殖を司る。愛に貪欲、散策と娯楽全般を好む。'},
+  {n:49, ja:'ヴェフエル', lat:'Vehuel', work:'悲嘆、不如意。神の祝福と栄光のために自らを高めるために。繊細で寛大な魂。文学、法学、外交。'},
+  {n:50, ja:'ダニエル', lat:'Daniel', work:'神の慈悲と慰めを得るために。正義・弁護士・事務弁護士を司る。ためらう者に結論を与える。勤勉で事業に活発、文学を愛し、雄弁で傑出。'},
+  {n:51, ja:'ハハシア', lat:'Hahasiah', work:'魂の高揚と、叡智の神秘の発見のために。化学と物理学を司る。賢者の石と万能薬の秘密を明かす。抽象科学を愛す。動物・植物・鉱物の性質の発見に献身。医学で傑出。'},
+  {n:52, ja:'イマミア', lat:'Imamiah', work:'敵の力を滅ぼし、彼らを辱める。旅全般を司り、己を頼る囚人を護り、自由を得る手立てを与える。力強く精力的な気質、逆境を忍耐と勇気で耐える。働くことを好む。'},
+  {n:53, ja:'ナナエル', lat:'Nanael', work:'高等学問を司る。憂鬱な気質、休息を避ける、瞑想、抽象科学に通じている。'},
+  {n:54, ja:'ニタエル', lat:'Nithael', work:'神の慈悲を得、長く生きるために。皇帝、王、君侯。著述と雄弁で名を知られ、学者の間で高い評判を得る。'},
+  {n:55, ja:'メバヒア', lat:'Mebahiah', alt:'Mabaiah', work:'慰めと償いを得るのに有益。道徳と宗教を司る。善行と敬虔によって傑出。'},
+  {n:56, ja:'ポイエル', lat:'Poyel', work:'己の願いが叶うために。名望・幸運・哲学を司る。慎み深さと快い気質のゆえに万人から敬われる。'},
+  {n:57, ja:'ネマミア', lat:'Nemamiah', alt:'Nemmamiah', work:'全般的な繁栄と、囚人の解放のために。偉大な指揮官を司る。軍事に惹かれる。活動的であること、疲労を勇敢に耐えることで傑出。'},
+  {n:58, ja:'イェイアレル', lat:'Yeialel', alt:'Ieialel', work:'悲嘆と憂慮から護り、病者を癒す。とりわけ眼の疾患を。鉄と、商業に携わる者に影響する。勇敢、率直、金星への親和。'},
+  {n:59, ja:'ハラヘル', lat:'Harahel', work:'女性の不妊に抗し、子を親に従順にさせるために。財宝と銀行を司る。印刷、書物。学問への愛、事業と金銭で成功する。'},
+  {n:60, ja:'ミツラエル', lat:'Mitzrael', alt:'Mizrael', work:'精神の病の治癒と、我らを迫害する者からの解放のために。有徳、長寿。'},
+  {n:61, ja:'ウマベル', lat:'Umabel', work:'特定の人物の友情を得るために。旅と健全な楽しみを好む。感じやすい心。'},
+  {n:62, ja:'イアヘル', lat:'Iah-hel', work:'叡智を得るために。哲学者・光明を得た者を司る。静寂と孤独を愛す、慎ましく、有徳。'},
+  {n:63, ja:'アナウエル', lat:'Anauel', alt:'Anianuel', work:'諸国民をキリスト教へ改宗させるために。事故から護り、病者を癒す。商業・銀行業を司る。精妙で創意に富み、勤勉で活動的。'},
+  {n:64, ja:'メヒエル', lat:'Mehiel', work:'逆境に抗して。狂犬病と野獣から護る。碩学・教授・弁論家その他を司る。文学で傑出。'},
+  {n:65, ja:'ダマビア', lat:'Damabiah', work:'呪いに抗し、叡智を得、事業を成功させるために。海・河・泉・船乗りを司る。船乗り。相当の財を成す。'},
+  {n:66, ja:'マナケル', lat:'Manakel', work:'神の怒りを鎮め、癲癇を癒すために。植生・水棲動物を司る。夢に影響する。性格の穏やかさ。'},
+  {n:67, ja:'エヤエル', lat:'Eyael', alt:'Itaiel', work:'逆境における慰めを得、叡智を得るために。隠秘学に影響する。仕事において己を呼ぶ者に真実を知らしめる。神の霊が求めるところを照らす。孤独を好み、高等学問で傑出。'},
+  {n:68, ja:'ハブヒア', lat:'Habuhiah', alt:'Chabuiah', work:'健康を保ち、病者を癒すために。農業と多産を司る。田園・狩猟・庭園、および農に関わるすべてを好む。'},
+  {n:69, ja:'ロケル', lat:'Rochel', work:'失われた物・盗まれた物を見つけ、その責を負う者を突き止めるために。司法において傑出。諸民族の道徳と習俗。'},
+  {n:70, ja:'ヤバミア', lat:'Jabamiah', alt:'Iabamiah', work:'生類の発生と自然の現象を司る。霊的に進もうと望む者を護る。天賦によって傑出。哲学の偉大な光の一つ。'},
+  {n:71, ja:'ハイアイェル', lat:'Haiaiel', alt:'Haiel', work:'邪悪な者を打ち負かし、我らを抑圧しようとする者から逃れるために（sic）。己を呼ぶ者を護る。火に影響する。勇敢。'},
+  {n:72, ja:'ムミア', lat:'Mumiah', work:'好都合な影響のもとで、裏面にこの霊の名を記した神聖な護符を用意すべし。神秘の作業において護り、万事に成功をもたらす。化学・物理学・医学を司る。健康と長寿に影響する。'},
 ];
 
-// 72魔神（ゴエティア）：グリモワールの序列どおり。［和名, ラテン綴り］
+// 72魔神（ゴエティア）：グリモワールの序列どおり。
+// 階級・軍団数・職能は元本ノート［ゴエティア72柱は何の専門家か］より転記。
 const DEMONS = [
-  ['バエル','Bael'],['アガレス','Agares'],['ウァサゴ','Vassago'],['ガミジン','Samigina'],
-  ['マルバス','Marbas'],['ウァレフォル','Valefor'],['アモン','Amon'],['バルバトス','Barbatos'],
-  ['パイモン','Paimon'],['ブエル','Buer'],['グシオン','Gusion'],['シトリー','Sitri'],
-  ['ベレト','Beleth'],['レラジェ','Leraje'],['エリゴス','Eligos'],['ゼパル','Zepar'],
-  ['ボティス','Botis'],['バティン','Bathin'],['サレオス','Sallos'],['プルソン','Purson'],
-  ['マラクス','Morax'],['イポス','Ipos'],['アイム','Aim'],['ナベリウス','Naberius'],
-  ['グラシャラボラス','Glasya-Labolas'],['ブネ','Bune'],['ロノウェ','Ronove'],['ベリト','Berith'],
-  ['アスタロト','Astaroth'],['フォルネウス','Forneus'],['フォラス','Foras'],['アスモデウス','Asmoday'],
-  ['ガープ','Gaap'],['フールフール','Furfur'],['マルコシアス','Marchosias'],['ストラス','Stolas'],
-  ['フェニクス','Phenex'],['ハルファス','Halphas'],['マルファス','Malphas'],['ラウム','Raum'],
-  ['フォカロル','Focalor'],['ウェパル','Vepar'],['サブナク','Sabnock'],['シャクス','Shax'],
-  ['ウィネ','Vine'],['ビフロンス','Bifrons'],['ウヴァル','Uvall'],['ハアゲンティ','Haagenti'],
-  ['クロケル','Crocell'],['フルカス','Furcas'],['バラム','Balam'],['アロケス','Alloces'],
-  ['カイム','Camio'],['ムルムル','Murmur'],['オロバス','Orobas'],['グレモリー','Gremory'],
-  ['オセ','Ose'],['アミー','Amy'],['オリアス','Orias'],['ウァプラ','Vapula'],
-  ['ザガン','Zagan'],['ウァラク','Valac'],['アンドラス','Andras'],['ハウレス','Haures'],
-  ['アンドレアルフス','Andrealphus'],['キマリス','Cimeries'],['アムドゥスキアス','Amdusias'],['ベリアル','Belial'],
-  ['デカラビア','Decarabia'],['セーレ','Seere'],['ダンタリオン','Dantalion'],['アンドロマリウス','Andromalius'],
+  {n:1, ja:'バエル', lat:'Bael', rank:'王', legion:'66', work:'姿を消す術を授ける'},
+  {n:2, ja:'アガレス', lat:'Agares', rank:'公爵', legion:'31', work:'あらゆる言語を教える／逃亡者を連れ戻す／地位ある者を失墜させる／地震を起こす'},
+  {n:3, ja:'ウァサゴ', lat:'Vassago', rank:'君主', legion:'26', work:'過去と未来を告げる／失せ物・隠されたものを見つける'},
+  {n:4, ja:'ガミジン', lat:'Gamigin／Samigina', rank:'侯爵', legion:'30', work:'自由学芸を教える／溺死者・罪に沈んだ魂を呼び出し答えさせる'},
+  {n:5, ja:'マルバス', lat:'Marbas', rank:'総裁', legion:'36', work:'隠された事柄に答える／病を与え、また癒す／機械技術を教える／姿を変えさせる'},
+  {n:6, ja:'ウァレフォル', lat:'Valefor', rank:'公爵', legion:'10', work:'良き使い魔となる／盗みをそそのかす'},
+  {n:7, ja:'アモン', lat:'Amon', rank:'侯爵', legion:'40', work:'過去と未来を告げる／不和を生み、また和解させる'},
+  {n:8, ja:'バルバトス', lat:'Barbatos', rank:'公爵', legion:'30', work:'鳥獣の言葉を解させる／隠された財宝を明かす／過去と未来を知る'},
+  {n:9, ja:'パイモン', lat:'Paimon', rank:'王', legion:'200', work:'あらゆる学芸・哲学・秘められた科学を教える／地位と使い魔を与える'},
+  {n:10, ja:'ブエル', lat:'Buer', rank:'総裁', legion:'50', work:'自然哲学・道徳哲学・論理学・薬草の効能を教える／病を癒す'},
+  {n:11, ja:'グシオン', lat:'Gusion', rank:'公爵', legion:'40', work:'過去現在未来を告げる／名誉と地位を与える／友を和解させる'},
+  {n:12, ja:'シトリー', lat:'Sitri', rank:'君主', legion:'60', work:'男女の愛欲を掻き立てる／人を裸に晒す'},
+  {n:13, ja:'ベレト', lat:'Beleth', rank:'王', legion:'85', work:'男女の間に愛をもたらす'},
+  {n:14, ja:'レラジェ', lat:'Leraje', rank:'侯爵', legion:'30', work:'争いと戦を起こす／矢傷を壊疽させる'},
+  {n:15, ja:'エリゴス', lat:'Eligos', rank:'公爵', legion:'60', work:'隠された物事を見つける／戦の帰趨を知る／兵と貴人の愛顧を得させる'},
+  {n:16, ja:'ゼパル', lat:'Zepar', rank:'公爵', legion:'26', work:'女に男を愛させる／女を不妊にする'},
+  {n:17, ja:'ボティス', lat:'Botis', rank:'総裁・伯爵', legion:'60', work:'過去と未来を告げる／敵味方を和解させる'},
+  {n:18, ja:'バティン', lat:'Bathin', rank:'公爵', legion:'30', work:'薬草と宝石の効能を教える／人を国から国へ瞬時に運ぶ'},
+  {n:19, ja:'サレオス', lat:'Sallos／Saleos', rank:'公爵', legion:'30', work:'男女の間に愛を生む'},
+  {n:20, ja:'プルソン', lat:'Purson', rank:'王', legion:'22', work:'隠されたもの・財宝を明かす／過去現在未来を告げる／良き使い魔を与える'},
+  {n:21, ja:'モラクス', lat:'Morax／Marax', rank:'伯爵・総裁', legion:'36', work:'天文学と自由学芸を教える／薬草と宝石の効能／賢き使い魔を与える'},
+  {n:22, ja:'イポス', lat:'Ipos', rank:'伯爵・君主', legion:'36', work:'過去と未来を知る／人を機知に富み勇敢にする'},
+  {n:23, ja:'アイム', lat:'Aim／Aini', rank:'公爵', legion:'26', work:'火を放ち都市を焼く／人を機知に富ませる／私事に真実を答える'},
+  {n:24, ja:'ナベリウス', lat:'Naberius', rank:'侯爵', legion:'19', work:'弁論術に巧みにさせる／失われた地位と名誉を回復させる'},
+  {n:25, ja:'グラシャ＝ラボラス', lat:'Glasya-Labolas', rank:'総裁・伯爵', legion:'36', work:'あらゆる学芸と科学を教える／流血と殺人を引き起こす／敵の心を和ませる／姿を消させる'},
+  {n:26, ja:'ブネ', lat:'Buné', rank:'公爵', legion:'30', work:'人を雄弁かつ賢明にする／富を与える／死者の眠る場所を移す'},
+  {n:27, ja:'ロノウェ', lat:'Ronové', rank:'侯爵・伯爵', legion:'19', work:'修辞学と語学を教える／忠実な従者を与える／友と敵の見分けを授ける'},
+  {n:28, ja:'ベリト', lat:'Berith', rank:'公爵', legion:'26', work:'過去現在未来を告げる／あらゆる金属を黄金に変える／地位を与える'},
+  {n:29, ja:'アスタロト', lat:'Astaroth', rank:'公爵', legion:'40', work:'数学（自由学芸）を教える／過去現在未来を告げる／堕天の秘密を語る'},
+  {n:30, ja:'フォルネウス', lat:'Forneus', rank:'侯爵', legion:'29', work:'修辞学と語学を教える／名声を得させる／敵からも愛されるようにする'},
+  {n:31, ja:'フォラス', lat:'Foras', rank:'総裁', legion:'29', work:'論理学と倫理学を教える／薬草と宝石の効能／隠された財宝／長寿と雄弁'},
+  {n:32, ja:'アスモデウス', lat:'Asmoday／Asmodeus', rank:'王', legion:'72', work:'幾何学・算術・天文学・工芸を教える／あらゆる問いに答える／隠された財宝／不可視'},
+  {n:33, ja:'ガープ', lat:'Gaap', rank:'総裁・君主', legion:'66', work:'哲学と自由学芸を教える／愛と憎しみを生む／人を瞬時に運ぶ'},
+  {n:34, ja:'フルフル', lat:'Furfur', rank:'伯爵', legion:'26', work:'男女の愛を生む／雷と嵐を起こす／秘められた事柄に答える'},
+  {n:35, ja:'マルコシアス', lat:'Marchosias', rank:'侯爵', legion:'30', work:'強き戦士となる／すべての問いに真実を答える'},
+  {n:36, ja:'ストラス', lat:'Stolas', rank:'君主', legion:'26', work:'天文学を教える／薬草と宝石の効能を授ける'},
+  {n:37, ja:'フェニクス', lat:'Phenex／Phœnix', rank:'侯爵', legion:'20', work:'驚くべき科学を教える／優れた詩人であり、詩を作らせる'},
+  {n:38, ja:'ハルファス', lat:'Halphas', rank:'伯爵', legion:'26', work:'塔と城を築く／武器庫を満たす／軍団を戦地へ送る'},
+  {n:39, ja:'マルファス', lat:'Malphas', rank:'総裁', legion:'40', work:'家と塔を築き、また壊す／敵の望みと考えを明かす／良き使い魔'},
+  {n:40, ja:'ラウム', lat:'Raum', rank:'伯爵', legion:'30', work:'王の宝を盗む／都市と地位を破壊する／過去現在未来／愛と和解を生む'},
+  {n:41, ja:'フォカロル', lat:'Focalor', rank:'公爵', legion:'30', work:'風と海を司る／船を沈め人を溺れさせる'},
+  {n:42, ja:'ウェパル', lat:'Vepar', rank:'公爵', legion:'29', work:'水を司る／嵐を起こす／傷を膿ませ、また癒す'},
+  {n:43, ja:'サブナック', lat:'Sabnock', rank:'侯爵', legion:'50', work:'塔と城砦を築く／傷を膿ませ蛆を湧かせる／良き使い魔'},
+  {n:44, ja:'シャックス', lat:'Shax', rank:'侯爵', legion:'30', work:'視力・聴力・理解を奪う／金と馬を盗む／大嘘つきで信用ならぬ'},
+  {n:45, ja:'ウィネ', lat:'Vine', rank:'王・伯爵', legion:'36', work:'魔女を暴く／隠されたことを明かす／嵐を起こし城壁を崩す'},
+  {n:46, ja:'ビフロンス', lat:'Bifrons', rank:'伯爵', legion:'6', work:'占星術・幾何学など諸学を教える／薬草宝石の効能／死者を移す'},
+  {n:47, ja:'ウヴァル', lat:'Uvall／Vual', rank:'公爵', legion:'37', work:'女の愛を得させる／友情を生む／過去現在未来／エジプト語を語る'},
+  {n:48, ja:'ハーゲンティ', lat:'Haagenti', rank:'総裁', legion:'33', work:'人を賢明にする／金属を黄金に変える／水を葡萄酒に、葡萄酒を水に変える'},
+  {n:49, ja:'クロケル', lat:'Crocell／Procel', rank:'公爵', legion:'48', work:'幾何学と水にまつわる学芸を教える／水を温める／大音響を発する'},
+  {n:50, ja:'フルカス', lat:'Furcas', rank:'騎士', legion:'20', work:'哲学・天文学・修辞学・論理学・手相術・火占いを教える'},
+  {n:51, ja:'バラム', lat:'Balam', rank:'王', legion:'40', work:'過去現在未来を告げる／人を不可視にし、機知に富ませる'},
+  {n:52, ja:'アロケス', lat:'Alloces／Allocer', rank:'公爵', legion:'36', work:'天文学と自由学芸を教える／良き使い魔を与える'},
+  {n:53, ja:'カイム', lat:'Caim／Camio', rank:'総裁', legion:'30', work:'鳥獣・牛・水音の言葉を解させる／未来のことを告げる'},
+  {n:54, ja:'ムルムル', lat:'Murmur', rank:'公爵・伯爵', legion:'30', work:'哲学を教える／死者の魂を呼び出し、問いに答えさせる'},
+  {n:55, ja:'オロバス', lat:'Orobas', rank:'君主', legion:'20', work:'過去現在未来を告げる／地位と聖職者の恩顧を与える／術者を決して欺かない'},
+  {n:56, ja:'グレモリー', lat:'Gremory／Gemory', rank:'公爵', legion:'26', work:'過去現在未来を告げる／隠された財宝を明かす／女の愛を得させる'},
+  {n:57, ja:'オセ', lat:'Ose', rank:'総裁', legion:'30', work:'人を賢明にする／自由学芸を教える／人を狂わせ、他の姿と思い込ませる'},
+  {n:58, ja:'アミー', lat:'Amy', rank:'総裁', legion:'36', work:'占星術と自由学芸を教える／優れた使い魔／隠された財宝を明かす'},
+  {n:59, ja:'オリアス', lat:'Orias', rank:'侯爵', legion:'30', work:'星と星座の効力を教える／人の姿を変える／地位と恩顧を与える'},
+  {n:60, ja:'ウァプラ', lat:'Vapula', rank:'公爵', legion:'36', work:'手工芸・哲学・機械学・諸科学を教える'},
+  {n:61, ja:'ザガン', lat:'Zagan', rank:'王・総裁', legion:'33', work:'人を機知に富ませる／金属を貨幣に、水を葡萄酒に変える／愚者を賢くする'},
+  {n:62, ja:'ウァラク', lat:'Valac／Volac', rank:'総裁', legion:'30', work:'隠された財宝を明かす／蛇の在処を示し、従わせる'},
+  {n:63, ja:'アンドラス', lat:'Andras', rank:'侯爵', legion:'30', work:'不和と争いを蒔く／術者自身を殺しうる危険な霊'},
+  {n:64, ja:'フラウロス', lat:'Flauros／Haures', rank:'公爵', legion:'36', work:'過去現在未来を真実に語る／敵を焼き滅ぼす／誘惑に抗わせる'},
+  {n:65, ja:'アンドレアルフス', lat:'Andrealphus', rank:'侯爵', legion:'30', work:'天文学・幾何学・測量術を教える／人を鳥に変える'},
+  {n:66, ja:'キマリス', lat:'Cimeies／Kimaris', rank:'侯爵', legion:'20', work:'文法・論理学・修辞学を教える／失せ物と財宝を見つける／アフリカを司る'},
+  {n:67, ja:'アムドゥスキアス', lat:'Amdusias', rank:'公爵', legion:'29', work:'音楽を司る／樹木を撓ませる／良き使い魔を与える'},
+  {n:68, ja:'ベリアル', lat:'Belial', rank:'王', legion:'80', work:'高位の官職と聖職禄を配る／人々の恩顧を得させる／良き使い魔'},
+  {n:69, ja:'デカラビア', lat:'Decarabia', rank:'侯爵', legion:'30', work:'薬草と宝石の効能を知る／鳥に変身し、鳥を従わせる'},
+  {n:70, ja:'セーレ', lat:'Seere', rank:'君主', legion:'26', work:'物事を瞬時に運ぶ／隠された財宝を明かす／善良で、命じられれば何でもなす'},
+  {n:71, ja:'ダンタリオン', lat:'Dantalion', rank:'公爵', legion:'36', work:'あらゆる技芸と科学を教える／人の心を読む／幻を見せる／愛を生む'},
+  {n:72, ja:'アンドロマリウス', lat:'Andromalius', rank:'伯爵', legion:'36', work:'盗人と盗品を取り戻す／悪事を暴き罰する／隠された財宝を明かす'},
 ];
+
 
 // 黄経 → デカン（10度区画）の情報
 function decanInfo(lon) {
@@ -1679,7 +1799,7 @@ function decanInfo(lon) {
     demonDay: DEMONS[k], demonNight: DEMONS[k + 36],
   };
 }
-// 黄経 → クイナリー（5度区画）の情報＝天使と、それと一対一で対応する魔神
+// 黄経 → クイナンス（5度区画）の情報＝天使と、それと一対一で対応する魔神
 function quinaryInfo(lon) {
   const q = Math.floor(norm(lon) / 5);        // 0〜71
   return { q, angel: ANGELS[q], demon: DEMONS[q], from: q * 5, to: q * 5 + 5 };
@@ -1690,37 +1810,38 @@ function degLabel(abs) {
   return SIGNS[Math.floor(a / 30)].name + Math.round(a % 30) + '度';
 }
 
-// 結果画面：あなたの天体がどの区画に立っているか
+// 結果画面：あなたの天体がどの区画に立っているか（天体ごとのカード）
 function decanSection(chart) {
-  const line = (sym, name, lon) => {
+  const card = (sym, name, lon, lead) => {
     const dc = decanInfo(lon), qn = quinaryInfo(lon);
-    return `<tr><td>${sym}${TXT} ${name}</td><td>${signChip(dc.si)}<span class="dec-deg">${degStr(lon)}</span></td>
-      <td>第${dc.d + 1}デカン<br><span class="dec-sub">${dc.ruler}</span></td>
-      <td><b>${dc.card}</b><br><span class="dec-sub">${dc.titleJa}</span></td>
-      <td>${qn.q + 1} ${qn.angel[0]}<br><span class="dec-sub">${qn.angel[1]}</span></td>
-      <td>${qn.q + 1} ${qn.demon[0]}<br><span class="dec-sub">${qn.demon[1]}</span></td></tr>`;
+    return `<div class="dec-card${lead ? ' dec-lead' : ''}">
+      <div class="dec-head"><span class="dec-planet">${sym}${TXT} ${name}</span>
+        <span class="dec-pos">${signChip(dc.si)}${degStr(lon)}</span></div>
+      <div class="dec-grid">
+        <div class="dec-cell"><div class="dec-key">デカン（10度区画）</div>
+          <div>${dc.sign.name}の第${dc.d + 1}デカン　支配星 <b>${dc.ruler}</b></div></div>
+        <div class="dec-cell"><div class="dec-key">タロット小アルカナ</div>
+          <div><b>${dc.card}</b>「${dc.titleJa}」<span class="dec-lat">${dc.titleEn}</span></div></div>
+        <div class="dec-cell"><div class="dec-key">天使（5度区画　${degLabel(qn.from)}〜${degLabel(qn.to)}）</div>
+          <div><b>第${qn.angel.n} ${qn.angel.ja}</b> <span class="dec-lat">${qn.angel.lat}</span></div>
+          <p class="dec-work">${qn.angel.work}</p></div>
+        <div class="dec-cell"><div class="dec-key">魔神（同じ区画・天使と一対一）</div>
+          <div><b>第${qn.demon.n} ${qn.demon.ja}</b> <span class="dec-lat">${qn.demon.lat}／${qn.demon.rank}・${qn.demon.legion}軍団</span></div>
+          <p class="dec-work">${qn.demon.work}</p></div>
+      </div></div>`;
   };
-  let rows = '';
-  for (const p of chart.planets) rows += line(p.sym, p.name, p.lon);
-  rows += line('☊', 'ドラゴンヘッド', chart.node);
+  let cards = '';
+  for (const p of chart.planets) cards += card(p.sym, p.name, p.lon, p.key === 'sun');
+  cards += card('☊', 'ドラゴンヘッド', chart.node);
   if (!chart.timeUnknown && chart.houses) {
-    rows += line('ASC', 'アセンダント', chart.houses.asc);
-    rows += line('MC', 'MC（天頂）', chart.houses.mc);
+    cards += card('ASC', 'アセンダント', chart.houses.asc);
+    cards += card('MC', 'MC（天頂）', chart.houses.mc);
   }
-  const sun = chart.planets.find(p => p.key === 'sun');
-  const sq = quinaryInfo(sun.lon), sd = decanInfo(sun.lon);
-  const guard = `<div class="guard-box">
-    <div class="guard-label">太陽の区画が示す天使</div>
-    <div class="guard-name">第${sq.q + 1} ${sq.angel[0]} <span class="guard-lat">${sq.angel[1]}</span></div>
-    <p class="small">太陽は${degLabel(sq.from)}〜${degLabel(sq.to)}の区画にあります。この5度を受け持つ天使です。誕生日でおよそ決まるため、俗に<b>誕生天使・守護天使</b>と呼ばれることがあります。同じ区画の魔神は<b>${sq.demon[0]}（${sq.demon[1]}）</b>、太陽のデカンが呼ぶ札は<b>${sd.card}「${sd.titleJa}」</b>です。</p>
-    <p class="small">※ 守護天使の決め方は文献によって異なり（太陽の度数のほか、生誕時刻から別の天使を立てる流儀、三体を組にする流儀もあります）、ここでは<b>太陽の度数による最も広く使われる方式</b>を採っています。</p>
-  </div>`;
   const tuNote = chart.timeUnknown
     ? `<p class="small">🕐 時刻不明のため、月の区画は前後にずれる可能性があります（月は1日で約13度＝2〜3区画進みます）。アセンダント・MCは計算していません。</p>` : '';
-  return `${guard}
-  <table class="pos-table dec-table"><thead><tr><th>天体</th><th>位置</th><th>デカン<br><span class="dec-sub">支配星</span></th><th>タロット<br><span class="dec-sub">札の通称</span></th><th>天使<br><span class="dec-sub">5度区画</span></th><th>魔神<br><span class="dec-sub">一対一対応</span></th></tr></thead><tbody>${rows}</tbody></table>
+  return `${cards}
   ${tuNote}
-  <p class="small">📖 表の魔神は<b>天使と一対一で対応する流儀</b>（5度ずつ）で出しています。もうひとつの流儀＝黄金の夜明け団の「1デカンに昼と夜の二体」では、割り当てが変わります。二つの流儀の違いは、下の<b>「専門的な理論」→「デカン・36枚の小アルカナ・72の天使と魔神」</b>で全表とともに解説しています。</p>`;
+  <p class="small">📖 上に出した魔神は<b>天使と一対一で対応する流儀</b>（5度ずつ）です。もうひとつの流儀＝黄金の夜明け団の「1デカンに昼と夜の二体」では割り当てが変わります。二つの流儀の違いと全一覧は、下の<b>「専門的な理論」→「デカン・36枚の小アルカナ・72の天使と魔神」</b>にあります。</p>`;
 }
 
 // 専門的な理論：36デカンの全表
@@ -1728,9 +1849,9 @@ function decanFullTable() {
   let rows = '';
   for (let k = 0; k < 36; k++) {
     const dc = decanInfo(k * 10 + 5);
-    rows += `<tr><td>${k + 1}</td><td>${dc.sign.sym}${TXT} ${dc.sign.name} ${dc.d * 10}〜${dc.d * 10 + 10}度</td>
+    rows += `<tr><td>${k + 1}</td><td>${dc.sign.sym}${TXT} ${dc.sign.name}<br><span class="dec-sub">${dc.d * 10}〜${dc.d * 10 + 10}度</span></td>
       <td>${dc.ruler}</td><td><b>${dc.card}</b></td><td>${dc.titleJa}<br><span class="dec-sub">${dc.titleEn}</span></td>
-      <td>${k + 1} ${dc.demonDay[0]}</td><td>${k + 37} ${dc.demonNight[0]}</td></tr>`;
+      <td>${k + 1} ${dc.demonDay.ja}</td><td>${k + 37} ${dc.demonNight.ja}</td></tr>`;
   }
   return `<table class="dec-full"><thead><tr><th>#</th><th>デカン</th><th>支配星</th><th>札</th><th>札の通称</th><th>昼の魔神</th><th>夜の魔神</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
@@ -1740,11 +1861,11 @@ function quinaryFullTable() {
   for (let q = 0; q < 72; q++) {
     const qn = quinaryInfo(q * 5 + 2);
     const si = Math.floor(q / 6);
-    rows += `<tr><td>${q + 1}</td><td>${SIGNS[si].sym}${TXT} ${SIGNS[si].name} ${(q % 6) * 5}〜${(q % 6) * 5 + 5}度</td>
-      <td>${qn.angel[0]}<br><span class="dec-sub">${qn.angel[1]}</span></td>
-      <td>${qn.demon[0]}<br><span class="dec-sub">${qn.demon[1]}</span></td></tr>`;
+    rows += `<tr><td>${q + 1}</td><td>${SIGNS[si].sym}${TXT} ${SIGNS[si].name}<br><span class="dec-sub">${(q % 6) * 5}〜${(q % 6) * 5 + 5}度</span></td>
+      <td><b>${qn.angel.ja}</b><br><span class="dec-sub">${qn.angel.lat}</span><p class="dec-work">${qn.angel.work}</p></td>
+      <td><b>${qn.demon.ja}</b><br><span class="dec-sub">${qn.demon.lat}・${qn.demon.rank}・${qn.demon.legion}軍団</span><p class="dec-work">${qn.demon.work}</p></td></tr>`;
   }
-  return `<table class="dec-full"><thead><tr><th>#</th><th>区画（5度）</th><th>天使</th><th>魔神（一対一対応）</th></tr></thead><tbody>${rows}</tbody></table>`;
+  return `<table class="dec-full dec-full-wide"><thead><tr><th>#</th><th>区画（5度）</th><th>天使 — 原文の訳（用途／司るもの／資質）</th><th>魔神 — 階級・軍団・職能</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 /* ---------------- 一覧表・サマリー ---------------- */
@@ -2191,23 +2312,39 @@ if (typeof module !== 'undefined' && module.exports) {
     <div class="dec-scroll" id="decan-full-holder"></div>
     <p class="small">📌 表の「昼の魔神／夜の魔神」については、次項で説明します。札の通称は『Book T』の英名（Lord of ○○）に基づく訳です。</p>
 
-    <h3>72の天使——シェムハメフォラシュ</h3>
-    <p>円を5度ずつ刻むと、72の区画になります（30度÷5＝6区画×12星座）。この72に配当されるのが、カバラの伝統でいう<b>シェムハメフォラシュ（שם המפורש＝「分節された御名」）</b>の72天使です。</p>
+    <h3>72の天使——シェム・ハ＝メフォラシュ</h3>
+    <p>円を5度ずつ刻むと、72の区画になります（30度÷5＝6区画×12星座）。この一区画を<b>クイナンス</b>と呼びます。ここに配当されるのが、カバラの伝統でいう<b>シェム・ハ＝メフォラシュ（שם המפורש＝「分節された御名」）</b>の72天使です。</p>
     <p>出どころは『出エジプト記』14章の19〜21節。ヘブライ語で書かれたこの三つの節は、<b>いずれもちょうど72文字</b>でできています。19節を左から、20節を右から、21節をまた左から——牛が畑を耕すように往復に読んで三文字ずつ縦に取ると、<b>72の三文字の名</b>が現れる。そこへ神を意味する接尾辞<b>エル（אל）</b>または<b>ヤ（יה）</b>を添えたものが、72天使の名です。名前の多くが「〜エル」「〜イア」で終わるのはそのためです。</p>
-    <p>この72天使を黄道の5度区画に順に当てる方式は、文献間で異論がありません。<b>牡羊座0〜5度が第1のヴェフイア</b>で、そこから順に一周します。太陽の位置する区画の天使が、俗に<b>誕生天使・守護天使</b>と呼ばれるものです（決め方には別の流儀もあります。上の結果画面の注記をご覧ください）。</p>
+    <p>この72天使を黄道の5度区画に順に当てる方式は、文献間で異論がありません。<b>牡羊座0〜5度が第1のヴェフイア</b>で、そこから順に一周し、第72のムミアが魚座25〜30度で閉じます。</p>
+
+    <div class="note">
+      <p><b>⚠️ 職能の一覧について——使う前に、三点</b></p>
+      <p>下の表の「天使が何を司るか」は、<b>読む前に知っておくべきことが三つあります</b>。この三点を伏せて使われることが多いのですが、伏せると誤解を招きます。</p>
+      <p><b>① 名は古く、内容は新しい。</b> 72の名そのものは16〜17世紀（ロイヒリン1517年・キルヒャー1653年）まで遡りますが、<b>職能の一覧は19世紀フランスのキリスト教カバラの産物</b>です（ルナン1823年）。両者を「古代からの伝統」と一括りにはできません。</p>
+      <p><b>② キリスト教の色が濃い。</b> 第20位・第41位・第63位には「諸国民をキリスト教へ改宗させるために」等の記述があります。出典の著者自身が第20位に「(!)」を付して異和を示しているほどです。由来を伏せずに読んでください。</p>
+      <p><b>③ 唯一の正解ではない。</b> この一覧はアンブラン／ルナン系統という一本を選んだ結果であり、<b>他の系統では内容が変わります</b>。</p>
+      <p class="small">また、原文の各項は<b>①祈願の用途（For／Against／To〜）②司るもの（Governs／Protects／Influences）③その天使が与える資質</b>という三段構造になっており、<b>①と②は別の情報</b>です。元本は占星術の書ではなく「招請の手引き」でした（第17位「断食して呼ぶべし」、第19位「南を向いて呼ぶべし」がその証拠です）。<b>②を持たない項が21あります</b>が、これは欠落ではなく元の資料の正直な姿ですので、埋めずにそのまま載せています。</p>
+    </div>
 
     <h3>72の魔神——ゴエティア、そして<b>二つの流儀</b></h3>
     <p><b>『ゴエティア』</b>は17世紀の魔術書『レメゲトン（ソロモンの小さな鍵）』の第一の書で、72の霊の名・位階・印章を列挙したものです。バエル、パイモン、アスモデウス、ベリアル——現代のゲームや小説でおなじみの名前の、ほとんどの出所がここです。</p>
     <p>この72を黄道に当てるとき、<b>広く使われている方式が二つあり、内容が食い違います</b>。どちらか一方だけを「正しい」として載せるのは誠実ではないので、両方を示します。</p>
     <table><thead><tr><th>流儀</th><th>刻み方</th><th>割り当て</th><th>例：牡羊座の頭</th></tr></thead><tbody>
       <tr><td><b>黄金の夜明け団</b><br><span class="dec-sub">マザース／クロウリー『777』</span></td><td><b>10度</b>（デカン）</td><td>1デカンに<b>昼・夜の二体</b>。昼＝序列1〜36、夜＝序列37〜72が、それぞれ36のデカンを順に受け持つ</td><td>牡羊0〜10度＝昼バエル（1）・夜フェニクス（37）</td></tr>
-      <tr><td><b>ラッド系</b><br><span class="dec-sub">近代の「クイナリー」説</span></td><td><b>5度</b>（クイナリー）</td><td>天使と<b>一対一</b>。序列どおり72区画に一体ずつ。天使Nと魔神Nが同じ区画で対になる</td><td>牡羊0〜5度＝バエル（1）／5〜10度＝アガレス（2）</td></tr>
+      <tr><td><b>ラッド系</b><br><span class="dec-sub">近代の「クイナンス」説</span></td><td><b>5度</b>（クイナンス）</td><td>天使と<b>一対一</b>。序列どおり72区画に一体ずつ。天使Nと魔神Nが同じ区画で対になる</td><td>牡羊0〜5度＝バエル（1）／5〜10度＝アガレス（2）</td></tr>
     </tbody></table>
     <p>上の36デカン表に載せた「昼の魔神・夜の魔神」が前者、下の72区画表が後者です。結果画面の一覧で出しているのは<b>後者（天使と一対一）</b>——天使と並べて見るのが本項の趣旨だからです。</p>
-    <p class="small">💡 なお、天使Nと魔神Nを「光と影の対」とみなす見立ては17世紀の英国の医師・魔術書収集家<b>トマス・ラッド</b>に遡るとされ、彼の写本では魔神を制する天使として並べられています。近年これを占星術に仕立て直したのがクイナリー説です。<b>体系としての歴史はそれほど古くありません</b>——古代からの伝承ではない、という点は押さえておいてよいでしょう。</p>
+    <p class="small">💡 なお、天使Nと魔神Nを「光と影の対」とみなす見立ては17世紀の英国の医師・魔術書収集家<b>トマス・ラッド</b>に遡るとされ、彼の写本では魔神を制する天使として並べられています。近年これを占星術に仕立て直したのがクイナンス説です。<b>体系としての歴史はそれほど古くありません</b>——古代からの伝承ではない、という点は押さえておいてよいでしょう。</p>
     <div class="dec-scroll" id="quinary-full-holder"></div>
-    <p class="small">📖 <b>表記のゆれについて</b>——天使・魔神の名はヘブライ語・ラテン語からの転写を重ねたもので、写本や翻訳ごとに綴りが揺れます（Jeliel／Jelialなど）。照合できるよう、和名の下にラテン綴りを併記しました。</p>
-    <p class="small">📚 <b>主な出典</b>：デカンの支配星＝カルデア順（ヘレニズム占星術の標準）／小アルカナの配当＝S.L.マグレガー・マザース『Book T — The Tarot』（黄金の夜明け団）、A.クロウリー『777』『トートの書』／72天使＝『出エジプト記』14:19-21に基づくカバラの伝統（ルナンほか）／72魔神＝『レメゲトン』第一の書『ゴエティア』（マザース／クロウリー版）、トマス・ラッドの写本系統。</p>
+    <p class="small">📖 <b>表記のゆれについて</b>——天使・魔神の名はヘブライ語・ラテン語からの転写を重ねたもので、写本や翻訳ごとに綴りが揺れます（第30位 Ornael と Omael のように、rn と m の誤読に由来するものもあります）。照合できるよう、和名の下にラテン綴りを併記しました。魔神の軍団数も版によって食い違います（バエル 66／「32以上」など）——<b>「正しい一つの数字」は存在しません</b>。なお第11位と第17位はどちらも Lauviah という同じ名ですが、<b>別の天使として扱われます</b>（写本伝統に由来する重複で、誤記ではありません）。</p>
+    <p class="small">📚 <b>出典</b>——何に書いてあるかを明示します。</p>
+    <ul class="small">
+      <li><b>デカンの支配星</b>＝カルデア順（ヘレニズム占星術の標準）</li>
+      <li><b>小アルカナ36枚の配当</b>＝S.L.マグレガー・マザース『Book T — The Tarot』（黄金の夜明け団）、A.クロウリー『777』『トートの書』</li>
+      <li><b>72天使の職能</b>＝William S. Burkle, Ph.D. <i>“The Seventy-Two Angels of the Shemhamphorash: Their Derivation, Correspondences, and Invocation”</i>（Societas Rosicruciana in Civitatibus Foederatis, 2015年11月6日・全65頁）の Table 6 の全訳。同論文が引く典拠は<b>ロベール・アンブラン『実践カバラ』（1951年）第5章</b>、さらに遡ると<b>ルナン『カバラ科学』（1823年）</b>。名前そのものの系譜は<b>ロイヒリン『カバラの術について』（1517年）</b>・<b>キルヒャー『エジプトのオイディプス』（1653年）</b></li>
+      <li><b>72魔神</b>＝『レメゲトン（ソロモンの小さな鍵）』第一の書『アルス・ゴエティア』（17世紀成立）、S.L.マザース訳／A.クロウリー編（1904年）。序列の祖形はヨハン・ワイヤー『悪魔の偽王国』（1577年・69柱）</li>
+      <li><b>天使と魔神の一対一対応</b>＝トマス・ラッドの写本系統。<b>これは黄金の夜明け団以降に整えられた後付けであり、17世紀の『ゴエティア』にも、カバラ本来の教説にも、この形の対応はありません</b></li>
+    </ul>
   </details>
 
   <details>
@@ -2284,7 +2421,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 </main>
 <footer class="site">
-  はじめてのホロスコープv2.5 — カヒノト式・占星術学習ツール<br>
+  はじめてのホロスコープv2.6 — カヒノト式・占星術学習ツール<br>
   © 2026 カヒノト — 本ツールの著作権は占い師カヒノトに帰属します。無断転載・再配布はご遠慮ください。<br>
   アクセス数の計測にGoatCounterを使用しています（入力内容・個人情報は送信されません）。<br>
   ご質問はXへ：<a href="https://x.com/yajul" target="_blank" rel="noopener">@yajul</a> ｜ 計算エンジン: Astronomy Engine (MIT License)
