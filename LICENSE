@@ -1,0 +1,63 @@
+このリポジトリには、二種類の著作物が含まれています。
+それぞれ扱いが異なりますので、以下に分けて記します。
+
+================================================================
+1. カヒノトが書いた部分（計算の呼び出し・描画・解説文・意匠）
+================================================================
+
+Copyright (c) 2026 カヒノト (Kahinoto). All Rights Reserved.
+
+このツールと解説書は、どなたでも自由にご覧いただけます。
+ブラウザで開いて使うこと、URLを人に紹介することに制限はありません。
+学習にお役立ていただければ幸いです。
+
+一方で、複製・改変・再配布の許諾は与えていません。
+（ソースが閲覧できるのは、GitHub Pages が公開リポジトリからのみ
+　配信される仕組みによるものであって、利用許諾の意思表示ではありません。）
+
+なお、算出される内容の正確性についていかなる保証もいたしません。
+これは学習用の道具であり、鑑定の結果を保証するものではありません。
+
+================================================================
+2. 同梱しているサードパーティ製ソフトウェア
+================================================================
+
+天体位置の計算に Astronomy Engine を index.html に埋め込んで同梱しています。
+これは MIT License で提供されており、以下の著作権表示と許諾条項を
+そのまま保持することが条件です。本ファイルおよび index.html 内の
+コメントの双方に、その全文を掲げます。
+
+----------------------------------------------------------------
+Astronomy Engine — Astronomy library for JavaScript
+https://github.com/cosinekitty/astronomy
+
+MIT License
+
+Copyright (c) 2019-2023 Don Cross <cosinekitty@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+----------------------------------------------------------------
+
+================================================================
+3. アクセス解析について
+================================================================
+
+Web版は GoatCounter（https://www.goatcounter.com/ ）による
+アクセス数の計測タグを読み込んでいます。個人を特定する情報は
+収集していません。この点はフッターにも明示しています。
