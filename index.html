@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>はじめてのホロスコープv2.6 — 読み方ナビつき出生図ツール</title>
+<title>はじめてのホロスコープv2.7 — 読み方ナビつき出生図ツール</title>
 <meta name="theme-color" content="#faf9f5">
 <!-- アイコン：火地風水の四色が十二宮を巡る意匠。極小用は四分割に簡略化しデータURIで内蔵＝ファイル単体でも表示される -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23faf9f5'/%3E%3Cpath d='M256 256 L256 86 A170 170 0 0 1 426 256 Z' fill='%23c1502e'/%3E%3Cpath d='M256 256 L426 256 A170 170 0 0 1 256 426 Z' fill='%235e7a2f'/%3E%3Cpath d='M256 256 L256 426 A170 170 0 0 1 86 256 Z' fill='%23a07d1c'/%3E%3Cpath d='M256 256 L86 256 A170 170 0 0 1 256 86 Z' fill='%232f6ea5'/%3E%3Ccircle cx='256' cy='256' r='96' fill='%23faf9f5' stroke='%23b08d3e' stroke-width='14'/%3E%3C/svg%3E">
@@ -225,7 +225,7 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 <body>
 <header class="site">
   <div class="stars">☽ ✶ ☉ ✶ ☊</div>
-  <h1>はじめてのホロスコープ <span class="ver">v2.6</span></h1>
+  <h1>はじめてのホロスコープ <span class="ver">v2.7</span></h1>
   <p>生年月日と生まれた場所から、あなたの出生図（ネイタルチャート）を作り、<br>「読む順番」つきでやさしく解説するカヒノト式学習ツールです。<br>v2から、アスペクト（天体同士の角度）を正式に読めるようになりました。</p>
 </header>
 <main>
@@ -349,9 +349,9 @@ footer.site{border-top:1px solid var(--line);margin-top:40px;padding:18px 16px;t
 </section>
 
 <section id="sec-decan">
-  <h2>デカンと照応 — あなたの天体が立つ区画</h2>
+  <h2>デカンと照応 — あなたの太陽が立つ区画</h2>
   <p>ホロスコープの円は360度。これを12で割ったものが<b>星座</b>（30度ずつ）でした。ところが古代の占星術は、同じ円をもっと細かく刻んでいます。<b>10度ずつ36に割ったものが「デカン」</b>、<b>5度ずつ72に割ったものが「クイナンス」</b>です。同じ牡羊座生まれでも、牡羊座の頭にいるのか、真ん中か、終わりかで、割り当てられる名も札も変わります。</p>
-  <p>デカンには<b>支配星</b>と<b>タロットの小アルカナ一枚</b>が、5度の区画には<b>72の天使</b>と<b>72の魔神</b>が配当されています。あなたの天体がどの区画に入るかを算出し、<b>その区画に配当されているものを、そのまま並べました</b>。</p>
+  <p>デカンには<b>支配星</b>と<b>タロットの小アルカナ一枚</b>が、5度の区画には<b>72の天使</b>と<b>72の魔神</b>が配当されています。ここでは<b>あなたの太陽が入る区画だけ</b>を算出し、<b>そこに配当されているものを、そのまま並べました</b>——全天体分を並べると数が多すぎて、かえって読めなくなるからです。ほかの天体の区画は、下の「専門的な理論」の全表から度数で引けます。</p>
   <div class="lead-box" style="background:#faf7f0">
     <p class="small">⚖️ <b>これは何の資料か</b> — ここに載せるのは、ルネサンス以降の西洋魔術・カバラの文献に記された<b>照応の体系</b>です。文化史・体系の資料としてご覧ください。<b>召喚や実践を勧めるものではありません</b>。占星術の本流の技法でもなく、「当たる／当たらない」を論じるものでもない——円をどう刻み、そこに何を配当してきたかという、人間の分類の歴史の一断面です。</p>
     <p class="small">📖 <b>読み方は書きません</b> — このページは<b>「その区画に何が配当されているか」を出すところまで</b>にとどめ、「あなたはこういう人です」という読み文は載せません。職能の記述は原典の訳であって、あなたを説明するものではないからです。<b>どう受け取るかは、読む方それぞれに委ねます。</b>出典と、使う前に知っておくべき注意は、下の「専門的な理論」に明記しました。</p>
@@ -1810,11 +1810,11 @@ function degLabel(abs) {
   return SIGNS[Math.floor(a / 30)].name + Math.round(a % 30) + '度';
 }
 
-// 結果画面：あなたの天体がどの区画に立っているか（天体ごとのカード）
+// 結果画面：あなたの太陽が立つ区画（v2.7＝カードは太陽の一枚のみ。全天体分は冗長ゆえ廃した）
 function decanSection(chart) {
-  const card = (sym, name, lon, lead) => {
+  const card = (sym, name, lon) => {
     const dc = decanInfo(lon), qn = quinaryInfo(lon);
-    return `<div class="dec-card${lead ? ' dec-lead' : ''}">
+    return `<div class="dec-card dec-lead">
       <div class="dec-head"><span class="dec-planet">${sym}${TXT} ${name}</span>
         <span class="dec-pos">${signChip(dc.si)}${degStr(lon)}</span></div>
       <div class="dec-grid">
@@ -1830,17 +1830,13 @@ function decanSection(chart) {
           <p class="dec-work">${qn.demon.work}</p></div>
       </div></div>`;
   };
-  let cards = '';
-  for (const p of chart.planets) cards += card(p.sym, p.name, p.lon, p.key === 'sun');
-  cards += card('☊', 'ドラゴンヘッド', chart.node);
-  if (!chart.timeUnknown && chart.houses) {
-    cards += card('ASC', 'アセンダント', chart.houses.asc);
-    cards += card('MC', 'MC（天頂）', chart.houses.mc);
-  }
+  const sun = chart.planets.find(p => p.key === 'sun');
+  if (!sun) return '';
   const tuNote = chart.timeUnknown
-    ? `<p class="small">🕐 時刻不明のため、月の区画は前後にずれる可能性があります（月は1日で約13度＝2〜3区画進みます）。アセンダント・MCは計算していません。</p>` : '';
-  return `${cards}
+    ? `<p class="small">🕐 時刻不明のため正午で計算しています。太陽は1日に約1度進むので、<b>5度の区画の境目にかかっている場合は、隣の区画になることがあります</b>（上の度数が0度台か5度に近いときはご注意ください）。</p>` : '';
+  return `${card(sun.sym, sun.name, sun.lon)}
   ${tuNote}
+  <p class="small">📖 出しているのは<b>太陽の区画だけ</b>です。月やほかの天体、アセンダントの区画も引きたい場合は、上の「天体の位置一覧」でその度数を見て、下の<b>「専門的な理論」→「デカン・36枚の小アルカナ・72の天使と魔神」</b>の表から引いてください（デカン＝10度ずつ・天使と魔神＝5度ずつ）。</p>
   <p class="small">📖 上に出した魔神は<b>天使と一対一で対応する流儀</b>（5度ずつ）です。もうひとつの流儀＝黄金の夜明け団の「1デカンに昼と夜の二体」では割り当てが変わります。二つの流儀の違いと全一覧は、下の<b>「専門的な理論」→「デカン・36枚の小アルカナ・72の天使と魔神」</b>にあります。</p>`;
 }
 
@@ -1944,7 +1940,7 @@ function navSection(chart) {
     ['card-node', `ドラゴンヘッド — ${SIGNS[signIdx(chart.node)].name}`, '未来へ進む道／過去の蓄積'],
     ['card-gen', '天王星・海王星・冥王星', '世代の刻印。さらりと眺める'],
     ['sec-aspects', 'アスペクト — 天体同士の対話', '仕上げの上級編。ここが読めれば占星術師'],
-    ['sec-decan', 'デカンと照応 — あなたの天体が立つ区画', '円をさらに細かく刻む見方。タロット札・72の天使と魔神'],
+    ['sec-decan', 'デカンと照応 — あなたの太陽が立つ区画', '円をさらに細かく刻む見方。タロット札・72の天使と魔神'],
   ];
   const navCls = id => id==='sec-aspects' ? ' nav-asp' : id==='sec-decan' ? ' nav-dec' : '';
   let lis = items.map((it, i) =>
@@ -2421,7 +2417,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 </main>
 <footer class="site">
-  はじめてのホロスコープv2.6 — カヒノト式・占星術学習ツール<br>
+  はじめてのホロスコープv2.7 — カヒノト式・占星術学習ツール<br>
   © 2026 カヒノト — 本ツールの著作権は占い師カヒノトに帰属します。無断転載・再配布はご遠慮ください。<br>
   アクセス数の計測にGoatCounterを使用しています（入力内容・個人情報は送信されません）。<br>
   ご質問はXへ：<a href="https://x.com/yajul" target="_blank" rel="noopener">@yajul</a> ｜ 計算エンジン: Astronomy Engine (MIT License)
