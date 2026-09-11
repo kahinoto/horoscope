@@ -1,0 +1,288 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>夜空とホロスコープ — 十二星座の帯を丸めると出生図になる</title>
+<meta name="description" content="夜空にならぶ十二星座の帯を丸めると、ホロスコープになる。太陽・月・惑星の速さのちがいと、逆行のしくみを、動かして確かめられる学習ページ。">
+<meta name="theme-color" content="#0a0e18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230a0e18'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='%23e8c25a' stroke-width='16'/%3E%3Ccircle cx='256' cy='106' r='26' fill='%23ff6b5b'/%3E%3Ccircle cx='386' cy='331' r='26' fill='%235aa8e0'/%3E%3Ccircle cx='126' cy='331' r='26' fill='%236fbf6a'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="はじめてのホロスコープ">
+<meta property="og:title" content="夜空とホロスコープ — 十二星座の帯を丸めると出生図になる">
+<meta property="og:description" content="夜空にならぶ十二星座の帯を丸めると、ホロスコープになる。太陽・月・惑星の速さのちがいと、逆行のしくみを、動かして確かめられる学習ページ。">
+<meta property="og:url" content="https://kahinoto.github.io/horoscope/sky.html">
+<meta property="og:image" content="https://kahinoto.github.io/horoscope/sky-ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@yajul">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Roboto+Mono:wght@400;500&family=Noto+Sans+Symbols+2&display=swap">
+</head><body>
+<style>
+/* 夜空のための単一テーマ。星空を白地で見せる意味がないので、これは意図した選択 */
+:root{
+  --ground:#0a0e18;      /* 夜空の地 */
+  --panel:#141b2b;       /* 面 */
+  --edge:#26304a;        /* 罫 */
+  --ink:#dde3ee;         /* 本文 */
+  --sub:#8492aa;         /* 副文 */
+  --gold:#e8c25a;        /* 星の金 */
+  --fire:#ff6b5b; --earth:#6fbf6a; --air:#f0c74a; --water:#5aa8e0;
+  --sans:"BIZ UDPGothic","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,SFMono-Regular,monospace;
+  --sym:"Noto Sans Symbols 2","Segoe UI Symbol","Apple Symbols",var(--sans);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{max-width:100%;background:var(--ground)}
+body{color:var(--ink);font-family:var(--sans);padding-block:26px;padding-left:18px;padding-right:18px;
+     -webkit-font-smoothing:antialiased;line-height:1.75}
+.wrap{max-width:1100px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:18px}
+
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+h1{font-size:clamp(23px,5vw,32px);font-weight:700;letter-spacing:.06em;line-height:1.3;text-wrap:balance}
+h1 small{display:block;font-size:13px;font-weight:400;color:var(--sub);letter-spacing:.04em;margin-top:6px}
+.lead{font-size:14.5px;color:#b7c0d2;max-width:62ch;overflow-wrap:anywhere}
+.lead b{color:var(--ink);font-weight:700}
+
+.panel{background:var(--panel);border:1px solid var(--edge);border-radius:10px;padding:14px 16px;max-width:100%}
+.cap{font-size:12.5px;color:var(--sub);letter-spacing:.04em;margin-bottom:8px}
+.cap b{color:var(--ink)}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:var(--sans)}
+svg .sy{font-family:var(--sym)}
+
+.bandwrap{overflow-x:auto;width:100%;max-width:100%;-webkit-overflow-scrolling:touch}
+.bandwrap>svg{min-width:720px}
+.hint{display:none;font-size:11.5px;color:var(--sub);text-align:center;margin-top:8px;letter-spacing:.04em}
+
+.fold{text-align:center;font-size:12.5px;color:var(--sub);letter-spacing:.14em}
+
+.two{display:flex;gap:18px;align-items:stretch;flex-wrap:wrap}
+.two>*{flex:1 1 340px;min-width:0}
+.two>.side{flex:1 1 280px;display:flex;flex-direction:column;gap:14px}
+
+.tbl{display:flex;flex-direction:column;gap:3px}
+.tbl .row{display:flex;align-items:baseline;gap:9px;min-width:0;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.045)}
+.tbl i{font-style:normal;font-family:var(--sym);font-size:16px;width:19px;text-align:center}
+.tbl .nm{font-size:13.5px}
+.tbl .deg{margin-left:auto;font-family:var(--mono);font-size:12.5px;color:var(--sub);
+          font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl .rx{color:var(--gold);font-size:11px;margin-left:7px}
+
+.tip{font-size:12.5px;color:var(--sub);overflow-wrap:anywhere}
+.tip+.tip{margin-top:10px}
+.tip b{color:#b7c0d2}
+.tip em{font-style:normal;color:var(--gold);font-weight:700}
+
+.ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.date{font-family:var(--mono);font-size:21px;font-weight:500;letter-spacing:.04em;
+      font-variant-numeric:tabular-nums;color:var(--gold)}
+button{font:inherit;font-size:13px;background:#1e273a;color:var(--ink);border:1px solid var(--edge);
+       border-radius:6px;padding:8px 15px;cursor:pointer;transition:background .15s}
+button:hover{background:#28344d}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.on{background:#33507e;border-color:#5c7fb5;color:#fff}
+.lab{font-size:12px;color:var(--sub)}
+
+footer{font-size:11.5px;color:#6f7a90;overflow-wrap:anywhere}
+footer b{color:#96a2b8}
+footer p+p{margin-top:5px}
+
+@media (max-width:760px){
+  body{padding-left:12px;padding-right:12px;padding-block:20px}
+  .panel{padding:12px}
+  .hint{display:block}
+  .date{width:100%;order:-1}
+  .two{gap:14px}
+}
+@media (prefers-reduced-motion:reduce){button{transition:none}}
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">占いの基本 ／ 西洋占星術</div>
+    <h1>夜空とホロスコープ
+      <small>おなじものを、のばして見るか、丸めて見るか</small></h1>
+    <p class="lead">
+      夜空には<b>十二の星座がぐるりと一周ならんでいます</b>。これは動きません。空にはりついた「目もり」です。
+      そこを<b>太陽・月・惑星が、それぞれちがう速さで通りすぎていきます</b>。
+      ある瞬間にどれがどこを通っていたか——それを書きとめた地図が、ホロスコープです。
+    </p>
+  </header>
+
+  <div class="panel">
+    <div class="cap"><b>夜空をぐるりと一周、のばしたところ</b>　／　左端と右端はつながっています</div>
+    <div class="bandwrap"><svg id="band" viewBox="0 0 1200 210" role="img" aria-label="黄道十二星座の帯と、その上を動く天体"></svg></div>
+    <div class="hint">← 横にスワイプすると一周ぜんぶ見られます →</div>
+  </div>
+
+  <div class="fold">▼　この帯を、そのまま丸めると　▼</div>
+
+  <div class="two">
+    <div class="panel">
+      <div class="cap"><b>丸めたところ＝ホロスコープ</b>　／　まんなかが地上（あなた）</div>
+      <svg id="wheel" viewBox="0 0 440 440" role="img" aria-label="ホロスコープの円盤"></svg>
+    </div>
+    <div class="side">
+      <div class="panel">
+        <div class="cap"><b>いま、どれがどこにいるか</b></div>
+        <div class="tbl" id="tbl"></div>
+      </div>
+      <div class="panel">
+        <p class="tip"><b>速さがまるでちがいます。</b>月は二日半で星座をひとつ通り、太陽はひと月かかります。土星はひとつの星座に二年半ちかく居すわります。</p>
+        <p class="tip"><b>火星や木星をよく見ていてください。</b>ときどき<em>逆もどり</em>します。惑星がほんとうに戻るのではなく、内側を速く回る地球が外側の星を追いこすときに、そう見えるだけです。これを<em>逆行</em>といいます。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel ctrl">
+    <button id="play">▶　うごかす</button>
+    <span class="date" id="date">—</span>
+    <span class="lab">はやさ</span>
+    <button class="sp" id="sp1" data-v="1">1日</button>
+    <button class="sp" id="sp7" data-v="7">1週</button>
+    <button class="sp" id="sp30" data-v="30">1か月</button>
+    <button class="sp" id="sp365" data-v="365">1年</button>
+    <span class="lab">／秒</span>
+    <button id="today">今日にもどす</button>
+    <button id="trail" class="on">通った跡をのこす</button>
+  </div>
+
+  <div class="panel" style="text-align:center">
+    <a href="index.html" style="color:#e8c25a;font-size:13.5px;text-decoration:none;border-bottom:1px solid rgba(232,194,90,.4);padding-bottom:2px">
+      → 自分の出生図をつくってみる（はじめてのホロスコープ）</a>
+  </div>
+
+  <footer>
+    <p>※ 天体の位置は<b>円軌道による教材用の近似</b>です。実際の暦とは1〜2度ほどずれます（2026-09-11で太陽が乙女座20.2度、実際は18〜19度）。星座のならびと速さのちがい、逆行のしくみを見るためのものです。</p>
+    <p>※ ここで使っているのは<b>トロピカル方式</b>（春分点を牡羊座0度とする区切り）で、西洋占星術の標準です。実際の星空の星座の位置とは、歳差によっておよそ一星座ぶんずれています。</p>
+    <p>アクセス数の計測にGoatCounterを使用しています（入力内容・個人情報は送信されません）。</p>
+    <p>「占いの基本」講座　—　カヒノト</p>
+  </footer>
+
+</div>
+
+<script>
+const RAD=Math.PI/180, norm=x=>((x%360)+360)%360;
+const SG=[["牡羊","♈","fire"],["牡牛","♉","earth"],["双子","♊","air"],["蟹","♋","water"],
+          ["獅子","♌","fire"],["乙女","♍","earth"],["天秤","♎","air"],["蠍","♏","water"],
+          ["射手","♐","fire"],["山羊","♑","earth"],["水瓶","♒","air"],["魚","♓","water"]];
+const EC={fire:"#ff6b5b",earth:"#6fbf6a",air:"#f0c74a",water:"#5aa8e0"};
+const EARTH={a:1.0,P:365.256,L0:100.46};
+const BODY=[
+ {k:"☉",nm:"太陽",c:"#ffc83d",t:"sun"},
+ {k:"☽",nm:"月",  c:"#d8e2f0",t:"moon"},
+ {k:"☿",nm:"水星",c:"#b3a6e0",a:0.387,P:87.969,L0:252.25},
+ {k:"♀",nm:"金星",c:"#7fd6a8",a:0.723,P:224.701,L0:181.98},
+ {k:"♂",nm:"火星",c:"#ff7a6e",a:1.524,P:686.980,L0:355.43},
+ {k:"♃",nm:"木星",c:"#f0b463",a:5.203,P:4332.589,L0:34.35},
+ {k:"♄",nm:"土星",c:"#9fb2c9",a:9.537,P:10759.22,L0:50.08}];
+const helio=(o,d)=>{const L=(o.L0+360/o.P*d)*RAD;return [o.a*Math.cos(L),o.a*Math.sin(L)];};
+function lonOf(b,d){
+  if(b.t==="moon") return norm(218.32+360/27.32158*d);
+  const [ex,ey]=helio(EARTH,d);
+  if(b.t==="sun") return norm(Math.atan2(-ey,-ex)/RAD);
+  const [px,py]=helio(b,d);
+  return norm(Math.atan2(py-ey,px-ex)/RAD);
+}
+const J2000=Date.UTC(2000,0,1,12);
+const toDays=ms=>(ms-J2000)/86400000;
+const toDate=d=>new Date(J2000+d*86400000);
+const fmtD=dt=>dt.getUTCFullYear()+"-"+String(dt.getUTCMonth()+1).padStart(2,"0")+"-"+String(dt.getUTCDate()).padStart(2,"0");
+const fmtL=l=>SG[Math.floor(l/30)][0]+" "+(l%30).toFixed(1)+"°";
+
+/* ── 帯 ── */
+const X=1200/360;
+let s='<rect x="0" y="0" width="1200" height="210" fill="#070b14"/>';
+let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+for(let i=0;i<190;i++){const x=rnd()*1200,y=22+rnd()*186,r=rnd()*1.05+0.25;
+  s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r.toFixed(2)+'" fill="#fff" opacity="'+(0.18+rnd()*0.5).toFixed(2)+'"/>';}
+SG.forEach((g,i)=>{
+  const x0=i*30*X, c=EC[g[2]];
+  s+='<rect x="'+x0+'" y="0" width="'+(30*X)+'" height="20" fill="'+c+'" opacity="0.55"/>';
+  s+='<line x1="'+x0+'" y1="0" x2="'+x0+'" y2="210" stroke="'+c+'" stroke-width="1" opacity="0.45"/>';
+  s+='<text class="sy" x="'+(x0+15*X)+'" y="14.5" font-size="12" font-weight="700" fill="#0a0e18" text-anchor="middle">'+g[1]+' '+g[0]+'</text>';
+});
+s+='<g id="btrail"></g><g id="bodies"></g>';
+document.getElementById("band").innerHTML=s;
+
+/* ── 円 ── */
+const CX=220, CY=220, R1=205, R2=172;
+const pt=(a,r)=>[(CX+r*Math.sin(a*RAD)).toFixed(2),(CY-r*Math.cos(a*RAD)).toFixed(2)];
+const ang=l=>270-l;
+let w='<circle cx="220" cy="220" r="'+R1+'" fill="#070b14"/>';
+SG.forEach((g,i)=>{
+  const a0=ang(i*30), a1=ang(i*30+30), c=EC[g[2]];
+  const A=pt(a0,R1),B=pt(a1,R1),C=pt(a1,R2),D=pt(a0,R2);
+  w+='<path d="M'+A+' A'+R1+','+R1+' 0 0 0 '+B+' L'+C+' A'+R2+','+R2+' 0 0 1 '+D+' Z" fill="'+c+'" opacity="0.55" stroke="'+c+'" stroke-width="1"/>';
+  const m=pt(ang(i*30+15),(R1+R2)/2);
+  w+='<text class="sy" x="'+m[0]+'" y="'+m[1]+'" font-size="19" font-weight="700" fill="#0a0e18" text-anchor="middle" dominant-baseline="central">'+g[1]+'</text>';
+});
+w+='<circle cx="220" cy="220" r="'+R2+'" fill="none" stroke="#26304a" stroke-width="1"/>';
+w+='<circle cx="220" cy="220" r="26" fill="#1b2438" stroke="#3a4560" stroke-width="1.4"/>';
+w+='<text x="220" y="220" font-size="11" fill="#9aa4b6" text-anchor="middle" dominant-baseline="central">地上</text>';
+w+='<g id="wtrail"></g><g id="wbodies"></g>';
+document.getElementById("wheel").innerHTML=w;
+
+/* ── 描画 ── */
+const gB=document.getElementById("bodies"), gW=document.getElementById("wbodies");
+const tB=document.getElementById("btrail"), tW=document.getElementById("wtrail");
+const tbl=document.getElementById("tbl");
+const YB=[42,64,86,108,130,152,174];
+const RW=[152,141,130,119,108,97,86];
+let trails=BODY.map(()=>[]);
+let day=toDays(Date.now()), speed=7, playing=false, showTrail=true, last=0;
+
+function draw(d){
+  let b="",c="",t="";
+  BODY.forEach((o,i)=>{
+    const l=lonOf(o,d), x=l*X, y=YB[i], p=pt(ang(l),RW[i]);
+    b+='<circle cx="'+x.toFixed(1)+'" cy="'+y+'" r="9.5" fill="'+o.c+'" opacity="0.9"/>';
+    b+='<text class="sy" x="'+x.toFixed(1)+'" y="'+y+'" font-size="12" fill="#0a0e18" text-anchor="middle" dominant-baseline="central">'+o.k+'</text>';
+    c+='<line x1="220" y1="220" x2="'+p[0]+'" y2="'+p[1]+'" stroke="'+o.c+'" stroke-width="0.8" opacity="0.3"/>';
+    c+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="10" fill="'+o.c+'" opacity="0.92"/>';
+    c+='<text class="sy" x="'+p[0]+'" y="'+p[1]+'" font-size="12.5" fill="#0a0e18" text-anchor="middle" dominant-baseline="central">'+o.k+'</text>';
+    const back=norm(l-lonOf(o,d-1))>180;
+    t+='<div class="row"><i style="color:'+o.c+'">'+o.k+'</i><span class="nm">'+o.nm+'</span>'
+      +'<span class="deg">'+fmtL(l)+(back?'<span class="rx">逆行</span>':'')+'</span></div>';
+    if(showTrail){ const tr=trails[i]; tr.push([x,y,p[0],p[1]]); if(tr.length>150) tr.shift(); }
+  });
+  gB.innerHTML=b; gW.innerHTML=c; tbl.innerHTML=t;
+  if(showTrail){
+    let tb="",tw="";
+    trails.forEach((tr,i)=>{ const col=BODY[i].c;
+      tr.forEach((q,j)=>{ const op=(j/tr.length*0.45).toFixed(2);
+        tb+='<circle cx="'+q[0]+'" cy="'+q[1]+'" r="2.2" fill="'+col+'" opacity="'+op+'"/>';
+        tw+='<circle cx="'+q[2]+'" cy="'+q[3]+'" r="2.2" fill="'+col+'" opacity="'+op+'"/>';});});
+    tB.innerHTML=tb; tW.innerHTML=tw;
+  } else { tB.innerHTML=""; tW.innerHTML=""; }
+  document.getElementById("date").textContent=fmtD(toDate(d));
+}
+
+function loop(ts){
+  if(!playing) return;
+  if(last){ day += speed*(ts-last)/1000; draw(day); }
+  last=ts; requestAnimationFrame(loop);
+}
+document.getElementById("play").onclick=e=>{
+  playing=!playing; e.currentTarget.textContent=playing?"⏸　とめる":"▶　うごかす";
+  e.currentTarget.classList.toggle("on",playing); last=0;
+  if(playing) requestAnimationFrame(loop);
+};
+document.querySelectorAll(".sp").forEach(b=>{
+  b.onclick=()=>{ speed=+b.dataset.v;
+    document.querySelectorAll(".sp").forEach(x=>x.classList.remove("on")); b.classList.add("on"); };
+});
+document.getElementById("sp7").classList.add("on");
+document.getElementById("today").onclick=()=>{ day=toDays(Date.now()); trails=BODY.map(()=>[]); draw(day); };
+document.getElementById("trail").onclick=e=>{
+  showTrail=!showTrail; e.currentTarget.classList.toggle("on",showTrail);
+  if(!showTrail) trails=BODY.map(()=>[]);
+};
+draw(day);
+</script>
+
+<script data-goatcounter="https://kahinoto.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body></html>
