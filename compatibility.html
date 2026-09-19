@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>十二星座の相性</title>
+<meta property="og:type" content="article"><meta property="og:title" content="十二星座の相性 — 三区分とエレメントで出す"><meta property="og:description" content="星座をひとつ選ぶと、残る十一との関係が出ます。相性表を覚えるのではなく、三区分・エレメント・二区分の三枚から導きます。"><meta property="og:image" content="https://kahinoto.github.io/horoscope/ogp.png"><meta property="og:url" content="https://kahinoto.github.io/horoscope/compatibility.html"><meta name="twitter:card" content="summary_large_image">
+<!-- ファビコン＝火地風水の四色が円を巡る意匠（「はじめてのホロスコープ」と同じ） -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23faf9f5'/%3E%3Cpath d='M256 256 L256 86 A170 170 0 0 1 426 256 Z' fill='%23c1502e'/%3E%3Cpath d='M256 256 L426 256 A170 170 0 0 1 256 426 Z' fill='%235e7a2f'/%3E%3Cpath d='M256 256 L256 426 A170 170 0 0 1 86 256 Z' fill='%23a07d1c'/%3E%3Cpath d='M256 256 L86 256 A170 170 0 0 1 256 86 Z' fill='%232f6ea5'/%3E%3Ccircle cx='256' cy='256' r='96' fill='%23faf9f5' stroke='%23b08d3e' stroke-width='14'/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#111; --sub:#666; --line:#ccc; --paper:#fff;
+  /* アスペクトの色は「はじめてのホロスコープ」に合わせる＝ソフトは青、ハードは赤、合は金茶 */
+  --r0:#8a6d3b;   /* コンジャンクション（合） */
+  --r30:#9a927f;  /* セミセクスタイル＝メジャーではない */
+  --r60:#2f6ea5;  /* セクスタイル（六角） */
+  --r90:#b0483a;  /* スクエア（矩） */
+  --r120:#2f6ea5; /* トライン（三角） */
+  --r150:#9a927f; /* インコンジャンクト＝メジャーではない */
+  --r180:#b0483a; /* オポジション（対） */
+}
+/* ── ホロスコープの円 ── */
+.wheel{margin:18px auto 0;max-width:480px}
+.wheel svg{width:100%;height:auto;display:block}
+.wheel .hit{cursor:pointer}
+.wheel .hit:hover{fill:#ece9d8}
+.wheel text{pointer-events:none;
+  font-family:"Segoe UI Symbol","BIZ UDPGothic","Yu Gothic","Meiryo",sans-serif}
+.wheelnote{max-width:640px;margin:8px auto 0;font-size:12.5px;color:#444;text-align:center;line-height:1.7}
+.boardhint{margin:18px 0 -8px;font-size:13px;color:#444;
+  border-left:4px solid #999;padding:2px 0 2px 10px}
+body{background:var(--paper);color:var(--ink);
+  font-family:"BIZ UDPGothic","Yu Gothic","Meiryo",sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.7;
+  padding:20px 16px 48px;max-width:1080px;margin:0 auto}
+.sym{font-family:"Segoe UI Symbol","BIZ UDPGothic",sans-serif}
+
+/* ── 見出し ── */
+.head{border-bottom:3px solid var(--ink);padding-bottom:8px;
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.head h1{font-size:22px;letter-spacing:.08em}
+.head span{font-size:13px;color:var(--sub)}
+.lead{margin-top:14px;font-size:14px}
+.lead b{font-weight:700}
+
+/* ── 盤面 ── */
+.board{display:grid;grid-template-columns:64px repeat(3,1fr);gap:8px;margin-top:18px}
+.corner{grid-column:1;grid-row:1}
+.qh{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  border-bottom:2px solid #333;padding-bottom:6px}
+.qh b{font-size:15px;letter-spacing:.06em}
+.qh span{font-size:11px;color:var(--sub)}
+.rh{background:var(--bg);border-left:5px solid var(--c);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px}
+.rh b{font-size:19px;color:var(--c);line-height:1}
+.rh span{font-size:10px;color:var(--sub)}
+
+/* ── パネル ── */
+.p{border:1px solid var(--line);border-top:5px solid var(--c);background:#fff;
+  padding:10px 12px 11px;text-align:left;font:inherit;color:inherit;
+  cursor:pointer;transition:background .12s,box-shadow .12s;
+  display:flex;flex-direction:column;gap:2px;min-height:104px}
+.p:hover{background:var(--bg)}
+.p:focus-visible{outline:3px solid #333;outline-offset:2px}
+.p .t{display:flex;align-items:baseline;gap:8px}
+.p .t i{font-style:normal;font-size:19px;color:var(--c)}
+.p .t b{font-size:16px}
+.p .t em{font-style:normal;margin-left:auto;font-size:11px;color:var(--sub);white-space:nowrap}
+.p .role{font-size:12px;color:var(--c);font-weight:700}
+.p .rel{margin-top:6px;font-size:12px;font-weight:700;color:var(--rc);
+  border-top:1px dotted var(--rc);padding-top:5px}
+.p .rel s{text-decoration:none;font-weight:400;color:var(--sub);font-size:11px}
+.p .msg{font-size:12px;color:#222;line-height:1.55}
+.p[aria-pressed="true"]{background:var(--bg);box-shadow:0 0 0 3px var(--c) inset}
+.p[data-dim="1"]{opacity:.55}
+
+/* ── 詳細 ── */
+.detail{margin-top:20px;border:1px solid #999;padding:0;display:none}
+.detail.on{display:block}
+.dh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:10px 14px;border-bottom:1px solid var(--line);background:#fafafa}
+.dh .pair{font-size:17px;font-weight:700}
+.dh .pair i{font-style:normal}
+.badge{font-size:12px;font-weight:700;color:#fff;background:var(--rc);padding:2px 9px;border-radius:2px}
+.dh .deg{font-size:12px;color:var(--sub)}
+.drow{display:flex;gap:12px;padding:10px 14px;border-bottom:1px dotted var(--line);font-size:13px}
+.drow .k{flex:0 0 84px;font-weight:700;color:var(--sub);font-size:12px}
+.drow .v b{font-weight:700}
+.dsum{padding:12px 14px;font-size:14px;line-height:1.8}
+.dsum b{font-weight:700}
+
+/* ── 凡例・注記 ── */
+.legend{margin-top:18px;display:grid;gap:5px 18px;font-size:12px;color:#333;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.legend i{font-style:normal;display:inline-block;width:11px;height:11px;margin-right:5px;
+  vertical-align:-1px;background:var(--rc)}
+.legend b{font-weight:700}
+.legend s{text-decoration:none;color:var(--sub);margin-left:6px}
+.note{margin-top:22px;border:1px solid #999;padding:14px 18px;font-size:13px;line-height:1.75}
+.note p+p{margin-top:8px}
+.note .nl{font-size:15px;font-weight:700;letter-spacing:.03em}
+.foot{margin-top:18px;font-size:11px;color:var(--sub);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.reset{font:inherit;font-size:12px;border:1px solid var(--line);background:#fff;
+  padding:3px 12px;cursor:pointer;border-radius:2px}
+.reset:hover{background:#f2f2f2}
+
+/* ── 画面が狭いとき ── */
+@media(max-width:760px){
+  body{padding:16px 16px 40px}
+  .head h1{font-size:19px}
+  .board{grid-template-columns:repeat(2,1fr);gap:7px}
+  .corner,.qh,.rh{display:none}       /* 見出し列は畳む。エレメントは色と札で分かる */
+  .p{min-height:0;padding:9px 10px 10px}
+  .wheel{max-width:none}
+  .legend{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .drow{flex-direction:column;gap:2px;padding:9px 12px}
+  .drow .k{flex:none}
+  .dh{padding:9px 12px}
+  .dh .pair{font-size:15px}
+  .note{padding:12px 14px}
+  .dsum{font-size:13.5px}
+}
+@media(max-width:430px){
+  .board{grid-template-columns:1fr}
+  .p{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+  .p .t{flex:1 1 100%}
+  .p .rel{margin-top:4px;flex:1 1 100%}
+}
+</style>
+
+<div class="head">
+  <h1>十二星座の相性</h1>
+  <span>三区分（3）× エレメント（4）× 二区分（2）　／　覚えずに、出す</span>
+</div>
+
+<p class="lead">
+  <b>星座をひとつ選んでください。</b>円にも盤にも、その星座から見た関係が出ます。<b>円は基準を選ぶところ</b>で、押すたびに切り替わります。<b>盤は相手を選ぶところ</b>で、もう一枚選ぶと、下に組み立ての中身が出ます。
+</p>
+
+<div class="wheel" id="wheel"></div>
+<p class="wheelnote" id="wheelnote"></p>
+
+<p class="boardhint" id="boardhint"></p>
+
+<div class="board" id="board"></div>
+
+<div class="detail" id="detail" aria-live="polite"></div>
+
+<div class="legend" id="legend"></div>
+
+<div class="note">
+  <p class="nl">相性は、覚えるものではなく、札の組み合わせで出るものです。</p>
+  <p><b>見るのは三つだけです。</b>①三区分が同じか違うか　②エレメントが同じか違うか　③二区分（陽と陰）が揃っているか。<b>この三つで、十二星座どうしの六十六通りがすべて決まります。</b></p>
+  <p><b>①が同じなら、ぶつかります。</b>三区分は<b>役割</b>です。活動どうしは二人とも先に動きたがり、不動どうしは二人とも譲らず、柔軟どうしは二人とも相手に合わせます。<b>役割が同じだから、同じところで競合する</b>ということです。そのうえで<b>②のエレメントが、ぶつかり方を決めます</b>——正面からの対立になるのか、横から妨げ合うのか。</p>
+  <p><b>②が同じなら、通じます。</b>同じエレメントで役割が違う組み合わせは、やり方が同じで役回りだけが違う関係です。互いの長所が自然に出ます（トライン・120度）。</p>
+  <p><b>③が要るのは、ここを分けるためです。</b>同じ活動でも、牡羊と天秤は正面に立ち（オポジション・180度）、牡羊と蟹は直角にぶつかります（スクエア・90度）。<b>分けているのは二区分です</b>——火と風は陽、地と水は陰。同じ側なら向かい合い、違う側ならすれ違います。</p>
+  <p><b>用語のことわり。</b>アスペクト（座相）は、本来<b>天体どうしの角度</b>を指す語です。星座そのものが角度を持つわけではありません。ここに出しているのは<b>二人の太陽どうしのアスペクト</b>で、度数ではなく<b>星座単位（ホールサイン）</b>で見ています。<b>天体がどの星座に乗るかで、天体どうしの角度が決まる</b>——エレメントと三区分は、その角度を決めている割りふりです。</p>
+  <p><b>隣どうし（30度）について。</b>古典では30度をアスペクトに数えず、「アヴァージョン（見ない）」＝互いが視界に入らない関係として扱います。この図で<b>協力し合えるほうに置いているのは、共有ではなく並び順を根拠にしています</b>——十二星座は前から後ろへ受け渡していく並びで、隣どうしはその前後にあたるためです。そのままでは噛み合いません。</p>
+  <p style="color:#555">※ 星座単位は古典の見方です。度数とオーブ（許容度）で測る近代のやり方では、星座の端どうしで別の関係になることがあります（獅子座0度と蠍座29度は、星座で見ればスクエアですが、実際の角度は119度です）。<br>※ この図が持っている言い回しは、三区分が6・エレメントが10・関係の型が7で、合わせて二十三です。六十六通りは、そこから掛け算で組み立てています。</p>
+</div>
+
+<div class="foot">
+  <span>ご近所先生企画講座「占いの基本」／占いサークル ヌミナ</span>
+  <span>カヒノト</span>
+</div>
+
+<script>
+"use strict";
+
+/* ── 素材 ───────────────────────────────────────── */
+const EL = {
+  火:{c:"#c0392b",bg:"#fdf0ee",essence:"燃える",pol:"陽"},
+  地:{c:"#4e7a4a",bg:"#f1f8f0",essence:"形にする",pol:"陰"},
+  風:{c:"#b8860b",bg:"#fdf8ea",essence:"つなぐ",pol:"陽"},
+  水:{c:"#26628f",bg:"#eff6fb",essence:"感じる",pol:"陰"}
+};
+const MODE = {
+  活動:{mark:"▶",en:"カーディナル",verb:"はじめる"},
+  不動:{mark:"■",en:"フィクスト",verb:"つづける"},
+  柔軟:{mark:"〜",en:"ミュータブル",verb:"うつる"}
+};
+/* 盤面の並び＝エレメント（行）× 三区分（列）。図版「十二星座のしくみ」と同じ配置 */
+const SIGNS = [
+  {sym:"♈",name:"牡羊",el:"火",mode:"活動",deg:0,  role:"火をつける"},
+  {sym:"♌",name:"獅子",el:"火",mode:"不動",deg:120,role:"火を保つ"},
+  {sym:"♐",name:"射手",el:"火",mode:"柔軟",deg:240,role:"火を飛ばす"},
+  {sym:"♑",name:"山羊",el:"地",mode:"活動",deg:270,role:"地を築く"},
+  {sym:"♉",name:"牡牛",el:"地",mode:"不動",deg:30, role:"地を守る"},
+  {sym:"♍",name:"乙女",el:"地",mode:"柔軟",deg:150,role:"地を整える"},
+  {sym:"♎",name:"天秤",el:"風",mode:"活動",deg:180,role:"風を通す"},
+  {sym:"♒",name:"水瓶",el:"風",mode:"不動",deg:300,role:"風を貫く"},
+  {sym:"♊",name:"双子",el:"風",mode:"柔軟",deg:60, role:"風を運ぶ"},
+  {sym:"♋",name:"蟹", el:"水",mode:"活動",deg:90, role:"水を注ぐ"},
+  {sym:"♏",name:"蠍", el:"水",mode:"不動",deg:210,role:"水を溜める"},
+  {sym:"♓",name:"魚", el:"水",mode:"柔軟",deg:330,role:"水を溶かす"}
+];
+
+/* 三区分が同じとき＝ぶつかり方の素 */
+const MODE_SAME = {
+  活動:"二人とも先に動きたい。主導権の取り合いになります",
+  不動:"二人とも動かない。譲らないまま向かい合う持久戦になります",
+  柔軟:"二人とも相手に合わせる。決まらないまま流れていきます"
+};
+/* 三区分が違うとき＝役の分かれ方 */
+const MODE_DIFF = {
+  "活動|不動":"始める人と、続ける人",
+  "活動|柔軟":"始める人と、移っていく人",
+  "不動|柔軟":"続ける人と、移っていく人"
+};
+/* エレメントが違うとき＝かみ合い方 */
+const EL_PAIR = {
+  "火|地":"勢いと、手順。火は先に走り、地は足場を固めます",
+  "火|風":"風は火を大きくします。煽りすぎることもあります",
+  "火|水":"水は火を鎮め、火は水を乾かします",
+  "地|風":"重さと、軽さ。地は積み上げ、風は組み替えます",
+  "地|水":"水は地を潤し、地は水に器を与えます",
+  "風|水":"言葉と、気分。風は説明し、水は感じます"
+};
+/* 名称と記号は「はじめてのホロスコープ」から。⛔ 新しい記号を作らない。
+   30度と150度はメジャーアスペクトではないので、記号を持たせず度数で示す。 */
+const REL = {
+  0:  {name:"コンジャンクション（合）", sym:"☌", v:"--r0",  short:"役割もエレメントも同じ。同質"},
+  30: {name:"セミセクスタイル",         sym:"",  v:"--r30", short:"微調整すれば、協力し合える"},
+  60: {name:"セクスタイル（六角）",     sym:"⚹", v:"--r60", short:"協力し合える"},
+  90: {name:"スクエア（矩）",           sym:"□", v:"--r90", short:"役割が同じで、妨げ合う"},
+  120:{name:"トライン（三角）",         sym:"△", v:"--r120",short:"長所を引き出し合う"},
+  150:{name:"インコンジャンクト",       sym:"",  v:"--r150",short:"共通項がなく、異質"},
+  180:{name:"オポジション（対）",       sym:"☍", v:"--r180",short:"役割が同じで、対立する"}
+};
+const TXT = "︎";  // 異体字セレクタ15＝記号を絵文字にさせない（ホロスコープ側と同じ処置）
+
+/* 組み合わせは順不同で引く。
+   ⛔ [a,b].sort() は使わない＝日本語は文字コード順に並ぶので、
+      「活動|不動」と書いた見出しが「不動|活動」に化けて引けなくなる（2026-09-19の不具合）。 */
+const pair = (table,x,y) => table[x + "|" + y] || table[y + "|" + x];
+
+/* ── 関係を出す：札は三枚だけ ───────────────────── */
+function relate(a,b){
+  if(a === b) return 0;
+  const sameEl   = a.el === b.el;
+  const sameMode = a.mode === b.mode;
+  const samePol  = EL[a.el].pol === EL[b.el].pol;
+  if(sameEl)   return 120;                 // 同じエレメント・違う三区分
+  if(sameMode) return samePol ? 180 : 90;  // 同じ三区分：二区分が揃えば正面、違えば直角
+  if(samePol)  return 60;                  // どちらも違うが、向きは同じ
+  const d = Math.abs(a.deg - b.deg);       // 30度と150度の別は黄道上の距離で決まる
+  return Math.min(d, 360 - d);
+}
+
+/* ── 文を組み立てる ─────────────────────────────── */
+function compose(a,b){
+  const r = relate(a,b);
+  const ea = EL[a.el], eb = EL[b.el];
+  const modeSame = a.mode === b.mode;
+  const elSame   = a.el === b.el;
+  const polSame  = ea.pol === eb.pol;
+  const mdiff = pair(MODE_DIFF, a.mode, b.mode);
+  const epair = pair(EL_PAIR, a.el, b.el);
+
+  const rows = [
+    {k:"三区分", v: modeSame
+      ? `どちらも<b>${a.mode}（${MODE[a.mode].en}・${MODE[a.mode].verb}）</b>で、<b>役割が同じ</b>です。${MODE_SAME[a.mode]}`
+      : `<b>${a.mode}</b>と<b>${b.mode}</b>で、<b>役割が違い</b>ます。${mdiff}`},
+    {k:"エレメント", v: elSame
+      ? `どちらも<b>${a.el}（${ea.essence}）</b>。${a.name}は${a.role}、${b.name}は${b.role}`
+      : `<b>${a.el}</b>と<b>${b.el}</b>。${epair}`},
+    {k:"二区分", v: polSame
+      ? `どちらも<b>${ea.pol}</b>（火と風は陽、地と水は陰）。向きが揃っています`
+      : `<b>${ea.pol}</b>と<b>${eb.pol}</b>。向きが逆です`}
+  ];
+
+  let sum;
+  if(r === 0){
+    sum = `役割もエレメントも同じ、<b>同質の関係</b>です。見ているものが同じなので、説明が要りません。<b>ただし、欠けているところも同じです。</b>補い合う相手にはなりません。`;
+  }else if(r === 120){
+    sum = `<b>長所を引き出し合う関係</b>です。どちらも${a.el}で、${a.name}は${a.role}、${b.name}は${b.role}——やり方が同じなので、言わなくても伝わります。${mdiff}という違いが、そのまま分担になります。相手の良いところが自然に出る代わりに、<b>楽すぎて動かないこともあります。</b>`;
+  }else if(r === 180){
+    sum = `<b>対立する関係</b>です。役割が同じで、${MODE_SAME[a.mode]}。そのうえ二区分も揃っていますので、<b>まっすぐ正面で向かい合います。</b>${epair}。対立してはいますが、根は同類です。<b>足りない半分を、相手がそのまま持っています。</b>`;
+  }else if(r === 90){
+    sum = `<b>妨げ合う関係</b>です。役割が同じで、${MODE_SAME[a.mode]}。ところが二区分が逆ですので、<b>同じ役割のまま、やり方だけが食い違います。</b>${epair}。正面からの対立ではなく、<b>横から差し込むように互いの動きを止めてしまいます。</b>十二のなかでいちばん摩擦が出ますが、摩擦は動きも生みます。`;
+  }else if(r === 60){
+    sum = `<b>協力し合える関係</b>です。${epair}。二区分が揃っているので、向いている方角が同じです。そのうえ${mdiff}と役が分かれていますから、<b>取り合いになりません。</b>無理なく助け合えますが、深くは踏み込まない間柄です。`;
+  }else if(r === 30){
+    sum = `<b>微調整すれば、協力し合える関係</b>です。役割もエレメントも二区分も、共通項はありません。<b>けれども黄道で隣り合っています。</b>十二星座は前から後ろへ受け渡していく並びで、${a.name}と${b.name}は、その前後にあたります。${epair}。<b>同質だから噛み合うのではなく、順番で繋がっているから噛み合う</b>——そのままでは噛み合いませんが、少し向きを揃えるだけで足ります。`;
+  }else{
+    sum = `<b>共通項がなく、異質な関係</b>です。役割もエレメントも二区分も、重なるところがありません。隣り合ってもいませんので、受け渡しの順番もありません。${epair}。<b>相性が悪いのではなく、そもそも同じ話をしていません。</b>噛み合わせようとするより、<b>受け持ちを分けたほうが</b>うまくいきます。`;
+  }
+  return {r, rows, sum};
+}
+
+/* ── ホロスコープの円 ─────────────────────────────
+   リングの構成・色・角度の取り方は「はじめてのホロスコープ」と同じ。
+   牡羊座0度を左（180度）に置き、反時計回りに並べる。            */
+const WHEEL = {
+  el:  {火:{bg:"#f6c7a5",ink:"#c1502e"}, 地:{bg:"#d5e3a5",ink:"#5e7a2f"},
+        風:{bg:"#f7e6a1",ink:"#a07d1c"}, 水:{bg:"#bcd8f0",ink:"#2f6ea5"}},
+  mode:{活動:"#f3e0e0", 不動:"#e5e5ef", 柔軟:"#e0efe4"},
+  pol: {陽:"#fdf3e4", 陰:"#e9eef5"}
+};
+const C = 430, SIZE = 860, D2R = Math.PI/180;
+const th = lon => 180 + lon;                                  // 黄経→表示角
+const xy = (r,t) => [C + r*Math.cos(t*D2R), C - r*Math.sin(t*D2R)];
+const f1 = n => n.toFixed(1);
+
+function seg(r1,r2,t1,t2,fill,cls,idx){
+  const pts = [], n = Math.max(2, Math.ceil(Math.abs(t2-t1)/3));
+  for(let i=0;i<=n;i++) pts.push(xy(r2, t1+(t2-t1)*i/n));
+  for(let i=n;i>=0;i--) pts.push(xy(r1, t1+(t2-t1)*i/n));
+  const p = pts.map(p => f1(p[0])+","+f1(p[1])).join(" ");
+  return `<polygon points="${p}" fill="${fill}" stroke="#8a8578" stroke-width="0.7"` +
+         (cls ? ` class="${cls}" data-i="${idx}"` : "") + `/>`;
+}
+function ringText(r,t,text,size,col,bold){
+  const [x,y] = xy(r,t);
+  let rot = 90 - t; const tn = ((t%360)+360)%360;
+  if(tn > 180 && tn < 360) rot += 180;        // 下半分は反転して読みやすく
+  return `<text x="${f1(x)}" y="${f1(y)}" font-size="${size}" fill="${col}"` +
+         (bold ? ` font-weight="bold"` : "") +
+         ` text-anchor="middle" dominant-baseline="central"` +
+         ` transform="rotate(${f1(rot)} ${f1(x)} ${f1(y)})">${text}</text>`;
+}
+function flatText(r,t,text,size,col,bold){
+  const [x,y] = xy(r,t);
+  return atText(x,y,text,size,col,bold);
+}
+function atText(x,y,text,size,col,bold){
+  return `<text x="${f1(x)}" y="${f1(y)}" font-size="${size}" fill="${col}"` +
+         (bold ? ` font-weight="bold"` : "") +
+         ` text-anchor="middle" dominant-baseline="central">${text}</text>`;
+}
+/* CSS変数の実際の色を一度だけ読む */
+let COLCACHE = null;
+function relColor(v){
+  if(!COLCACHE){
+    COLCACHE = {};
+    const cs = getComputedStyle(document.documentElement);
+    for(const r of Object.keys(REL)) COLCACHE[REL[r].v] = cs.getPropertyValue(REL[r].v).trim();
+  }
+  return COLCACHE[v];
+}
+
+function drawWheel(){
+  const wheel = document.getElementById("wheel");
+  /* 画面が狭いと四層の細字が読めなくなるので、色の層は残して字だけ畳む */
+  const small = window.innerWidth < 560;
+  let s = `<circle cx="${C}" cy="${C}" r="${C-2}" fill="#fffdf8"/>`;
+  const at = i => SIGNS.findIndex(x => x.deg === i*30);   // 黄経順に並べ直す
+
+  for(let i=0;i<12;i++){
+    const sg = SIGNS[at(i)], t1 = th(i*30), t2 = t1+30, tm = t1+15;
+    s += seg(330,370,t1,t2,"#f6f8ec","hit",at(i));
+    s += seg(300,330,t1,t2,WHEEL.el[sg.el].bg);
+    s += seg(272,300,t1,t2,WHEEL.mode[sg.mode]);
+    s += seg(246,272,t1,t2,WHEEL.pol[EL[sg.el].pol]);
+    if(small){
+      s += ringText(350,tm, sg.sym+TXT+" "+sg.name, 25, "#3a352f", true);
+      s += ringText(300,tm, sg.el, 22, WHEEL.el[sg.el].ink, true);
+    }else{
+      s += ringText(350,tm, sg.sym+TXT+" "+sg.name, 19, "#3a352f", true);
+      s += ringText(315,tm, sg.el, 15, WHEEL.el[sg.el].ink, true);
+      s += ringText(286,tm, sg.mode, 13, "#6b6357");
+      s += ringText(259,tm, EL[sg.el].pol, 12, "#6b6357");
+    }
+  }
+  [[370,1.4],[330,.8],[300,.8],[272,.8],[246,1.2],[234,.8]].forEach(([r,w]) =>
+    s += `<circle cx="${C}" cy="${C}" r="${r}" fill="none" stroke="#8a8578" stroke-width="${w}"/>`);
+
+  if(base){
+    const bt = th(base.deg) + 15;
+    // 基準の星座を囲う
+    const pts = [], n = 10;
+    for(let i=0;i<=n;i++) pts.push(xy(370, th(base.deg)+30*i/n));
+    for(let i=n;i>=0;i--) pts.push(xy(246, th(base.deg)+30*i/n));
+    s += `<polygon points="${pts.map(p=>f1(p[0])+","+f1(p[1])).join(" ")}"` +
+         ` fill="none" stroke="#3a352f" stroke-width="3"/>`;
+    // 関係の線と、円の外の記号
+    for(const sg of SIGNS){
+      if(sg === base) continue;
+      const r = relate(base, sg), meta = REL[r], tm = th(sg.deg)+15;
+      const col = relColor(meta.v);
+      const [x1,y1] = xy(234, bt), [x2,y2] = xy(234, tm);
+      const hard = (r === 90 || r === 180);
+      s += `<line x1="${f1(x1)}" y1="${f1(y1)}" x2="${f1(x2)}" y2="${f1(y2)}"` +
+           ` stroke="${col}" stroke-width="${hard?2:1.2}" opacity="${r===30||r===150?.45:.9}"` +
+           (r===30||r===150 ? ` stroke-dasharray="4 4"` : "") + `/>`;
+      s += meta.sym
+        ? flatText(398, tm, meta.sym+TXT, small ? 34 : 26, col, true)
+        : flatText(398, tm, r+"°", small ? 19 : 13, col, false);
+    }
+    // 中心に基準を置く
+    s += `<circle cx="${C}" cy="${C}" r="${small?62:52}" fill="#fffdf8" stroke="#b9b2a0" stroke-width="1"/>`;
+    s += atText(C, C-(small?15:12), base.sym+TXT, small ? 36 : 30, WHEEL.el[base.el].ink, true);
+    s += atText(C, C+(small?22:18), base.name,    small ? 19 : 15, "#3a352f", true);
+  }
+
+  wheel.innerHTML = `<svg viewBox="0 0 ${SIZE} ${SIZE}" xmlns="http://www.w3.org/2000/svg"` +
+    ` role="img" aria-label="十二星座の円と、選んだ星座から見た関係">${s}</svg>`;
+  [...wheel.querySelectorAll(".hit")].forEach(el =>
+    el.addEventListener("click", () => pickBase(SIGNS[+el.dataset.i])));
+
+  document.getElementById("boardhint").innerHTML = base
+    ? `いま<b>${base.name}</b>から見ています。<b>相手の星座を押すと、組み立ての中身が下に出ます。</b>` +
+      `（円を押せば、見る側の星座が切り替わります）`
+    : `<b>星座を押してください。</b>残りの十一が、その星座から見た関係に変わります。` +
+      `<b>そのあと相手を押すと、詳しい解説が下に出ます。</b>`;
+
+  document.getElementById("wheelnote").innerHTML = base
+    ? `<b>${base.name}</b>と同じ<b>${base.mode}</b>の三つは、円の上で<b>十字</b>に並びます。` +
+      `向かいが${REL[180].name}、両隣の直角が${REL[90].name}——<b>役割が同じ相手とは、対立か妨害にしかなりません。</b>`
+    : `牡羊座を左に置き、反時計回りに十二星座が並びます。四層は外から順に、星座・エレメント・三区分・二区分です。`;
+}
+
+/* ── 描く ───────────────────────────────────────── */
+const board = document.getElementById("board");
+const detail = document.getElementById("detail");
+let base = null;   // 基準の星座
+let mate = null;   // 相手の星座
+
+function buildBoard(){
+  board.innerHTML = "";
+  const corner = document.createElement("div");
+  corner.className = "corner";
+  board.appendChild(corner);
+  for(const m of ["活動","不動","柔軟"]){
+    const h = document.createElement("div");
+    h.className = "qh";
+    h.innerHTML = `<b>${MODE[m].mark} ${m}</b><span>${MODE[m].en}</span>`;
+    board.appendChild(h);
+  }
+  for(const e of ["火","地","風","水"]){
+    const rh = document.createElement("div");
+    rh.className = "rh";
+    rh.style.setProperty("--c", EL[e].c);
+    rh.style.setProperty("--bg", EL[e].bg);
+    rh.innerHTML = `<b>${e}</b><span>${EL[e].essence}</span>`;
+    board.appendChild(rh);
+    for(const m of ["活動","不動","柔軟"]){
+      board.appendChild(panel(SIGNS.find(s => s.el === e && s.mode === m)));
+    }
+  }
+}
+
+function panel(s){
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "p";
+  b.style.setProperty("--c", EL[s.el].c);
+  b.style.setProperty("--bg", EL[s.el].bg);
+  b.dataset.name = s.name;
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => pick(s));
+  b.innerHTML =
+    /* 狭い画面ではエレメントの見出し列を畳むので、札の中にも書いておく */
+    `<span class="t"><i class="sym">${s.sym}${TXT}</i><b>${s.name}</b>` +
+    `<em>${s.el}・${MODE[s.mode].mark} ${s.mode}</em></span>` +
+    `<span class="role">${s.role}</span><span class="slot"></span>`;
+  return b;
+}
+
+/* 盤＝相手を選ぶ。基準がまだ無ければ基準になる */
+function pick(s){
+  if(base === s){ base = null; mate = null; }         // 選び直し
+  else if(base === null){ base = s; mate = null; }
+  else { mate = s; }
+  render();
+}
+/* 円＝いつでも基準を切り替える。
+   ⭐ 円と盤で役を分ける＝円は「誰から見るか」、盤は「誰との関係を見るか」 */
+function pickBase(s){
+  if(base === s){ base = null; mate = null; }         // もう一度押せば解除
+  else { base = s; mate = null; }
+  render();
+}
+
+function render(){
+  [...board.querySelectorAll(".p")].forEach(el => {
+    const s = SIGNS.find(x => x.name === el.dataset.name);
+    const slot = el.querySelector(".slot");
+    el.setAttribute("aria-pressed", String(base === s));
+    el.dataset.dim = (base && mate && s !== base && s !== mate) ? "1" : "0";
+    if(!base){ slot.innerHTML = ""; return; }
+    const r = relate(base, s);
+    const meta = REL[r];
+    slot.innerHTML =
+      `<span class="rel" style="--rc:var(${meta.v})">${meta.name} <s>${r}度</s><br>` +
+      `<span class="msg">${meta.short}</span></span>`;
+  });
+  if(base && mate){ showDetail(base, mate); }
+  else { detail.className = "detail"; detail.innerHTML = ""; }
+  drawWheel();
+}
+
+function showDetail(a,b){
+  const {r, rows, sum} = compose(a,b);
+  const meta = REL[r];
+  detail.className = "detail on";
+  detail.style.setProperty("--rc", `var(${meta.v})`);
+  detail.innerHTML =
+    `<div class="dh" style="--rc:var(${meta.v})">` +
+      `<span class="pair"><i class="sym">${a.sym}</i> ${a.name} ＋ <i class="sym">${b.sym}</i> ${b.name}</span>` +
+      `<span class="badge">${meta.name}</span><span class="deg">${r}度</span>` +
+      `<button class="reset" type="button" id="clr">選び直す</button>` +
+    `</div>` +
+    rows.map(x => `<div class="drow"><span class="k">${x.k}</span><span class="v">${x.v}</span></div>`).join("") +
+    `<div class="dsum">${sum}</div>`;
+  document.getElementById("clr").addEventListener("click", () => { base = null; mate = null; render(); });
+}
+
+function buildLegend(){
+  document.getElementById("legend").innerHTML =
+    [0,30,60,90,120,150,180].map(r =>
+      `<span style="--rc:var(${REL[r].v})"><i></i><b>${REL[r].name}</b>（${r}度）` +
+      `<s>${REL[r].short}</s></span>`).join("");
+}
+
+buildBoard();
+buildLegend();
+render();
+
+/* 画面の幅が変わったら円を描き直す（横向きにしたとき・字の畳み方が変わるため） */
+let rz;
+window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(drawWheel, 200); });
+</script>
+<script data-goatcounter="https://kahinoto.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</html>
